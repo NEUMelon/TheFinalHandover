@@ -1,0 +1,64 @@
+/* 《最后一次交班》Stage 3 · UI 高保真第一批修正（只覆盖，不改 Demo α 的 USS）
+   依据：01_圣经/03_UI设计系统 v0.1 §1–§3、50_游戏交互/prototype/css/tokens.css。
+   每条前缀 .lsb-s3（由 UiHifiLayer 加到 lsb-root 上），选择器更具体，所以无论加载顺序都会覆盖原样式。
+   对应 50_游戏交互/stage3/01_UI高保真对齐表 §3 的 H-01…H-03；v02（2026-10-15）补 H-04…H-08 与 S-02（见 01_UI高保真对齐表_v0.2.md §3）。
+   由 Claude 编写，未在 Unity 里看过。v01 原文备份在 stage3_addon/备份/lsb_stage3_hifi_v01备份.uss.txt。 */
+
+/* H-01 衡的界面只用冷白：Demo α 新加的薄荷绿 #9FD6B4 不在色板里（UI-DS §3：冷白不得出纸面，衡只有冷白 + 安全黄警告）。
+   “正常 / 通过”改成冷白实色 + 加粗，靠亮度和字重区分，不靠新颜色。 */
+.lsb-s3 .sys-line.ok,
+.lsb-s3 .mes-val.ok,
+.lsb-s3 .mes-line.ok,
+.lsb-s3 .cine-line.ok,
+.lsb-s3 .rc-sys-status.ok,
+.lsb-s3 .heng-ticker .line.ok { color: var(--C-Sys); -unity-font-style: bold; }
+.lsb-s3 .bar-fill.brg { background-color: var(--C-Sys); }
+.lsb-s3 .spec-sel.ok { border-color: var(--C-Sys); }
+
+/* H-02 最小字号 14px（UI-DS §2.1）：Demo α 有 12 / 13px 的字段名、坐标轴、状态。 */
+.lsb-s3 .data-label,
+.lsb-s3 .rc-key-zh,
+.lsb-s3 .rc-bind,
+.lsb-s3 .ax,
+.lsb-s3 .spec-tag,
+.lsb-s3 .mes-rule-st,
+.lsb-s3 .crane-ax,
+.lsb-s3 .heng-ticker .head,
+.lsb-s3 .tool .no { font-size: 14px; }
+
+/* H-03 规则卡字段名的中文副标签用 T-Label（16px），值的颜色回到 Token。 */
+.lsb-s3 .rc-key-zh { font-size: var(--T-Label); color: var(--C-Pencil); }
+
+/* ===================== v02（2026-10-15）对齐表 v0.2 §3 的 H-04…H-08 ===================== */
+
+/* H-04 最小字号 14px 补漏：v01 漏了 3 处（静态统计 lsb_hud.uss + lsb_views.uss，见对齐表 v0.2 §2）。
+   .clip-key 是贴页被三联引用后的小标（UI-DS §5.3“小三联图标”的文字占位，11px）；.placeholder-tag / .build-tag 是灰盒提示和版本角标。 */
+.lsb-s3 .clip-key { font-size: var(--T-Mono-S); padding: 0 4px; top: -10px; }
+.lsb-s3 .placeholder-tag { font-size: var(--T-Mono-S); }
+.lsb-s3 .build-tag { font-size: var(--T-Mono-S); }
+
+/* H-05 衡平板齿轮指示（谜题二 R1）：正常区原为色板外薄荷绿 rgba(159,214,180,.55)，异常区为红 rgba(168,50,45,.55)。
+   UI-DS §3：衡的警告用 C-Sys-Alert（安全黄），“红色留给老经验”。游戏文字写的是“指针在绿区”（事实链 E2-2、ContentDB 证据 / 提示 / 三联反馈），
+   所以正常区保留“绿”，但改用色板内的墙裙绿 C-Green #5E7D6A；异常区改安全黄。需用户确认（对齐表 v0.2 D-3）。 */
+.lsb-s3 .gauge-norm { background-color: rgba(94, 125, 106, 0.85); }
+.lsb-s3 .gauge-bad { background-color: rgba(242, 194, 0, 0.55); }
+
+/* H-06 纸面上的“不对 / 还不能翻”提示条（HUD .feedback.no）：左边线原为 C-Ink-Red。
+   UI-DS §3：纸面上的冲突标记用 C-Safety；红色只给红胶布与老周的红笔批改。 */
+.lsb-s3 .feedback.no { border-left-color: var(--C-Safety); }
+
+/* H-07 结局衡日志里的四条 Rule ID：原为纯白 #FFFFFF，回到衡的冷白 C-Sys。 */
+.lsb-s3 .cine-rule { color: var(--C-Sys); }
+
+/* H-08 动效时长对到 Token：规则卡 Source 变淡 0.3s → D-Base 240ms。
+   其余非 Token 时长有出处，不改：.rc-lamp 0.6s = UI-DS §5.4 交接灯 2700K 余辉 600ms；.memory 2s / .cine-bar 1.2s / .cine-black 1.6s / .cine-dedication 2.4s 是演出镜头时长（声音圣经 / 主文档 §5.3），不是组件动效。 */
+.lsb-s3 .rc-val { transition-duration: 0.24s; }
+
+/* S-02 三级提示的视觉差（UiHifiLayer 按顺序给批注加 s3-hint-l1…l3）：UI-DS §5.8 一级铅笔小字 C-Ink 60%，二 / 三级钢笔字。
+   箭头（二级）与圈出目标（三级）要接 HintSet.PointsAt，见对齐表 v0.2 §1 第 9 行，未做。 */
+.lsb-s3 .hint-note .h.s3-hint-l1 { color: var(--C-Pencil); }
+.lsb-s3 .hint-note .h.s3-hint-l2,
+.lsb-s3 .hint-note .h.s3-hint-l3 { color: var(--C-Ink-Blue); }
+
+/* S-01 三联冲突格的答案框：UiHifiLayer 在四周画 8px 斜纹，文字往里收，不压在斜纹上（原型 04b）。 */
+.lsb-s3 .triad-col.conflict .triad-slot { padding: 12px 14px 10px 14px; }

@@ -1,0 +1,60 @@
+/* 《最后一次交班》UI Prototype —— 设计 Token
+   与 01_圣经/03_UI设计系统_v0.1.md §2–§5 同名、同值。改值先改圣经，再改这里。 */
+:root {
+  /* 色彩 §3 */
+  --C-Paper: #EDE6D6;
+  --C-Paper-Old: #DCCFAF;
+  --C-Paper-Print: #F2F0EA;
+  --C-Ink: #1A1A1A;
+  --C-Ink-Blue: #1F3A5F;
+  --C-Ink-Red: #A8322D;
+  --C-Line: #B9B4A8;
+  --C-Warm: #E8B45A;
+  --C-Safety: #F2C200;
+  --C-Green: #5E7D6A;
+  --C-Sys-BG: #0E1620;
+  --C-Sys: #E6F0F5;
+  --C-Sys-Dim: rgba(230, 240, 245, .45);
+  --C-Sys-Faint: rgba(230, 240, 245, .14);
+  --C-Sys-Alert: #F2C200;
+
+  /* 美术圣经 7 色补充 */
+  --C-Wall: #5E7D6A;          /* 墙裙绿 */
+  --C-Terrazzo: #B9B4A8;      /* 水磨石灰 */
+  --C-Blueprint: #1F3A5F;     /* 晒图蓝 */
+  --C-Pencil: rgba(26, 26, 26, .6);
+  --C-Kraft: #B8915E;         /* 牛皮纸（派生） */
+
+  /* 字体 §2：H 手写 / S 印刷宋 / M 等宽 / U 界面黑 */
+  --F-Hand-Zhou: "ZhiMangXing", "LXGWWenKai", "KaiTi", cursive;   /* 老周体（占位） */
+  --F-Hand-Jian: "LongCang", "LXGWWenKai", "KaiTi", cursive;                 /* 建国体（占位） */
+  --F-Hand-Lin: "LXGWWenKai", "KaiTi", cursive;                  /* 林小满（玩家）笔迹（占位） */
+  --F-Serif: "NotoSerifSC", "Source Han Serif SC", "Songti SC", serif;
+  --F-Mono: "JetBrainsMono", "Sarasa Mono SC", "NotoSansSC", monospace; /* 本机装了更纱等宽就优先用它（UI-DS 指定），否则回退思源黑体 */
+  --F-Sans: "NotoSansSC", "Source Han Sans SC", sans-serif;
+
+  /* 字号 §2.1（px@1080p） */
+  --T-Display: 48px; --L-Display: 60px;
+  --T-H1: 32px; --L-H1: 44px;
+  --T-H2: 24px; --L-H2: 34px;
+  --T-Body: 20px; --L-Body: 32px;
+  --T-Hand-L: 28px; --L-Hand-L: 36px;
+  --T-Hand-M: 22px; --L-Hand-M: 30px;
+  --T-Mono-L: 22px; --L-Mono-L: 30px;
+  --T-Mono: 18px; --L-Mono: 26px;
+  --T-Mono-S: 14px; --L-Mono-S: 20px;
+  --T-Caption: 22px; --L-Caption: 32px;
+  --T-Label: 16px; --L-Label: 22px;
+
+  /* 间距 §4 */
+  --S1: 8px; --S2: 16px; --S3: 24px; --S4: 32px; --S6: 48px; --S8: 64px;
+
+  /* 动效 §5 */
+  --D-Fast: 120ms;
+  --D-Base: 240ms;
+  --D-Slow: 480ms;
+  --D-Memory: 1000ms;
+  --D-Flip: 520ms; /* 演示放慢；规范 D-Base 240ms，见 README */
+  --E-Paper: cubic-bezier(.215, .61, .355, 1); /* ease-out-cubic，有重量 */
+  --E-Sys: linear;                               /* 衡：无惯性 */
+}

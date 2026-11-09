@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>最后一次交班 · UI Prototype</title>
+<link rel="stylesheet" href="fonts/fonts.css">
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/screens.css">
+</head>
+<body>
+<div id="viewport"><div id="stage">
+
+  <!-- ============ 1 主菜单：厂门打卡机 ============ -->
+  <section id="scr-title" class="screen">
+    <div class="gate-wall"></div>
+    <div class="gate-lamp"><div class="shade"></div><div class="cord"></div></div>
+
+    <div class="notice paper">
+      <div class="tape" style="left:-18px;top:18px;transform:rotate(-38deg)"></div>
+      <div class="tape" style="right:-20px;top:16px;transform:rotate(36deg)"></div>
+      <div class="notice-org">衡川第三机械厂　三号车间</div>
+      <h1 class="notice-title">最后一次交班</h1>
+      <div class="notice-rule"></div>
+      <dl class="notice-form">
+        <dt>班　次</dt><dd><span class="hand-jian">中班</span><span class="mono">16:00—24:00</span></dd>
+        <dt>交班人</dt><dd><span class="hand-jian">周建国</span></dd>
+        <dt>接班人</dt><dd class="blank"></dd>
+      </dl>
+      <p class="notice-foot hand-jian">一九五六—二<span class="o0">〇</span>二六</p>
+    </div>
+
+    <div class="clock">
+      <div class="conduit"></div>
+      <div class="clock-body">
+        <div class="screw s1"></div><div class="screw s2"></div><div class="screw s3"></div><div class="screw s4"></div>
+        <svg class="dial" viewBox="0 0 300 300" width="300" height="300" aria-hidden="true">
+          <defs>
+            <radialGradient id="enamel" cx=".45" cy=".4" r=".7"><stop offset="0" stop-color="#fbf8ef"/><stop offset=".85" stop-color="#e9e3d2"/><stop offset="1" stop-color="#cfc7b1"/></radialGradient>
+            <linearGradient id="bezel" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f2efe6"/><stop offset=".5" stop-color="#8f8b80"/><stop offset="1" stop-color="#3b3935"/></linearGradient>
+            <linearGradient id="glass" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".45"/><stop offset=".4" stop-color="#fff" stop-opacity="0"/></linearGradient>
+          </defs>
+          <circle cx="150" cy="150" r="146" fill="url(#bezel)"/>
+          <circle cx="150" cy="150" r="132" fill="url(#enamel)"/>
+          <g id="dialTicks"></g>
+          <text x="150" y="104" text-anchor="middle" font-family="NotoSerifSC" font-size="12" fill="#3b3935" letter-spacing="3">考 勤 钟</text>
+          <text x="150" y="208" text-anchor="middle" font-family="JetBrainsMono" font-size="9" fill="#6b675e">HC · 1974</text>
+          <g id="hHour"><path d="M146 150 L148 92 L150 86 L152 92 L154 150 Z" fill="#1A1A1A"/></g>
+          <g id="hMin"><path d="M148 150 L149 40 L150 34 L151 40 L152 150 Z" fill="#1A1A1A"/></g>
+          <g id="hSec"><line x1="150" y1="168" x2="150" y2="34" stroke="#1A1A1A" stroke-width="1"/></g>
+          <circle cx="150" cy="150" r="6" fill="#1A1A1A"/><circle cx="150" cy="150" r="2" fill="#bdb8ab"/>
+          <circle cx="150" cy="150" r="132" fill="url(#glass)"/>
+          <path d="M40 120 A112 112 0 0 1 120 40" stroke="#fff" stroke-opacity=".5" stroke-width="3" fill="none"/>
+        </svg>
+        <div class="clock-plate"><span>上班　下班</span></div>
+        <div class="slot-block">
+          <div class="slot-window mono" id="slotTime">15:58</div>
+          <div class="slot"><div class="slot-mouth"></div></div>
+          <div class="slot-label">▼ 插 卡</div>
+        </div>
+        <div class="chip c1"></div><div class="chip c2"></div><div class="chip c3"></div>
+      </div>
+    </div>
+
+    <div class="rack">
+      <div class="rack-head">中 班</div>
+      <div class="rack-grid" id="rackGrid"></div>
+    </div>
+
+    <div class="keyhint" style="left:56px;bottom:40px">选卡 <kbd>↑</kbd><kbd>↓</kbd>　打卡 <kbd>Enter</kbd>　暂停 / 演示目录 <kbd>Esc</kbd></div>
+    <div class="keyhint mono" style="right:56px;bottom:40px">UI PROTOTYPE v0.1 · 谜题二垂直切片</div>
+  </section>
+
+  <!-- ============ 开场 ============ -->
+  <section id="scr-intro" class="screen">
+    <div class="intro-time mono">16:00</div>
+    <div class="intro-line hand-jian" id="introLine">一九五六—二<span class="o0">〇</span>二六，最后一班，交给你了。</div>
+    <div class="keyhint" style="right:56px;bottom:40px">点击跳过</div>
+  </section>
+
+  <!-- ============ 2 交班桌 / 交班本主界面 ============ -->
+  <section id="scr-desk" class="screen">
+    <div class="desk-wood"></div>
+    <div class="desk-glass"></div>
+    <div class="desk-sheet paper print"></div>
+
+    <!-- 交接状态板（柜门） -->
+    <button class="handover" id="handoverDesk" data-act="noop" aria-label="交接状态板"></button>
+
+    <!-- 人事档案袋 -->
+    <button class="folder" data-act="archive" aria-label="人事档案">
+      <span class="folder-label">人事档案<small>（摘录）</small></span>
+      <span class="folder-string"></span>
+    </button>
+
+    <!-- 衡平板（林小满的调试平板） -->
+    <button class="tablet-mini" data-act="mes" aria-label="衡 MES">
+      <span class="tm-screen sys"><span class="tm-head">衡 · MES</span><ul class="log" id="miniLog"></ul><span class="tm-led blink"></span></span>
+    </button>
+
+    <!-- 技术等级证 -->
+    <button class="cert-book" data-act="cert" aria-label="技术等级证">
+      <span class="cb-title">技术等级证</span><span class="cb-sub">持证者　衡</span>
+    </button>
+
+    <!-- 对讲机 -->
+    <div class="walkie" id="walkie"><div class="w-ant"></div><div class="w-body"><div class="w-grill"></div><div class="w-led"></div></div></div>
+
+    <!-- 交班本 -->
+    <div class="ledger closed" id="ledger">
+      <div class="ledger-cloth"></div>
+      <div class="pages">
+        <div class="page left" id="pageL"></div>
+        <div class="page right" id="pageR"></div>
+        <div class="gutter"></div>
+      </div>
+      <button class="cover" id="cover" data-act="openLedger">
+        <span class="cover-front">
+          <span class="cover-label"><b>交 班 本</b><i>三号车间　二〇二六</i><em class="hand-jian">最后一卷</em></span>
+          <span class="cover-wear"></span>
+        </span>
+        <span class="cover-back"></span>
+      </button>
+    </div>
+    <div class="keyhint" id="deskHint" style="left:640px;bottom:34px">翻页 <kbd>A</kbd><kbd>D</kbd>　工具箱 <kbd>T</kbd>　交班本 <kbd>Tab</kbd>　暂停 <kbd>Esc</kbd></div>
+  </section>
+
+  <!-- ============ 4 听音诊断（CU-1 LT01 主轴箱） ============ -->
+  <section id="scr-lathe" class="screen">
+    <div class="lathe-art" id="latheArt"></div>
+    <div class="torch-mask" id="torchMask"></div>
+    <div class="lathe-probe" id="probe"></div>
+    <button class="pt-hot" id="hotL1" data-act="point" data-pt="L1" style="left:150px;top:276px"></button>
+    <button class="pt-hot" id="hotR1" data-act="point" data-pt="R1" style="left:476px;top:330px"></button>
+    <button class="pt-tag" id="tagL1" data-act="point" data-pt="L1" style="left:96px;top:120px"><b>L1</b><span>主轴箱左端 · 后轴承</span></button>
+    <button class="pt-tag" id="tagR1" data-act="point" data-pt="R1" style="left:430px;top:178px"><b>R1</b><span>右端临时传感器</span></button>
+    <svg class="pt-leaders" width="1100" height="600"><path id="leadL1" d="M150 186 L178 266"/><path id="leadR1" d="M486 244 L512 340"/></svg>
+    <div class="scene-tag"><span class="mono">CU-1</span>　LT01 主轴箱　<span class="hand-jian">十七点三十分</span></div>
+
+    <div class="tablet" id="tablet"></div>
+
+    <button class="ledger-corner" data-act="desk" aria-label="回到交班本">
+      <span class="lc-tabs" id="lcTabs"></span>
+      <span class="lc-cover"><b>交班本</b><small>Tab</small></span>
+      <span class="lc-hint" id="lcHint"></span>
+    </button>
+  </section>
+
+  <!-- ============ 6 衡 MES ============ -->
+  <section id="scr-mes" class="screen sys">
+    <div id="mesRoot"></div>
+  </section>
+
+  <!-- ============ 10 结局签名 ============ -->
+  <section id="scr-ending" class="screen">
+    <div id="endRoot"></div>
+  </section>
+
+  <!-- ============ 9 工具箱（跨屏共享） ============ -->
+  <div class="toolbox" id="toolbox">
+    <button class="tb-front" data-act="toolbox" aria-label="工具箱"><span class="tb-handle"></span><span class="tb-tag">工具 <kbd>T</kbd></span></button>
+    <div class="tb-drawer" id="tbDrawer"></div>
+  </div>
+
+  <!-- ============ 覆盖层 ============ -->
+  <div class="overlay" id="ov-reader"><div class="dim" data-act="closeOv"></div><div id="readerRoot"></div></div>
+  <div class="overlay" id="ov-triad"><div class="dim"></div><div id="triadRoot"></div></div>
+  <div class="overlay" id="ov-rule"><div class="dim"></div><canvas id="dots" width="1920" height="1080"></canvas><div id="ruleRoot"></div></div>
+  <div class="overlay" id="ov-promo"><div class="dim" data-act="closePromo"></div><div id="promoRoot"></div></div>
+  <div class="overlay" id="ov-archive"><div class="dim" data-act="closeOv"></div><div id="archiveRoot"></div></div>
+  <div class="overlay" id="ov-cert"><div class="dim" data-act="closeOv"></div><div id="certRoot"></div></div>
+  <div class="overlay" id="ov-settings"><div class="dim" data-act="closeOv"></div><div id="settingsRoot"></div></div>
+  <div class="overlay" id="ov-pause"><div class="dim" data-act="closeOv"></div><div id="pauseRoot"></div></div>
+
+  <div id="flyLayer"></div>
+  <div id="caption"></div>
+  <div id="grain"></div>
+</div>
+<!-- 舞台外的固定控件：触屏 / 网页版没有 Esc 时用；桌面鼠标本地打开时由 CSS 隐藏 -->
+<button id="menuFab" aria-label="暂停 / 演示目录"><i></i><i></i><i></i><span>目录</span></button>
+<div id="rotateHint">本原型按 16:9 横屏设计，把手机横过来看更清楚。</div>
+</div>
+
+<script src="js/data.js"></script>
+<script src="js/svg.js"></script>
+<script src="js/halftone.js"></script>
+<script src="js/audio.js"></script>
+<script src="js/spectro.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

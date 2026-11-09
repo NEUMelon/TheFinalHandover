@@ -1,0 +1,9 @@
+asset=LSB_ENV_PRP_Toolbox_v01
+tris_total=768
+budget=2k
+atlas=PRP_Toolbox 1024px≈889px/m
+parts:
+  Toolbox: 768
+readback_worst_mm=0.042
+readback:
+  Toolbox: 中心 ['0.000', '0.000', '0.132'] 枢轴 ['0.000', '0.000', '0.000'] 误差 0.04 mm 三角 768 材质 ['M_PRP_Toolbox_Atlas']

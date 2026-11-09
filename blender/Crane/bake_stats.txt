@@ -1,0 +1,3 @@
+CR01: 2048px density_px_per_m=61
+CR01Hook: 2048px density_px_per_m=1089
+CR01Mug: 1024px density_px_per_m=2069

@@ -1,0 +1,328 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>记忆显影样片</title>
+<!--
+  《最后一次交班》VFX · 记忆显影 Look-dev v01
+  派生自 00_主项目文档 v1.1 §6.8、美术圣经关键帧 B、声音圣经 §2.8、Demo α 口径 D-28。
+  本页的片元着色器与 Unity 版 LSB_MemoryDevelop.shader 是同一套算法（网点格、门限、聚合、溶解、刀刻线、颗粒），用来在浏览器里调参数、定时序。
+  ⚠ 剪影与刀刻线遮罩是 Claude 用几何形状画的占位，正式版由团队手绘遮罩贴图（R = 剪影浓度，G = 刀刻线）。背景夜景也是占位。
+  ⚠ 代码由 AI（Claude）编写，记入 80_合规 AI 使用日志；交付特效视频是否沿用此代码需团队决定并声明。
+-->
+<style>
+:root{
+  --blue:#1F3A5F; --green:#5E7D6A; --gray:#B9B4A8; --warm:#E8B45A; --safety:#F2C200; --black:#1A1A1A; --cold:#E6F0F5;
+  --bg:#0E1620; --panel:#14202c; --text:#E6F0F5; --dim:rgba(230,240,245,.55); --line:rgba(230,240,245,.18);
+}
+:root[data-theme="light"]{ --bg:#EDE6D6; --panel:#F2F0EA; --text:#1A1A1A; --dim:rgba(26,26,26,.6); --line:rgba(26,26,26,.18); }
+@media (prefers-color-scheme: light){ :root:not([data-theme="dark"]){ --bg:#EDE6D6; --panel:#F2F0EA; --text:#1A1A1A; --dim:rgba(26,26,26,.6); --line:rgba(26,26,26,.18); } }
+:root[data-theme="dark"]{ --bg:#0E1620; --panel:#14202c; --text:#E6F0F5; --dim:rgba(230,240,245,.55); --line:rgba(230,240,245,.18); }
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:"Noto Sans SC","PingFang SC","Microsoft YaHei",sans-serif;}
+.wrap{max-width:1180px;margin:0 auto;padding:20px 16px 40px}
+h1{font-family:"Noto Serif SC","Songti SC",serif;font-size:22px;margin:0 0 4px}
+.sub{color:var(--dim);font-size:13px;margin:0 0 14px;line-height:1.6}
+.stage{position:relative;width:100%;aspect-ratio:16/9;background:#05090d;border:1px solid var(--line);overflow:hidden}
+.stage canvas{position:absolute;inset:0;width:100%;height:100%}
+.year{position:absolute;right:20%;top:16%;font-family:"Noto Serif SC","Songti SC",serif;font-weight:700;font-size:clamp(18px,3.4vw,40px);color:var(--warm);letter-spacing:.2em;opacity:0;pointer-events:none}
+.caps{position:absolute;left:0;right:0;bottom:6%;text-align:center;font-size:clamp(12px,1.8vw,20px);color:#E6F0F5;text-shadow:0 1px 3px #000;pointer-events:none;line-height:1.7}
+.tag{position:absolute;left:10px;top:8px;font-size:11px;color:rgba(230,240,245,.6);font-family:"JetBrains Mono",monospace}
+.ctrl{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:12px 0 6px}
+button,select{font:inherit;font-size:13px;padding:6px 12px;background:var(--panel);color:var(--text);border:1px solid var(--line);border-radius:2px;cursor:pointer}
+button:hover{border-color:var(--warm)}
+input[type=range]{flex:1;min-width:160px;accent-color:#E8B45A}
+.clock{font-family:"JetBrains Mono",monospace;font-size:13px;min-width:120px;color:var(--dim)}
+.tl{position:relative;height:40px;border:1px solid var(--line);margin-top:6px;font-size:11px}
+.seg{position:absolute;top:0;bottom:0;border-right:1px solid var(--line);padding:4px 5px;overflow:hidden;white-space:nowrap;color:var(--dim)}
+.seg b{display:block;color:var(--text);font-weight:500}
+.head{position:absolute;top:-3px;bottom:-3px;width:2px;background:#E8B45A}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin-top:16px}
+.card{border:1px solid var(--line);padding:10px 12px;background:var(--panel)}
+.card h3{margin:0 0 6px;font-size:14px}
+.card p,.card li{margin:0;font-size:12.5px;color:var(--dim);line-height:1.65}
+.card ul{margin:0;padding-left:18px}
+label.chk{font-size:13px;display:flex;gap:4px;align-items:center;color:var(--dim)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>记忆显影 · Look-dev v01</h1>
+  <p class="sub">关键帧 B「一九八七年的凹痕」与一九九八年天车铃。网点在手电光锥里一颗颗聚合成剪影，停留后散去；过去的声音比画面早 0.8 秒。剪影遮罩与夜景背景是占位，正式版换团队手绘遮罩。</p>
+  <div class="stage" id="stage">
+    <canvas id="bg"></canvas>
+    <canvas id="gl"></canvas>
+    <div class="year" id="year">一九八七</div>
+    <div class="caps" id="caps"></div>
+    <div class="tag" id="tag">PLACEHOLDER MASK · LOOK-DEV</div>
+  </div>
+  <div class="ctrl">
+    <button id="play">▶ 播放</button>
+    <select id="mem"><option value="m1987">一九八七 凹痕</option><option value="m1998">一九九八 天车铃</option></select>
+    <input type="range" id="scrub" min="0" max="1000" value="0">
+    <span class="clock" id="clock">0.00 s</span>
+    <label class="chk"><input type="checkbox" id="showMask"> 看遮罩</label>
+  </div>
+  <div class="tl" id="tl"></div>
+  <div class="grid">
+    <div class="card"><h3>时序（D-28）</h3><ul>
+      <li>抽空 0.3 s：2026 环境声淡出</li>
+      <li>全静音 2.0 s（只有一九八七）</li>
+      <li>声音先行 0.8 s：撞击 / 铃</li>
+      <li>聚合 1.0 s：网点按门限逐格出现</li>
+      <li>停留 2.0 s（一九九八 3.6 s）</li>
+      <li>溶解 1.2 s：网点缩小、上浮、散去</li></ul></div>
+    <div class="card"><h3>网点参数</h3><ul>
+      <li>AM 网点，45° 网角</li>
+      <li>光锥直径内约 40 格（≈ 25–40 lpi 视觉等效）</li>
+      <li>点面积 ∝ 剪影浓度（半径 ∝ √浓度）</li>
+      <li>每格一个随机门限，聚合 / 溶解各一个</li>
+      <li>只在手电光锥内出现，锥边 15% 柔化</li></ul></div>
+    <div class="card"><h3>色与禁区</h3><ul>
+      <li>网点：钨丝暖黄 #E8B45A；刀刻线同色</li>
+      <li>不出现冷白、紫色、霓虹</li>
+      <li>剪影不画五官，不画伤，不画血</li>
+      <li>画面暖黄占比约 25%（美术圣经 §2）</li></ul></div>
+    <div class="card"><h3>正式版要换的</h3><ul>
+      <li>遮罩贴图：团队手绘（R 剪影 / G 刀刻线）</li>
+      <li>背景：Unity 实机夜景，不是本页的占位</li>
+      <li>声音：实录 / 拟音，见音频来源登记表</li></ul></div>
+  </div>
+</div>
+
+<script id="vs" type="x-shader/x-vertex">
+attribute vec2 aPos; varying vec2 vUv;
+void main(){ vUv = aPos*0.5+0.5; gl_Position = vec4(aPos,0.,1.); }
+</script>
+<script id="fs" type="x-shader/x-fragment">
+precision highp float;
+varying vec2 vUv;
+uniform sampler2D uMask;      // R = 剪影浓度，G = 刀刻线
+uniform vec2  uRes;
+uniform float uAgg;           // 聚合 0→1
+uniform float uDis;           // 溶解 0→1
+uniform float uTime;
+uniform vec3  uCone;          // 光锥中心 xy（uv），半径（以画面高为 1）
+uniform float uCells;         // 光锥直径内的网点格数
+uniform vec3  uInk;
+uniform float uShowMask;
+
+float hash(vec2 p){ p = fract(p*vec2(123.34, 456.21)); p += dot(p, p+45.32); return fract(p.x*p.y); }
+const float S45 = 0.70710678;
+vec2 rot(vec2 p){ return vec2(S45*p.x - S45*p.y, S45*p.x + S45*p.y); }
+vec2 irot(vec2 p){ return vec2(S45*p.x + S45*p.y, -S45*p.x + S45*p.y); }
+
+float coneMask(vec2 uv){
+  float asp = uRes.x/uRes.y;
+  vec2 d = (uv - uCone.xy) * vec2(asp, 1.);
+  return 1. - smoothstep(uCone.z*0.85, uCone.z, length(d));
+}
+
+// 颗粒包络：聚合初段和溶解中段最密
+float a_env(float agg, float dis){ return smoothstep(0.,0.3,agg)*(1.-smoothstep(0.,1.,agg)) + smoothstep(0.,0.4,dis)*(1.-smoothstep(0.4,1.,dis)); }
+
+void main(){
+  vec2 uv = vUv;
+  float asp = uRes.x/uRes.y;
+  if (uShowMask > 0.5){ vec4 m = texture2D(uMask, uv); gl_FragColor = vec4(m.r, m.g, 0., 1.); return; }
+
+  // ---- 网点格（以画面高为单位，45° 网角）----
+  float cellSize = (uCone.z*2.) / uCells;
+  vec2 p = vec2(uv.x*asp, uv.y) / cellSize;
+  vec2 q = rot(p);
+  vec2 id = floor(q);
+  vec2 f = fract(q) - 0.5;
+  float h1 = hash(id);              // 聚合门限
+  float h2 = hash(id + 17.31);      // 溶解门限
+  float h3 = hash(id + 41.7);       // 漂移方向
+
+  vec2 cUv = irot(id + 0.5) * cellSize; cUv.x /= asp;   // 格中心回到 uv
+  float dens = texture2D(uMask, cUv).r * coneMask(cUv);
+
+  float a = smoothstep(h1*0.75, h1*0.75 + 0.25, uAgg);            // 出现
+  float k = smoothstep(h2*0.65, h2*0.65 + 0.35, uDis);            // 散去
+  float r = 0.5 * sqrt(dens) * 1.08 * a * (1. - k);
+  vec2 drift = vec2(h3 - 0.5, 0.6 + 0.6*h2) * k * 0.9;            // 上浮（格坐标里 +y 朝上）
+  float d = length(f - irot(drift));
+  float aa = 0.07;
+  float dotA = 1. - smoothstep(r - aa, r + aa, d);
+  dotA *= step(0.02, r);
+
+  // ---- 刀刻线：按像素级门限显出，溶解时先断后散 ----
+  float g = texture2D(uMask, uv).g * coneMask(uv);
+  vec2 pix = floor(uv*uRes/2.);
+  float n1 = hash(pix), n2 = hash(pix + 7.7);
+  float lineA = g * smoothstep(n1*0.8, n1*0.8 + 0.2, uAgg) * (1. - smoothstep(n2*0.7, n2*0.7 + 0.3, uDis));
+
+  // ---- 颗粒：光锥内暖色细颗粒，聚合时最密 ----
+  float cm = coneMask(uv);
+  float gr = hash(floor(uv*uRes/1.5) + floor(uTime*24.));
+  float grainAmt = cm * (0.03 + 0.10*a_env(uAgg, uDis));
+  float grain = step(1. - grainAmt, gr) * 0.55;
+
+  float alpha = clamp(max(max(dotA, lineA), grain), 0., 1.);
+  gl_FragColor = vec4(uInk * alpha, alpha);   // 预乘
+}
+</script>
+
+<script>
+const MEM = {
+  m1987: { year:'一九八七', silence:true,  hold:2.0, cone:[0.47,0.50,0.36],
+           caps:['〔金属撞击声〕','〔一声喊〕','〔一个年轻人被拽开〕'] },
+  m1998: { year:'一九九八', silence:false, hold:3.6, cone:[0.52,0.52,0.40],
+           caps:['〔天车铃：叮——〕','〔一九九八年　最后一次吊运〕','〔铃跟着钩子，一下，一下〕'] },
+};
+function timing(m){
+  const tSound = m.silence ? 2.3 : 0.3, tAgg = tSound + 0.8, tHold = tAgg + 1.0, tDis = tHold + m.hold, tEnd = tDis + 1.2;
+  return { tSound, tAgg, tHold, tDis, tEnd };
+}
+
+// ---------------- 占位遮罩（R 剪影 / G 刀刻线）----------------
+function drawMask(id, W, H){
+  const c = document.createElement('canvas'); c.width = W; c.height = H;
+  const x = c.getContext('2d');
+  x.fillStyle = '#000'; x.fillRect(0,0,W,H);
+  x.globalCompositeOperation = 'lighter';
+  const R = a => `rgba(255,0,0,${a})`, G = a => `rgba(0,255,0,${a})`;
+  const fig = (pts, a) => { x.fillStyle = R(a); x.beginPath(); pts.forEach((p,i)=> i? x.lineTo(p[0]*W,p[1]*H): x.moveTo(p[0]*W,p[1]*H)); x.closePath(); x.fill(); };
+  const blob = (cx,cy,rx,ry,a,rot=0) => { x.save(); x.translate(cx*W,cy*H); x.rotate(rot); const m = Math.max(rx,ry); const g = x.createRadialGradient(0,0,0,0,0,m*W); g.addColorStop(0,R(a)); g.addColorStop(0.75,R(a*0.85)); g.addColorStop(1,R(0)); x.fillStyle=g; x.scale(rx/m, ry/m*W/H); x.beginPath(); x.arc(0,0,m*W,0,Math.PI*2); x.fill(); x.restore(); };
+  const stroke = (pts, w0, w1, a) => { // 刀刻线：粗细变化，两端尖
+    for (let i=0;i<pts.length-1;i++){ const t=i/(pts.length-1); const w = (w0 + (w1-w0)*t) * Math.sin(Math.PI*Math.min(1,Math.max(0,t*1.05))) + 0.6;
+      x.strokeStyle = G(a); x.lineWidth = w; x.lineCap='round'; x.beginPath(); x.moveTo(pts[i][0]*W,pts[i][1]*H); x.lineTo(pts[i+1][0]*W,pts[i+1][1]*H); x.stroke(); } };
+  const curve = (p0,p1,p2,n=40) => Array.from({length:n+1},(_,i)=>{const t=i/n,u=1-t; return [u*u*p0[0]+2*u*t*p1[0]+t*t*p2[0], u*u*p0[1]+2*u*t*p1[1]+t*t*p2[1]];});
+
+  if (id === 'm1987'){
+    // 年长者（左，向后拽），年轻人（右，被拽开、失衡）。只有轮廓浓度，不画五官
+    blob(0.355,0.30,0.026,0.026,0.95);
+    fig([[0.31,0.36],[0.40,0.35],[0.42,0.62],[0.29,0.64]], 0.9);
+    fig([[0.29,0.64],[0.34,0.64],[0.33,0.86],[0.27,0.86]], 0.8);
+    fig([[0.36,0.63],[0.41,0.62],[0.44,0.86],[0.39,0.86]], 0.75);
+    fig([[0.39,0.38],[0.41,0.40],[0.53,0.42],[0.53,0.45],[0.40,0.45]], 0.85);
+    blob(0.585,0.33,0.023,0.023,0.9);
+    fig([[0.53,0.38],[0.62,0.37],[0.64,0.62],[0.55,0.63]], 0.8);
+    fig([[0.55,0.63],[0.60,0.63],[0.66,0.84],[0.61,0.85]], 0.7);
+    fig([[0.60,0.62],[0.64,0.61],[0.58,0.84],[0.53,0.84]], 0.6);
+    // 工件飞出的轨迹（刀刻线）：从右下卡盘方向斜飞过两人之间
+    stroke(curve([0.66,0.74],[0.62,0.46],[0.50,0.20]), 1.0, 4.0, 1.0);
+    stroke(curve([0.68,0.70],[0.645,0.50],[0.56,0.30],30), 0.6, 2.0, 0.8);
+    stroke(curve([0.64,0.76],[0.60,0.58],[0.53,0.38],24), 0.5, 1.6, 0.6);
+    // 护罩打开的弧
+    stroke(curve([0.38,0.88],[0.50,0.76],[0.64,0.86],30), 1.0, 3.0, 0.9);
+  } else {
+    // 一九九八：吊钩与绳、司机室窗框里的半身剪影、铃声弧线
+    stroke(curve([0.62,0.12],[0.62,0.30],[0.62,0.48],20), 1.0, 2.4, 1.0);
+    stroke(curve([0.66,0.12],[0.66,0.30],[0.66,0.48],20), 1.0, 2.4, 1.0);
+    blob(0.64,0.53,0.035,0.035,0.95);
+    stroke(curve([0.64,0.57],[0.70,0.66],[0.63,0.70],24), 1.2, 3.2, 1.0);
+    blob(0.64,0.80,0.028,0.028,0.7);
+    x.strokeStyle = G(0.9); x.lineWidth = 2; x.strokeRect(0.24*W,0.30*H,0.22*W,0.30*H);
+    blob(0.35,0.40,0.024,0.024,0.95);
+    fig([[0.31,0.45],[0.39,0.45],[0.41,0.60],[0.29,0.60]], 0.85);
+    fig([[0.38,0.48],[0.40,0.47],[0.46,0.56],[0.44,0.58]], 0.8);
+    stroke(curve([0.44,0.58],[0.45,0.62],[0.46,0.66],10), 1.5, 2.5, 0.9);
+    for (let i=0;i<3;i++) stroke(curve([0.50+i*0.025,0.20],[0.52+i*0.03,0.25],[0.50+i*0.025,0.30],16), 0.6, 1.4, 0.7-i*0.15);
+  }
+  return c;
+}
+
+// ---------------- 占位夜景背景 ----------------
+function drawBg(id, cv, cone, light){
+  const x = cv.getContext('2d'), W = cv.width, H = cv.height;
+  const g = x.createLinearGradient(0,0,0,H); g.addColorStop(0,'#0b121a'); g.addColorStop(1,'#16263a');
+  x.fillStyle = g; x.fillRect(0,0,W,H);
+  if (id === 'm1987'){
+    x.fillStyle = '#3a3a2c'; x.fillRect(0.12*W,0.18*H,0.76*W,0.64*H);
+    x.fillStyle = '#2a2a22'; x.beginPath(); x.ellipse(0.50*W,0.52*H,0.06*W,0.035*H,0.2,0,7); x.fill();
+  } else {
+    x.fillStyle = '#1a2a3c'; x.fillRect(0.08*W,0.10*H,0.84*W,0.08*H);
+    x.fillStyle = '#2b3a2c'; x.fillRect(0.20*W,0.24*H,0.30*W,0.42*H);
+  }
+  const cx = cone[0]*W, cy = (1-cone[1])*H, r = cone[2]*H;
+  const rg = x.createRadialGradient(cx,cy,0,cx,cy,r*1.05);
+  rg.addColorStop(0, `rgba(255,226,180,${0.30*light})`); rg.addColorStop(0.8, `rgba(255,214,160,${0.18*light})`); rg.addColorStop(1,'rgba(255,214,160,0)');
+  x.fillStyle = rg; x.fillRect(0,0,W,H);
+  x.fillStyle = 'rgba(0,0,0,0.25)'; x.fillRect(0,0,W,H);
+}
+
+// ---------------- WebGL ----------------
+const stage = document.getElementById('stage'), glc = document.getElementById('gl'), bgc = document.getElementById('bg');
+const gl = glc.getContext('webgl', { premultipliedAlpha:true, alpha:true, preserveDrawingBuffer:true });
+function sh(type, src){ const s = gl.createShader(type); gl.shaderSource(s, src); gl.compileShader(s); if(!gl.getShaderParameter(s, gl.COMPILE_STATUS)) throw new Error(gl.getShaderInfoLog(s)); return s; }
+const prog = gl.createProgram();
+gl.attachShader(prog, sh(gl.VERTEX_SHADER, document.getElementById('vs').textContent));
+gl.attachShader(prog, sh(gl.FRAGMENT_SHADER, document.getElementById('fs').textContent));
+gl.linkProgram(prog); gl.useProgram(prog);
+const buf = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1,1,-1,-1,1,1,1]), gl.STATIC_DRAW);
+const loc = gl.getAttribLocation(prog,'aPos'); gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc,2,gl.FLOAT,false,0,0);
+const U = n => gl.getUniformLocation(prog, n);
+const tex = gl.createTexture();
+gl.bindTexture(gl.TEXTURE_2D, tex);
+gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
+gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+gl.enable(gl.BLEND); gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
+
+let memId = 'm1987', t = 0, playing = false, last = 0;
+function loadMem(id){
+  memId = id;
+  gl.bindTexture(gl.TEXTURE_2D, tex);
+  gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, drawMask(id, 960, 540));
+  document.getElementById('year').textContent = MEM[id].year;
+  buildTimeline(); t = 0; render();
+}
+function resize(){
+  const r = stage.getBoundingClientRect(), dpr = Math.min(2, window.devicePixelRatio||1);
+  for (const c of [glc, bgc]){ c.width = Math.round(r.width*dpr); c.height = Math.round(r.height*dpr); }
+  gl.viewport(0,0,glc.width,glc.height); render();
+}
+function buildTimeline(){
+  const m = MEM[memId], T = timing(m), tl = document.getElementById('tl');
+  const segs = [['抽空',0,0.3]];
+  if (m.silence) segs.push(['全静音',0.3,2.3]);
+  segs.push(['声音先行',T.tSound,T.tAgg],['聚合',T.tAgg,T.tHold],['停留',T.tHold,T.tDis],['溶解',T.tDis,T.tEnd]);
+  tl.innerHTML = segs.map(([n,a,b])=>`<div class="seg" style="left:${a/T.tEnd*100}%;width:${(b-a)/T.tEnd*100}%"><b>${n}</b>${(b-a).toFixed(1)} s</div>`).join('') + '<div class="head" id="head"></div>';
+}
+function render(){
+  const m = MEM[memId], T = timing(m);
+  const agg = Math.min(1, Math.max(0, (t - T.tAgg)/1.0)), dis = Math.min(1, Math.max(0, (t - T.tDis)/1.2));
+  drawBg(memId, bgc, m.cone, 1);
+  gl.clearColor(0,0,0,0); gl.clear(gl.COLOR_BUFFER_BIT);
+  gl.uniform1i(U('uMask'), 0);
+  gl.uniform2f(U('uRes'), glc.width, glc.height);
+  gl.uniform1f(U('uAgg'), agg); gl.uniform1f(U('uDis'), dis); gl.uniform1f(U('uTime'), t);
+  gl.uniform3f(U('uCone'), m.cone[0], m.cone[1], m.cone[2]);
+  gl.uniform1f(U('uCells'), 40);
+  gl.uniform3f(U('uInk'), 0xE8/255, 0xB4/255, 0x5A/255);
+  gl.uniform1f(U('uShowMask'), document.getElementById('showMask').checked ? 1 : 0);
+  gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+  const yo = t < T.tHold ? 0 : t < T.tDis ? Math.min(1,(t-T.tHold)/0.4) : Math.max(0, 1-(t-T.tDis)/0.6);
+  document.getElementById('year').style.opacity = yo;
+  const caps = []; if (t >= T.tSound) caps.push(m.caps[0]); if (t >= T.tAgg) caps.push(m.caps[1]); if (t >= T.tHold) caps.push(m.caps[2]);
+  document.getElementById('caps').innerHTML = (t < T.tEnd ? caps.slice(-2) : []).join('<br>');
+  document.getElementById('clock').textContent = `${t.toFixed(2)} s / ${T.tEnd.toFixed(1)} s`;
+  document.getElementById('scrub').value = Math.round(t / T.tEnd * 1000);
+  const head = document.getElementById('head'); if (head) head.style.left = `${Math.min(100, t/T.tEnd*100)}%`;
+}
+function loop(ts){
+  if (!playing) return;
+  const dt = last ? (ts - last)/1000 : 0; last = ts; t += dt;
+  const T = timing(MEM[memId]);
+  if (t >= T.tEnd + 0.6){ t = T.tEnd + 0.6; playing = false; document.getElementById('play').textContent = '▶ 重播'; }
+  render(); if (playing) requestAnimationFrame(loop);
+}
+document.getElementById('play').onclick = () => {
+  const T = timing(MEM[memId]); if (t >= T.tEnd) t = 0;
+  playing = !playing; last = 0; document.getElementById('play').textContent = playing ? '❚❚ 暂停' : '▶ 播放';
+  if (playing) requestAnimationFrame(loop);
+};
+document.getElementById('mem').onchange = e => { playing = false; document.getElementById('play').textContent='▶ 播放'; loadMem(e.target.value); };
+document.getElementById('scrub').oninput = e => { playing = false; document.getElementById('play').textContent='▶ 播放'; t = e.target.value/1000*timing(MEM[memId]).tEnd; render(); };
+document.getElementById('showMask').onchange = render;
+window.__seek = (id, s) => { if (id !== memId) loadMem(id); t = s; render(); };
+window.addEventListener('resize', resize);
+loadMem('m1987'); resize();
+</script>
+</body>
+</html>

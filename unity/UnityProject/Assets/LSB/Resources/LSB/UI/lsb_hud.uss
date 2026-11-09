@@ -1,0 +1,81 @@
+/* 《最后一次交班》Demo α —— HUD 与通用面板样式（UI Toolkit）
+   UI Toolkit 不支持 box-shadow / 渐变 / clip-path：纸张肌理与阴影改用程序生成的贴图或纯色近似（见 README “与原型的差异”）。 */
+.lsb-root { position: absolute; left: 0; top: 0; right: 0; bottom: 0; -unity-font-definition: url("project://database/Assets/LSB/Fonts/SDF/NotoSansSC-Regular.asset"); color: var(--C-Sys); }
+.layer { position: absolute; left: 0; top: 0; right: 0; bottom: 0; }
+
+/* 左上：时刻 + 当前点检项 + 位置 */
+.hud-clock { position: absolute; left: 32px; top: 24px; flex-direction: column; }
+.hud-clock .time { font-size: 28px; color: var(--C-Sys); -unity-font-definition: url("project://database/Assets/LSB/Fonts/SDF/JetBrainsMono-Regular.asset"); }
+.hud-clock .item { font-size: var(--T-Label); color: var(--C-Sys-Dim); margin-top: 2px; }
+.hud-clock .place { font-size: var(--T-Label); color: var(--C-Sys); margin-top: 6px; }
+
+/* 右上：衡日志滚动条（冷白） */
+.heng-ticker { position: absolute; right: 24px; top: 20px; width: 560px; background-color: rgba(14, 22, 32, 0.78); border-left-width: 2px; border-left-color: var(--C-Sys-Dim); padding: 8px 12px; }
+.heng-ticker .line { font-size: var(--T-Mono-S); color: var(--C-Sys); -unity-font-definition: url("project://database/Assets/LSB/Fonts/SDF/NotoSansSC-Regular.asset"); white-space: normal; margin-bottom: 2px; }
+.heng-ticker .line.warn { color: var(--C-Sys-Alert); }
+.heng-ticker .line.ok { color: #9FD6B4; }
+.heng-ticker .line.conflict { color: var(--C-Sys-Alert); }
+.heng-ticker .head { font-size: 12px; color: var(--C-Sys-Dim); margin-bottom: 4px; -unity-font-definition: url("project://database/Assets/LSB/Fonts/SDF/JetBrainsMono-Regular.asset"); }
+
+/* 右侧：页边提示（铅笔字纸条） */
+.hint-note { position: absolute; right: 32px; top: 260px; width: 340px; background-color: var(--C-Paper); padding: 12px 16px; border-left-width: 4px; border-left-color: var(--C-Warm); }
+.hint-note .h { font-size: var(--T-Hand-M); color: var(--C-Pencil); -unity-font-definition: url("project://database/Assets/LSB/Fonts/SDF/LXGWWenKai-Medium.asset"); white-space: normal; margin-bottom: 6px; }
+.hint-btn { position: absolute; right: 32px; top: 260px; }
+
+/* 左下：导航 */
+.nav { position: absolute; left: 24px; bottom: 24px; flex-direction: column; align-items: flex-start; }
+.chip { background-color: rgba(237, 230, 214, 0.92); color: var(--C-Ink); font-size: 18px; padding: 6px 14px; margin-top: 6px; border-width: 0; border-radius: 2px; -unity-text-align: middle-left; }
+.chip:hover { background-color: var(--C-Warm); }
+.chip.cu { background-color: rgba(14, 22, 32, 0.85); color: var(--C-Sys); border-left-width: 3px; border-left-color: var(--C-Sys-Dim); }
+.chip.cu:hover { border-left-color: var(--C-Warm); }
+.chip.back { background-color: var(--C-Ink-Blue); color: var(--C-Paper); }
+
+/* 底部：字幕 */
+.captions { position: absolute; left: 22%; right: 22%; bottom: 120px; align-items: center; }
+.caption { font-size: var(--T-Caption); color: #FFFFFF; background-color: rgba(0, 0, 0, 0.55); padding: 4px 16px; margin-top: 4px; -unity-text-align: middle-center; white-space: normal; }
+.caption .who { color: var(--C-Warm); }
+.feedback { position: absolute; left: 30%; right: 30%; bottom: 220px; -unity-text-align: middle-center; font-size: 20px; color: var(--C-Ink); background-color: var(--C-Paper); padding: 8px 16px; display: none; }
+.feedback.ok { border-left-width: 4px; border-left-color: var(--C-Green); }
+.feedback.no { border-left-width: 4px; border-left-color: var(--C-Ink-Red); }
+
+/* 右下：工具箱 + 交班本 */
+.tools { position: absolute; right: 24px; bottom: 24px; flex-direction: row; align-items: flex-end; }
+.tool { width: 92px; height: 92px; margin-left: 8px; background-color: rgba(70, 58, 44, 0.92); color: var(--C-Paper); border-width: 2px; border-color: rgba(0, 0, 0, 0); font-size: 18px; -unity-text-align: lower-center; padding-bottom: 8px; }
+.tool .no { position: absolute; left: 6px; top: 4px; font-size: 13px; color: var(--C-Line); }
+.tool.sel { border-color: var(--C-Warm); background-color: rgba(110, 86, 56, 0.95); }
+.tool:hover { border-color: var(--C-Line); }
+.ledger-btn { width: 132px; height: 92px; margin-left: 16px; background-color: #2E4636; color: var(--C-Paper); font-size: 20px; border-width: 0; -unity-font-definition: url("project://database/Assets/LSB/Fonts/SDF/NotoSerifSC-Bold.asset"); }
+.ledger-btn.new { border-top-width: 4px; border-top-color: var(--C-Ink-Red); }
+.lamps { flex-direction: row; margin-right: 16px; margin-bottom: 6px; }
+.lamp { width: 14px; height: 14px; margin-left: 6px; border-radius: 7px; background-color: var(--C-Warm); border-width: 1px; border-color: rgba(0, 0, 0, 0.5); }
+.lamp.off { background-color: #2A2A2A; }
+
+/* 悬停名称 */
+.hover { position: absolute; font-size: 18px; color: var(--C-Ink); background-color: rgba(237, 230, 214, 0.95); padding: 3px 10px; display: none; }
+.hover.act { border-left-width: 4px; border-left-color: var(--C-Warm); }
+
+/* 过场卡（“十七点三十分　点检第二项”） */
+.transition { position: absolute; left: 0; top: 0; right: 0; bottom: 0; background-color: rgba(10, 10, 10, 0.94); align-items: center; justify-content: center; display: none; }
+.transition .t { font-size: var(--T-Display); color: var(--C-Paper); -unity-font-definition: url("project://database/Assets/LSB/Fonts/SDF/NotoSerifSC-Bold.asset"); }
+
+/* 通用面板：交班本 / 三联板 / 衡屏幕等在 2B–2E 逐个接入；未接入的先显示占位面板 */
+.modal-dim { position: absolute; left: 0; top: 0; right: 0; bottom: 0; background-color: rgba(0, 0, 0, 0.55); align-items: center; justify-content: center; }
+.paper { background-color: var(--C-Paper); color: var(--C-Ink); padding: 32px 40px; border-width: 1px; border-color: var(--C-Line); }
+.sys { background-color: var(--C-Sys-BG); color: var(--C-Sys); padding: 24px 32px; border-width: 1px; border-color: var(--C-Sys-Faint); }
+.panel-title { font-size: var(--T-H1); margin-bottom: 12px; -unity-font-definition: url("project://database/Assets/LSB/Fonts/SDF/NotoSerifSC-Bold.asset"); }
+.panel-body { font-size: var(--T-Body); white-space: normal; margin-bottom: 8px; }
+.panel-note { font-size: var(--T-Label); color: #6B6658; white-space: normal; }
+.btn { background-color: var(--C-Ink-Blue); color: var(--C-Paper); font-size: 18px; padding: 8px 20px; margin-top: 16px; border-width: 0; }
+.btn:hover { background-color: #2C5283; }
+.placeholder-tag { font-size: 13px; color: var(--C-Ink-Red); margin-bottom: 8px; -unity-font-definition: url("project://database/Assets/LSB/Fonts/SDF/JetBrainsMono-Regular.asset"); }
+
+/* 标题（打卡）与开场 */
+.title { position: absolute; left: 0; top: 0; right: 0; bottom: 0; background-color: #121212; align-items: center; justify-content: center; }
+.title .name { font-size: 72px; color: var(--C-Paper); -unity-font-definition: url("project://database/Assets/LSB/Fonts/SDF/NotoSerifSC-Black.asset"); }
+.title .sub { font-size: var(--T-Label); color: var(--C-Line); margin-top: 12px; }
+.intro-line { font-size: 40px; color: var(--C-Paper); -unity-font-definition: url("project://database/Assets/LSB/Fonts/SDF/LongCang-Regular.asset"); }
+.build-tag { position: absolute; left: 24px; bottom: 8px; font-size: 12px; color: rgba(230, 240, 245, 0.35); -unity-font-definition: url("project://database/Assets/LSB/Fonts/SDF/JetBrainsMono-Regular.asset"); }
+/* 2F：标题页试玩编号（可用性测试用，可不填） */
+.title-tester { width: 380px; margin-top: 22px; }
+.title-tester > .unity-base-field__label, .title-tester > .unity-text-field__label { min-width: 170px; font-size: var(--T-Label); color: var(--C-Line); }
+.title-tester > .unity-base-text-field__input, .title-tester > .unity-text-field__input { font-size: 20px; color: var(--C-Paper); background-color: #1E1E1E; border-color: #555555; -unity-font-definition: url("project://database/Assets/LSB/Fonts/SDF/JetBrainsMono-Regular.asset"); }

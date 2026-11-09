@@ -1,0 +1,9 @@
+objects=286
+tris_total=34732
+tris_CR01_Bridge=23936
+tris_CR01_CabMug=972
+tris_CR01_Hook=3652
+tris_CR01_Mug=972
+tris_CR01_MugWater=96
+tris_CR01_Rope=1336
+tris_CR01_Trolley=3768

@@ -1,0 +1,30 @@
+{
+  "asset": "LSB_ENV_PRP_ListeningRod",
+  "fbx": "20_场景地编/stage3/Props/ListeningRod/LSB_ENV_PRP_ListeningRod_v01.fbx",
+  "textures": [
+    "20_场景地编/stage3/Props/ListeningRod/PRP_ListeningRod_Atlas_BaseColor.png",
+    "20_场景地编/stage3/Props/ListeningRod/PRP_ListeningRod_Atlas_Normal.png",
+    "20_场景地编/stage3/Props/ListeningRod/PRP_ListeningRod_Atlas_MS.png"
+  ],
+  "instances": [
+    {
+      "name": "听针_工具箱盖上",
+      "pos": [
+        27.17,
+        0.2635,
+        12.24
+      ],
+      "yaw": 0
+    }
+  ],
+  "hide_graybox": [],
+  "follow": [],
+  "mirror_emission": [],
+  "highlight": [
+    {
+      "id": "toolbox_desk",
+      "part": "ListeningRod"
+    }
+  ],
+  "notes": "灰盒里没有听针实体（听针是工具 ToolId.Probe，按 1–4 切换），所以没有要隐藏的灰盒。这里给一个默认摆放：平放在工具箱盖上（局部原点 = 木柄握持段中心轴线，针沿 +X 朝东，耳贴在西端；耳贴半径 17.5 mm 贴着盖面，针尖离盖面约 1.5 cm，没做倾斜——manifest 只有 yaw）。也可以不摆，只在 CU1 特写里当手持道具用。木柄中段是“磨亮木”（老周左手握出来的包浆）。形制待核 K-12。贴图集 512。"
+}

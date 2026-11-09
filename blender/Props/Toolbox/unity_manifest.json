@@ -1,0 +1,32 @@
+{
+  "asset": "LSB_ENV_PRP_Toolbox",
+  "fbx": "20_场景地编/stage3/Props/Toolbox/LSB_ENV_PRP_Toolbox_v01.fbx",
+  "textures": [
+    "20_场景地编/stage3/Props/Toolbox/PRP_Toolbox_Atlas_BaseColor.png",
+    "20_场景地编/stage3/Props/Toolbox/PRP_Toolbox_Atlas_Normal.png",
+    "20_场景地编/stage3/Props/Toolbox/PRP_Toolbox_Atlas_MS.png"
+  ],
+  "instances": [
+    {
+      "name": "工具箱",
+      "pos": [
+        27.3,
+        0.0,
+        12.3
+      ],
+      "yaw": 0
+    }
+  ],
+  "hide_graybox": [
+    "工具箱"
+  ],
+  "follow": [],
+  "mirror_emission": [],
+  "highlight": [
+    {
+      "id": "toolbox_desk",
+      "part": "Toolbox"
+    }
+  ],
+  "notes": "局部原点 = 底面中心；长边沿 X，搭扣朝北（朝椅子 / N1）。BG，贴图集 1024。听针（LSB_ENV_PRP_ListeningRod）默认放在它盖上。"
+}

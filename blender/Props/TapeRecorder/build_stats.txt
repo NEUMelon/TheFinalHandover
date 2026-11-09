@@ -1,0 +1,13 @@
+asset=LSB_ENV_PRP_TapeRecorder_v01
+tris_total=1498
+budget=4k
+atlas=PRP_TapeRecorder 2048px≈2992px/m
+parts:
+  DrawerClutter: 220
+  Recorder: 1068
+  Tape: 210
+readback_worst_mm=0.050
+readback:
+  DrawerClutter: 中心 ['-0.049', '0.050', '-0.050'] 枢轴 ['-0.050', '0.050', '-0.060'] 误差 0.03 mm 三角 220 材质 ['M_PRP_TapeRecorder_Atlas']
+  Recorder: 中心 ['0.050', '-0.076', '-0.019'] 枢轴 ['0.050', '-0.085', '-0.020'] 误差 0.01 mm 三角 1068 材质 ['M_PRP_TapeRecorder_Atlas', 'M_TPR_Window', 'M_TPR_Dial', 'M_TPR_Needle']
+  Tape: 中心 ['-0.050', '0.050', '-0.033'] 枢轴 ['-0.050', '0.050', '-0.033'] 误差 0.05 mm 三角 210 材质 ['M_PRP_TapeRecorder_Atlas', 'M_TPR_TapeWindow', 'M_TPR_TapeReel']

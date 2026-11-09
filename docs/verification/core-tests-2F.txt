@@ -1,0 +1,102 @@
+  Determining projects to restore...
+  All projects are up-to-date for restore.
+  CoreTests -> /home/claude/demo_alpha/tools/CoreTests/bin/Debug/net8.0/CoreTests.dll
+Test run for /home/claude/demo_alpha/tools/CoreTests/bin/Debug/net8.0/CoreTests.dll (.NETCoreApp,Version=v8.0)
+Microsoft (R) Test Execution Command Line Tool Version 17.8.0 (x64)
+Copyright (c) Microsoft Corporation.  All rights reserved.
+
+Starting test execution, please wait...
+A total of 1 test files matched the specified pattern.
+NUnit Adapter 4.5.0.0: Test execution started
+Running all tests in /home/claude/demo_alpha/tools/CoreTests/bin/Debug/net8.0/CoreTests.dll
+   NUnit3TestExecutor discovered 62 of 62 NUnit test cases using Current Discovery mode, Non-Explicit run
+  Passed AllTwentySixSpecInteractablesPresent [61 ms]
+  Passed CloseUpsEnterFromListedNodes [2 ms]
+  Passed DeductionAnswersAreInWordBank [6 ms]
+  Passed EvidenceIdsUniqueAndHavePaperNumberWhenNecessary [4 ms]
+  Passed FourTriadsThreeByThreeOneCorrectEach [12 ms]
+  Passed FrozenWordingInPages [1 ms]
+  Passed InteractableInsideWorkshop [3 ms]
+  Passed JianguoAtMostTenLines [1 ms]
+  Passed NodeGraphIsSymmetricAndConnected [1 ms]
+结局自动段合计 38.5 秒（不含玩家拉闸、命名、签名）
+
+  Passed RuleCardsKeepFrozenWording [34 ms]
+  Passed RulesReferenceExistingThings [2 ms]
+  Passed TenNodesAndFiveCloseUps [2 ms]
+  Passed TimeAnchorsCoverSixteenToMidnightInOrder [1 ms]
+  Passed TriadAnswersMatchFactChain [1 ms]
+  Passed NameBeforeSignAlsoFinishes [88 ms]
+  Passed SaveAtNameAndSignThenResume [22 ms]
+  Passed TickDrivesEndingWithOnlyPlayerActions [27 ms]
+  Passed ChineseClock [< 1 ms]
+  Passed ClockStaysInsideEachPhaseWindow [7 ms]
+  Passed DevJumpReachesEveryPhaseStart [10 ms]
+  Passed Ending_SwitchNeedsJianguoSignature [6 ms]
+  Passed EveryStageSeenInPlayHasHints [7 ms]
+  Passed HintsAt90_180_300AndResetOnValidAction [4 ms]
+  Passed HintsOffMeansManualOnly [1 ms]
+  Passed NewGameToFinishedWithoutJumps [14 ms]
+  Passed P1_LockerBeforeGloves_AndCompareNeedsBothSides [2 ms]
+  Passed P1_TriadLockedOptionsAndConflictDoNotPunish [2 ms]
+  Passed P2_ConfirmWithdrawsGearAdvice [2 ms]
+  Passed P2_SpectroJudgeCases [< 1 ms]
+  Passed P2_ThreeDeviationsRaiseHintAndGearIsNormal [2 ms]
+  Passed P3_TwinShowsMissingRequirementThenVerifies [4 ms]
+  Passed P3_WordsAppearOnlyAfterEvidence [3 ms]
+  Passed P4_BellsEveryHalfBeat [< 1 ms]
+  Passed P4_TuningWithoutTapeHasNoBasis [6 ms]
+  Passed P4_ZvPhysics [13 ms]
+  Passed RuleNameNormalization [< 1 ms]
+自动全程（不用开发菜单）汇总：
+session,phase,seconds,hints_L1,hints_L2,hints_L3,hints_manual,triad_wrong,empty_clicks,unreachable_clicks
+P01_20261014-055102,Intro,6,0,0,0,0,0,0,0
+P01_20261014-055102,P1,4,0,0,0,0,0,0,0
+P01_20261014-055102,P2,4,0,0,0,0,0,0,0
+P01_20261014-055102,P3,4,0,0,0,0,0,0,0
+P01_20261014-055102,P4,4,0,0,0,0,0,0,0
+P01_20261014-055102,Ending,39,0,0,0,0,0,0,0
+
+
+谜题一最少操作：走动 4 次，点物件 6 次，读页 1 页，自动玩家记录 11 条
+
+  Passed SaveRoundTripMidPuzzleThree [9 ms]
+  Passed SwitchPoseFacesTheSwitch [< 1 ms]
+  Passed NewGameToDoneLikeRuntimeNoDevMenu [13 ms]
+  Passed RuntimeCodeDoesNotDependOnDevTools [37 ms]
+  Passed TesterIdNormalization [< 1 ms]
+  Passed PanelPath_LockerToFirstLampOff [3 ms]
+  Passed PuzzleOneMainLayerIsPlainLanguage [4 ms]
+  Passed ReportMinimalStepsP1 [1 ms]
+  Passed SaveDuringRuleCardThenResume [1 ms]
+谜题三最少操作：走动 4 次，点物件 3 次，读页 3 页，推断单 7 个空，孪生 1 次补回 + 2 次试
+
+  Passed MesOpenGivesGearRepairRecordOnlyInPuzzleTwo [< 1 ms]
+  Passed PanelPath_GearMisdiagnosisToZhouClick [2 ms]
+  Passed SpectroImageShowsClicksLeftAndHumRight [3 ms]
+  Passed PanelPath_DentToJianguoGuard [5 ms]
+  Passed PuzzleThreeMainLayerIsPlainLanguage [2 ms]
+  Passed ReportMinimalStepsP3 [1 ms]
+  Passed SaveDuringTwinThenResume [1 ms]
+  Passed TwinBeforeTriadShowsMissingConditionButCannotRestore [< 1 ms]
+  Passed ControlTimingChangesOutcome [9 ms]
+谜题四最少操作：走动 7 次，点物件 5 次，玩家试吊 1 次，磁带 3 句
+
+谜题四时机表（绳长 4 m）： 0.20→81% Spill; 0.30→59% Spill; 0.35→45% Spill; 0.40→31% Shake; 0.45→16% Still; 0.50→0% Still; 0.55→16% Still; 0.60→31% Shake; 0.65→45% Spill; 0.70→59% Spill; 0.80→81% Spill; 1.00→100% Spill; 1.20→81% Spill;　6 m 半拍 0% Still
+
+文本预算（汉字数）：台词 74，交班本页面 304，阅读器 91，证据 533，三联主层 442，三联反馈 428，提示 645，交互字幕 381，规则卡摘要 54，推断单 97，点检行 97，记忆字幕 40，开场献词 32，衡阶段日志 168；计入预算 2313 / 2500（不含提示与填错反馈）；全部文字 3386
+
+NUnit Adapter 4.5.0.0: Test execution complete
+  Passed PanelPath_SpillTapeTuneHalfbeat [6 ms]
+  Passed PuzzleFourMainLayerIsPlainLanguage [1 ms]
+  Passed ReportMinimalStepsP4 [3 ms]
+  Passed ReportTimingTable [47 ms]
+  Passed SaveDuringP4ThenResume [2 ms]
+  Passed ShakeIsConfirmableAfterTape [1 ms]
+  Passed T2SnapsAndClamps [< 1 ms]
+  Passed ReportTextBudget [20 ms]
+
+Test Run Successful.
+Total tests: 62
+     Passed: 62
+ Total time: 2.6526 Seconds

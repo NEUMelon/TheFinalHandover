@@ -1,0 +1,18 @@
+name: core-tests
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+      - name: Build gameplay core (no Unity)
+        run: dotnet build unity/tools/CoreCheck/CoreCheck.csproj
+      - name: Run EditMode tests with dotnet
+        run: dotnet test unity/tools/CoreTests/CoreTests.csproj

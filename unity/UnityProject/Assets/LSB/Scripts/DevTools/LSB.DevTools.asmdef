@@ -1,0 +1,14 @@
+{
+    "name": "LSB.DevTools",
+    "rootNamespace": "LSB.Dev",
+    "references": ["LSB.Core", "LSB.Runtime"],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -1,0 +1,32 @@
+{
+  "asset": "LSB_ENV_PRP_ShiftLedger",
+  "fbx": "20_场景地编/stage3/Props/ShiftLedger/LSB_ENV_PRP_ShiftLedger_v01.fbx",
+  "textures": [
+    "20_场景地编/stage3/Props/ShiftLedger/PRP_ShiftLedger_Atlas_BaseColor.png",
+    "20_场景地编/stage3/Props/ShiftLedger/PRP_ShiftLedger_Atlas_Normal.png",
+    "20_场景地编/stage3/Props/ShiftLedger/PRP_ShiftLedger_Atlas_MS.png"
+  ],
+  "instances": [
+    {
+      "name": "交班本",
+      "pos": [
+        26.5,
+        0.772,
+        13.0
+      ],
+      "yaw": 0
+    }
+  ],
+  "hide_graybox": [
+    "交班本"
+  ],
+  "follow": [],
+  "mirror_emission": [],
+  "highlight": [
+    {
+      "id": "ledger",
+      "part": "Ledger"
+    }
+  ],
+  "notes": "只有合上的状态（灰盒和玩法里交班本的打开 / 翻页都在 UI 里，场景里没有 3D 打开态）。局部原点 = 本子底面中心，放在交班桌玻璃板上沿 Y 0.772（灰盒交班本底面是 0.76，抬高 12 mm 是因为玻璃板）。朝向：书顶朝西、书脊朝南（坐在东侧面朝西的人看是正的）。封面纸签“交班记录 二〇二六”是占位字（文泉驿正黑），封面 UI 定稿后可以换签上的字（改 build 脚本里 text_img 一行重烘）。贴图集 2048。"
+}

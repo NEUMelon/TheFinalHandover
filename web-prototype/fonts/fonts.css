@@ -1,0 +1,11 @@
+/* 由 tools/subset_fonts.py 生成，勿手改。字体均为 SIL OFL 1.1，见 fonts/FONTS.md */
+@font-face{font-family:'NotoSerifSC';font-weight:400;font-style:normal;font-display:block;src:url('NotoSerifSC-Regular.woff2') format('woff2');}
+@font-face{font-family:'NotoSerifSC';font-weight:700;font-style:normal;font-display:block;src:url('NotoSerifSC-Bold.woff2') format('woff2');}
+@font-face{font-family:'NotoSerifSC';font-weight:900;font-style:normal;font-display:block;src:url('NotoSerifSC-Black.woff2') format('woff2');}
+@font-face{font-family:'NotoSansSC';font-weight:400;font-style:normal;font-display:block;src:url('NotoSansSC-Regular.woff2') format('woff2');}
+@font-face{font-family:'NotoSansSC';font-weight:500;font-style:normal;font-display:block;src:url('NotoSansSC-Medium.woff2') format('woff2');}
+@font-face{font-family:'JetBrainsMono';font-weight:400;font-style:normal;font-display:block;src:url('JetBrainsMono-Regular.woff2') format('woff2');}
+@font-face{font-family:'JetBrainsMono';font-weight:700;font-style:normal;font-display:block;src:url('JetBrainsMono-Bold.woff2') format('woff2');}
+@font-face{font-family:'LongCang';font-weight:400;font-style:normal;font-display:block;src:url('LongCang-Regular.woff2') format('woff2');}
+@font-face{font-family:'ZhiMangXing';font-weight:400;font-style:normal;font-display:block;src:url('ZhiMangXing-Regular.woff2') format('woff2');}
+@font-face{font-family:'LXGWWenKai';font-weight:500;font-style:normal;font-display:block;src:url('LXGWWenKai-Medium.woff2') format('woff2');}

@@ -1,0 +1,111 @@
+/* 《最后一次交班》UI Prototype —— 舞台、材质与通用组件
+   舞台固定 1920×1080（UI-DS 基准分辨率），按窗口等比缩放；截图时把视口设为 1920×1080 即为 1:1。 */
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; background: #07090b; overflow: hidden; overflow: clip; }
+body { font-family: var(--F-Serif); color: var(--C-Ink); -webkit-font-smoothing: antialiased; user-select: none; }
+button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+#viewport { position: fixed; inset: 0; display: grid; place-items: center; }
+/* overflow: clip：禁止 focus / scrollIntoView 把舞台内容卷动错位 */
+#stage { position: absolute; left: 50%; top: 50%; width: 1920px; height: 1080px; transform-origin: 0 0; overflow: hidden; overflow: clip; background: #0b0f13; }
+
+/* ---------- 材质纹理（全部程序生成，无位图） ---------- */
+:root {
+  --tex-grain: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='256' height='256'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .5  0 0 0 0 .5  0 0 0 0 .5  0 0 0 .9 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  --tex-paper: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .32  0 0 0 0 .26  0 0 0 0 .17  0 0 0 .32 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  --tex-mottle: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='600' height='600'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.008' numOctaves='3' seed='4' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .45  0 0 0 0 .34  0 0 0 0 .18  0 0 0 .55 -.18'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  --tex-wood: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='900' height='400'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.0025 .09' numOctaves='4' seed='11' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .16  0 0 0 0 .09  0 0 0 0 .04  0 0 0 1.3 -.35'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  --tex-cloth: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='turbulence' baseFrequency='.9 .06' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .35 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  --tex-steel: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.004 .6' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .2  0 0 0 0 .2  0 0 0 0 .2  0 0 0 .35 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  --hatch-safety: repeating-linear-gradient(-45deg, var(--C-Safety) 0 10px, var(--C-Ink) 10px 20px);
+}
+
+/* 后处理颗粒（美术圣经 §7：轻微颗粒 0.1） */
+#grain { position: absolute; inset: 0; pointer-events: none; z-index: 900; background-image: var(--tex-grain); opacity: .07; mix-blend-mode: overlay; }
+
+/* ---------- 屏幕切换 ---------- */
+.screen { position: absolute; inset: 0; opacity: 0; visibility: hidden; transition: opacity var(--D-Slow) var(--E-Paper), visibility 0s linear var(--D-Slow); }
+.screen.on { opacity: 1; visibility: visible; transition: opacity var(--D-Slow) var(--E-Paper), visibility 0s; }
+.overlay { position: absolute; inset: 0; z-index: 500; opacity: 0; visibility: hidden; transition: opacity var(--D-Base) var(--E-Paper), visibility 0s linear var(--D-Base); }
+.overlay.on { opacity: 1; visibility: visible; transition: opacity var(--D-Base) var(--E-Paper), visibility 0s; }
+.dim { position: absolute; inset: 0; background: rgba(8, 10, 12, .62); }
+
+/* ---------- 纸张 ---------- */
+.paper {
+  background-color: var(--C-Paper);
+  background-image: var(--tex-paper), var(--tex-mottle);
+  border-radius: 2px;
+  box-shadow: 0 1px 0 rgba(255,255,255,.4) inset, 0 6px 18px rgba(0,0,0,.35), 0 1px 2px rgba(0,0,0,.4);
+}
+.paper.old { background-color: var(--C-Paper-Old); }
+.paper.print { background-color: var(--C-Paper-Print); background-image: var(--tex-paper); }
+.tape { position: absolute; width: 86px; height: 26px; background: rgba(236, 226, 190, .55); box-shadow: 0 1px 2px rgba(0,0,0,.15); backdrop-filter: brightness(1.04); }
+.tape::before { content: ""; position: absolute; inset: 0; background: repeating-linear-gradient(90deg, transparent 0 3px, rgba(255,255,255,.12) 3px 4px); }
+.hand-zhou { font-family: var(--F-Hand-Zhou); color: var(--C-Ink-Blue); }
+.hand-jian { font-family: var(--F-Hand-Jian); color: var(--C-Ink-Blue); }
+.hand-lin { font-family: var(--F-Hand-Lin); color: var(--C-Ink-Blue); font-weight: 500; }
+/* 手写体缺“〇”时回退到文楷，字面偏大，手动缩一号 */
+.o0 { display: inline-block; font-size: .62em; transform: translateY(-.1em) rotate(-10deg) scaleX(.86); }
+.pencil { font-family: var(--F-Hand-Jian); color: var(--C-Pencil); }
+.mono { font-family: var(--F-Mono); }
+.label { font: 400 var(--T-Label)/var(--L-Label) var(--F-Serif); color: #4a463d; }
+.caps { font: 400 var(--T-Mono-S)/var(--L-Mono-S) var(--F-Mono); letter-spacing: .06em; text-transform: uppercase; }
+
+/* 新贴页红三角（UI-DS §5.1 / §5.3） */
+.newmark { position: absolute; width: 0; height: 0; border-style: solid; border-width: 0 22px 22px 0; border-color: transparent var(--C-Ink-Red) transparent transparent; }
+
+/* ---------- 衡（冷白） ---------- */
+.sys { background: var(--C-Sys-BG); color: var(--C-Sys); font-family: var(--F-Mono); font-size: var(--T-Mono); line-height: var(--L-Mono); position: relative; }
+.sys::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: repeating-linear-gradient(0deg, rgba(230,240,245,.08) 0 1px, transparent 1px 2px); opacity: .55; }
+.sys .dim { position: static; background: none; color: var(--C-Sys-Dim); }
+.sys-btn { border: 1px solid var(--C-Sys-Dim); color: var(--C-Sys); padding: 4px 14px; font: 400 var(--T-Mono-S)/20px var(--F-Mono); letter-spacing: .04em; transition: background var(--D-Fast) linear; }
+.sys-btn:hover { background: var(--C-Sys-Faint); }
+.sys-btn.on { background: var(--C-Sys); color: var(--C-Sys-BG); border-color: var(--C-Sys); }
+.sys-btn[disabled] { opacity: .35; cursor: default; }
+.log { list-style: none; margin: 0; padding: 0; }
+.log li { white-space: pre-wrap; padding: 1px 0; }
+.log li .t { color: var(--C-Sys-Dim); }
+.log li .m { color: var(--C-Sys-Dim); }
+.log li.warn { color: var(--C-Sys-Alert); }
+.log li.warn::before { content: "! "; }
+.log li.conflict { animation: invert 240ms linear 1; }
+.log li.ok .c { text-decoration: underline; text-underline-offset: 4px; }
+@keyframes invert { 0%,99% { background: var(--C-Sys); color: var(--C-Sys-BG); } }
+.blink { animation: blink 1s steps(1) infinite; }
+@keyframes blink { 50% { opacity: 0; } }
+
+/* ---------- 字幕（非叙事，UI-DS T-Caption） ---------- */
+#caption { position: absolute; left: 50%; bottom: 46px; transform: translateX(-50%); z-index: 800; max-width: 1200px; text-align: center; font: 400 var(--T-Caption)/var(--L-Caption) var(--F-Sans); color: #f3efe6; text-shadow: 0 1px 3px #000; pointer-events: none; transition: opacity var(--D-Base); opacity: 0; }
+#caption.on { opacity: 1; }
+#caption span { background: rgba(10, 10, 10, .55); padding: 4px 14px; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+#caption .who { color: #d8c9a3; margin-right: .5em; }
+
+/* 操作提示条（非叙事，最小） */
+.keyhint { position: absolute; z-index: 20; font: 400 14px/20px var(--F-Sans); color: rgba(240, 232, 214, .55); letter-spacing: .04em; }
+.keyhint kbd { font: 500 12px/18px var(--F-Mono); border: 1px solid rgba(240,232,214,.4); border-radius: 3px; padding: 0 5px; margin: 0 3px; }
+
+/* 抖动（UI-DS §5.2：左右抖 2 次 × 4px，D-Fast） */
+.shake { animation: shake var(--D-Fast) linear 2; }
+@keyframes shake { 25% { transform: translateX(-4px); } 75% { transform: translateX(4px); } }
+
+/* 手写笔画显现（占位：左到右揭开，最终用矢量笔顺动画） */
+.write { clip-path: inset(0 100% 0 0); animation: write var(--dur, 800ms) var(--E-Paper) forwards; animation-delay: var(--delay, 0ms); }
+@keyframes write { to { clip-path: inset(0 0 0 0); } }
+
+/* 飞入证据 */
+.fly { position: absolute; z-index: 850; pointer-events: none; }
+
+/* ---------- 触屏与网页版 ---------- */
+body { touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+input { -webkit-user-select: text; user-select: text; }
+.spec-box, #sigCanvas { touch-action: none; }
+/* “目录”按钮：触屏设备（无 Esc）或打包的网页版显示；本地桌面鼠标打开时隐藏，截图不受影响 */
+#menuFab { display: none; position: fixed; top: 8px; right: 8px; z-index: 100; align-items: center; gap: 3px; flex-direction: column; justify-content: center;
+  width: 52px; height: 52px; padding: 0; border: 1px solid rgba(240,232,214,.28); border-radius: 6px; background: rgba(10,12,14,.72); color: rgba(240,232,214,.86); cursor: pointer;
+  font: 500 12px/1 "NotoSansSC", system-ui, sans-serif; letter-spacing: .1em; backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); }
+#menuFab i { display: block; width: 18px; height: 2px; background: currentColor; border-radius: 1px; }
+#menuFab span { margin-top: 3px; }
+#menuFab:hover { background: rgba(40,36,30,.86); }
+html.web #menuFab { display: flex; }
+@media (pointer: coarse) { #menuFab { display: flex; } }
+#rotateHint { display: none; position: fixed; left: 16px; right: 16px; bottom: 24px; text-align: center; font: 400 14px/22px "NotoSansSC", system-ui, sans-serif; color: rgba(240,232,214,.7); }
+@media (orientation: portrait) and (max-width: 900px) { #rotateHint { display: block; } }

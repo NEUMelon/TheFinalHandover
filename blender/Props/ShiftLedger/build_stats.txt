@@ -1,0 +1,9 @@
+asset=LSB_ENV_PRP_ShiftLedger_v01
+tris_total=3326
+budget=3–5k
+atlas=PRP_ShiftLedger 2048px density≈2200px/m
+parts:
+  Ledger: 3326
+readback_worst_mm=0.018
+readback:
+  Ledger: 中心 ['-0.022', '-0.001', '0.025'] 枢轴 ['0.000', '0.000', '0.000'] 误差 0.02 mm 三角 3326 材质 ['M_PRP_ShiftLedger_Atlas', 'M_LDG_PaperPrint', 'M_LDG_Ribbon']

@@ -1,0 +1,11 @@
+asset=LSB_ENV_LGT_PendantLamp_v01
+tris_total=690
+budget=0.8k/盏
+atlas=LGT_PendantLamp 512px≈753px/m
+parts:
+  Lamp: 420
+  LampGlow: 270
+readback_worst_mm=0.000
+readback:
+  Lamp: 中心 ['0.000', '0.000', '1.707'] 枢轴 ['0.000', '0.000', '0.000'] 误差 0.00 mm 三角 420 材质 ['M_LGT_PendantLamp_Atlas', 'M_LMP_Rod']
+  LampGlow: 中心 ['0.000', '0.000', '-0.005'] 枢轴 ['0.000', '0.000', '0.000'] 误差 0.00 mm 三角 270 材质 ['M_LMP_Glow_On']

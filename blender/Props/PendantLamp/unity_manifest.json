@@ -1,0 +1,272 @@
+{
+  "asset": "LSB_ENV_LGT_PendantLamp",
+  "fbx": "20_场景地编/stage3/Props/PendantLamp/LSB_ENV_LGT_PendantLamp_v01.fbx",
+  "textures": [
+    "20_场景地编/stage3/Props/PendantLamp/LGT_PendantLamp_Atlas_BaseColor.png",
+    "20_场景地编/stage3/Props/PendantLamp/LGT_PendantLamp_Atlas_Normal.png",
+    "20_场景地编/stage3/Props/PendantLamp/LGT_PendantLamp_Atlas_MS.png"
+  ],
+  "instances": [
+    {
+      "name": "吊灯_X2_Z4.5",
+      "pos": [
+        2,
+        5.5,
+        4.5
+      ],
+      "yaw": 0
+    },
+    {
+      "name": "吊灯_X2_Z9.0",
+      "pos": [
+        2,
+        5.5,
+        9.0
+      ],
+      "yaw": 0
+    },
+    {
+      "name": "吊灯_X2_Z13.5",
+      "pos": [
+        2,
+        5.5,
+        13.5
+      ],
+      "yaw": 0
+    },
+    {
+      "name": "吊灯_X6_Z4.5",
+      "pos": [
+        6,
+        5.5,
+        4.5
+      ],
+      "yaw": 0
+    },
+    {
+      "name": "吊灯_X6_Z9.0",
+      "pos": [
+        6,
+        5.5,
+        9.0
+      ],
+      "yaw": 0
+    },
+    {
+      "name": "吊灯_X6_Z13.5",
+      "pos": [
+        6,
+        5.5,
+        13.5
+      ],
+      "yaw": 0
+    },
+    {
+      "name": "吊灯_X10_Z4.5",
+      "pos": [
+        10,
+        5.5,
+        4.5
+      ],
+      "yaw": 0
+    },
+    {
+      "name": "吊灯_X10_Z9.0",
+      "pos": [
+        10,
+        5.5,
+        9.0
+      ],
+      "yaw": 0
+    },
+    {
+      "name": "吊灯_X10_Z13.5",
+      "pos": [
+        10,
+        5.5,
+        13.5
+      ],
+      "yaw": 0
+    },
+    {
+      "name": "吊灯_X14_Z4.5",
+      "pos": [
+        14,
+        5.5,
+        4.5
+      ],
+      "yaw": 0
+    },
+    {
+      "name": "吊灯_X14_Z9.0",
+      "pos": [
+        14,
+        5.5,
+        9.0
+      ],
+      "yaw": 0
+    },
+    {
+      "name": "吊灯_X14_Z13.5",
+      "pos": [
+        14,
+        5.5,
+        13.5
+      ],
+      "yaw": 0
+    },
+    {
+      "name": "吊灯_X18_Z4.5",
+      "pos": [
+        18,
+        5.5,
+        4.5
+      ],
+      "yaw": 0
+    },
+    {
+      "name": "吊灯_X18_Z9.0",
+      "pos": [
+        18,
+        5.5,
+        9.0
+      ],
+      "yaw": 0
+    },
+    {
+      "name": "吊灯_X18_Z13.5",
+      "pos": [
+        18,
+        5.5,
+        13.5
+      ],
+      "yaw": 0
+    },
+    {
+      "name": "吊灯_X22_Z4.5",
+      "pos": [
+        22,
+        5.5,
+        4.5
+      ],
+      "yaw": 0
+    },
+    {
+      "name": "吊灯_X22_Z9.0",
+      "pos": [
+        22,
+        5.5,
+        9.0
+      ],
+      "yaw": 0
+    },
+    {
+      "name": "吊灯_X22_Z13.5",
+      "pos": [
+        22,
+        5.5,
+        13.5
+      ],
+      "yaw": 0
+    }
+  ],
+  "hide_graybox": [
+    "灯罩_X*",
+    "吊杆"
+  ],
+  "follow": [],
+  "mirror_emission": [
+    {
+      "instance": "吊灯_X2_Z4.5",
+      "part": "LampGlow",
+      "gray": "灯罩_X2_Z4.5"
+    },
+    {
+      "instance": "吊灯_X2_Z9.0",
+      "part": "LampGlow",
+      "gray": "灯罩_X2_Z9.0"
+    },
+    {
+      "instance": "吊灯_X2_Z13.5",
+      "part": "LampGlow",
+      "gray": "灯罩_X2_Z13.5"
+    },
+    {
+      "instance": "吊灯_X6_Z4.5",
+      "part": "LampGlow",
+      "gray": "灯罩_X6_Z4.5"
+    },
+    {
+      "instance": "吊灯_X6_Z9.0",
+      "part": "LampGlow",
+      "gray": "灯罩_X6_Z9.0"
+    },
+    {
+      "instance": "吊灯_X6_Z13.5",
+      "part": "LampGlow",
+      "gray": "灯罩_X6_Z13.5"
+    },
+    {
+      "instance": "吊灯_X10_Z4.5",
+      "part": "LampGlow",
+      "gray": "灯罩_X10_Z4.5"
+    },
+    {
+      "instance": "吊灯_X10_Z9.0",
+      "part": "LampGlow",
+      "gray": "灯罩_X10_Z9.0"
+    },
+    {
+      "instance": "吊灯_X10_Z13.5",
+      "part": "LampGlow",
+      "gray": "灯罩_X10_Z13.5"
+    },
+    {
+      "instance": "吊灯_X14_Z4.5",
+      "part": "LampGlow",
+      "gray": "灯罩_X14_Z4.5"
+    },
+    {
+      "instance": "吊灯_X14_Z9.0",
+      "part": "LampGlow",
+      "gray": "灯罩_X14_Z9.0"
+    },
+    {
+      "instance": "吊灯_X14_Z13.5",
+      "part": "LampGlow",
+      "gray": "灯罩_X14_Z13.5"
+    },
+    {
+      "instance": "吊灯_X18_Z4.5",
+      "part": "LampGlow",
+      "gray": "灯罩_X18_Z4.5"
+    },
+    {
+      "instance": "吊灯_X18_Z9.0",
+      "part": "LampGlow",
+      "gray": "灯罩_X18_Z9.0"
+    },
+    {
+      "instance": "吊灯_X18_Z13.5",
+      "part": "LampGlow",
+      "gray": "灯罩_X18_Z13.5"
+    },
+    {
+      "instance": "吊灯_X22_Z4.5",
+      "part": "LampGlow",
+      "gray": "灯罩_X22_Z4.5"
+    },
+    {
+      "instance": "吊灯_X22_Z9.0",
+      "part": "LampGlow",
+      "gray": "灯罩_X22_Z9.0"
+    },
+    {
+      "instance": "吊灯_X22_Z13.5",
+      "part": "LampGlow",
+      "gray": "灯罩_X22_Z13.5"
+    }
+  ],
+  "highlight": [],
+  "notes": "局部原点 = 灯罩中心（灰盒灯罩圆柱中心 Y 5.5），吊杆向上到 Y 9.0。部件：Lamp（外罩 + 灯头 + 抱箍用贴图集，吊杆用纯色 M_LMP_Rod）、LampGlow（罩内白搪瓷面 + 灯泡，材质 M_LMP_Glow_On）。亮灭：LampGlow 跟对应灰盒灯罩（mirror_emission 逐盏写了）。灭的时候应换成不发光的白搪瓷 #E8E4D8（不是继电器柜交接灯那种深灰 #3A3A38）；Stage3ArtMaterials 给 _On 材质的自发光色是交接灯的暖橙 #F0A040×4，对钨丝灯偏橙偏亮，建议灯具用 2700K 暖白（约 #FFD9A0）×2–3。注意：WorkshopRefs.Reindex 按名字前缀“灯罩_X”收集灯罩渲染体，模型实例 / 部件名不要以“灯罩_X”开头（这里实例叫“吊灯_X…”）。“吊杆”是精确名（天车的“司机室_吊杆”不受影响）。贴图集 512。"
+}

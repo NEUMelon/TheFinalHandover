@@ -1,0 +1,14 @@
+{
+    "name": "LSB.Stage3.Editor",
+    "rootNamespace": "LSB.Stage3.EditorTools",
+    "references": ["LSB.Core", "LSB.Runtime", "LSB.Stage3"],
+    "includePlatforms": ["Editor"],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

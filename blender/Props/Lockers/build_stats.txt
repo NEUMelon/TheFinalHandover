@@ -1,0 +1,13 @@
+asset=LSB_ENV_PRP_Lockers_v01
+tris_total=5046
+budget=6k
+atlas=PRP_Lockers 2048px≈313px/m + PRP_LockerZhou 2048px≈515px/m
+parts:
+  LockerDoor_Zhou: 594
+  Locker_Zhou: 612
+  Lockers: 3840
+readback_worst_mm=0.042
+readback:
+  Locker_Zhou: 中心 ['1.199', '-0.010', '0.900'] 枢轴 ['1.200', '0.000', '0.000'] 误差 0.00 mm 三角 612 材质 ['M_PRP_LockerZhou_Atlas', 'M_LKR_Cap']
+  LockerDoor_Zhou: 中心 ['1.190', '-0.275', '0.900'] 枢轴 ['0.910', '-0.260', '0.900'] 误差 0.04 mm 三角 594 材质 ['M_PRP_LockerZhou_Atlas', 'M_LKR_VentShadow', 'M_LKR_CardSlot']
+  Lockers: 中心 ['-0.001', '-0.024', '0.900'] 枢轴 ['0.000', '0.000', '0.000'] 误差 0.01 mm 三角 3840 材质 ['M_PRP_Lockers_Atlas', 'M_LKR_VentShadow', 'M_LKR_CardSlot']

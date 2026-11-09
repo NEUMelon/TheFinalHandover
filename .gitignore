@@ -1,0 +1,30 @@
+# Unity
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+[Uu]ser[Ss]ettings/
+[Mm]emoryCaptures/
+*.csproj
+!unity/tools/**/*.csproj
+*.sln
+*.suo
+*.user
+*.pidb
+*.booproj
+*.unityproj
+.vs/
+.idea/
+Screenshots_DemoAlpha/
+# dotnet
+bin/
+obj/
+# Python / OS
+__pycache__/
+*.pyc
+.DS_Store
+Thumbs.db
+# Blender backups
+*.blend1

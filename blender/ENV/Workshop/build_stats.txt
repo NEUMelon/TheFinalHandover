@@ -1,0 +1,17 @@
+Floor: tris=1296 mats=['M_LSB_ENV_BLD_Terrazzo_Atlas', 'M_LSB_ENV_BLD_FloorStain_Atlas']
+SafetyLines: tris=18 mats=['M_LSB_ENV_BLD_SafetyLine_Atlas', 'M_LSB_ENV_BLD_Zebra_Atlas']
+Walls: tris=504 mats=['M_LSB_ENV_BLD_Wainscot_Atlas', 'M_LSB_ENV_BLD_Plaster_Atlas']
+Columns: tris=432 mats=['M_LSB_ENV_BLD_Wainscot_Atlas', 'M_LSB_ENV_BLD_Concrete_Atlas']
+CraneBeams: tris=504 mats=['M_LSB_ENV_BLD_Concrete_Atlas', 'M_LSB_ENV_BLD_CraneRail']
+RoofTruss: tris=3816 mats=['M_LSB_ENV_BLD_SteelPaint_Atlas']
+Roof: tris=348 mats=['M_LSB_ENV_BLD_Concrete_Atlas', 'M_LSB_ENV_BLD_SteelPaint_Atlas', 'M_LSB_ENV_BLD_Plaster_Atlas']
+Windows: tris=3180 mats=['M_LSB_ENV_BLD_SteelPaint_Atlas', 'M_LSB_ENV_BLD_Concrete_Atlas']
+WestDoor: tris=132 mats=['M_LSB_ENV_BLD_SteelPaint_Atlas']
+ControlRoomPartition: tris=276 mats=['M_LSB_ENV_BLD_Wainscot_Atlas', 'M_LSB_ENV_BLD_SteelPaint_Atlas', 'M_LSB_ENV_BLD_Plaster_Atlas']
+DoorFrames: tris=108 mats=['M_LSB_ENV_BLD_DoorFrame_Paint']
+Conduit_1998: tris=156 mats=['M_LSB_ENV_BLD_Conduit1998_PVC']
+Conduit_2025: tris=228 mats=['M_LSB_ENV_BLD_Conduit2025_PVC', 'M_LSB_ENV_BLD_Gateway2025']
+parts=13
+tris=10998
+glass_parts=4
+glass_tris=304

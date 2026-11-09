@@ -1,0 +1,15 @@
+asset=LSB_ENV_PRP_ShiftDesk_v01
+tris_total=2748
+budget=8–12k（桌 + 台灯）
+atlas=PRP_ShiftDesk 2048px≈707px/m
+parts:
+  Desk: 1624
+  DeskLamp: 820
+  Drawer: 260
+  GlassPlate: 44
+readback_worst_mm=0.050
+readback:
+  Desk: 中心 ['0.000', '0.000', '0.380'] 枢轴 ['0.000', '0.000', '0.000'] 误差 0.05 mm 三角 1624 材质 ['M_PRP_ShiftDesk_Atlas']
+  DeskLamp: 中心 ['-0.374', '0.594', '0.935'] 枢轴 ['-0.300', '0.500', '0.772'] 误差 0.01 mm 三角 820 材质 ['M_PRP_ShiftDesk_Atlas', 'M_DSK_LampInner', 'M_DSK_LampBulb']
+  Drawer: 中心 ['0.110', '0.530', '0.625'] 枢轴 ['0.050', '0.550', '0.620'] 误差 0.03 mm 三角 260 材质 ['M_PRP_ShiftDesk_Atlas']
+  GlassPlate: 中心 ['0.000', '0.000', '0.766'] 枢轴 ['0.000', '0.000', '0.766'] 误差 0.05 mm 三角 44 材质 ['M_DSK_Glass']

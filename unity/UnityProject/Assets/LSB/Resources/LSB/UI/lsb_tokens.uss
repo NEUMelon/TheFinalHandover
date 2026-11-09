@@ -1,0 +1,51 @@
+/* 《最后一次交班》Demo α —— 设计 Token（UI Toolkit 版）
+   与 01_圣经/03_UI设计系统_v0.1.md §2–§5、UI 原型 css/tokens.css 同名同值（UI-DS §8：USS 变量与 Token 同名）。
+   改值先改圣经，再改原型和这里。字体为开源占位字体（OFL 1.1），许可证见 Assets/LSB/Fonts/licenses/。 */
+:root {
+    --C-Paper: #EDE6D6;
+    --C-Paper-Old: #DCCFAF;
+    --C-Paper-Print: #F2F0EA;
+    --C-Ink: #1A1A1A;
+    --C-Ink-Blue: #1F3A5F;
+    --C-Ink-Red: #A8322D;
+    --C-Line: #B9B4A8;
+    --C-Warm: #E8B45A;
+    --C-Safety: #F2C200;
+    --C-Green: #5E7D6A;
+    --C-Sys-BG: #0E1620;
+    --C-Sys: #E6F0F5;
+    --C-Sys-Dim: rgba(230, 240, 245, 0.45);
+    --C-Sys-Faint: rgba(230, 240, 245, 0.14);
+    --C-Sys-Alert: #F2C200;
+    --C-Kraft: #B8915E;
+    --C-Pencil: rgba(26, 26, 26, 0.6);
+
+    --T-Display: 48px;
+    --T-H1: 32px;
+    --T-H2: 24px;
+    --T-Body: 20px;
+    --T-Hand-L: 28px;
+    --T-Hand-M: 22px;
+    --T-Mono-L: 22px;
+    --T-Mono: 18px;
+    --T-Mono-S: 14px;
+    --T-Caption: 22px;
+    --T-Label: 16px;
+
+    --S1: 8px;
+    --S2: 16px;
+    --S3: 24px;
+    --S4: 32px;
+    --S6: 48px;
+    --S8: 64px;
+}
+
+/* 字体角色 §2：H 手写 / S 印刷宋 / M 等宽 / U 界面黑 */
+.f-sans { -unity-font-definition: url("project://database/Assets/LSB/Fonts/SDF/NotoSansSC-Regular.asset"); }
+.f-sans-m { -unity-font-definition: url("project://database/Assets/LSB/Fonts/SDF/NotoSansSC-Medium.asset"); }
+.f-serif { -unity-font-definition: url("project://database/Assets/LSB/Fonts/SDF/NotoSerifSC-Regular.asset"); }
+.f-serif-b { -unity-font-definition: url("project://database/Assets/LSB/Fonts/SDF/NotoSerifSC-Bold.asset"); }
+.f-mono { -unity-font-definition: url("project://database/Assets/LSB/Fonts/SDF/JetBrainsMono-Regular.asset"); }
+.f-hand-zhou { -unity-font-definition: url("project://database/Assets/LSB/Fonts/SDF/ZhiMangXing-Regular.asset"); }
+.f-hand-jian { -unity-font-definition: url("project://database/Assets/LSB/Fonts/SDF/LongCang-Regular.asset"); }
+.f-hand-lin { -unity-font-definition: url("project://database/Assets/LSB/Fonts/SDF/LXGWWenKai-Medium.asset"); }

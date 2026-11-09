@@ -1,0 +1,14 @@
+{
+    "name": "LSB.Runtime",
+    "rootNamespace": "LSB.Unity",
+    "references": ["LSB.Core"],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

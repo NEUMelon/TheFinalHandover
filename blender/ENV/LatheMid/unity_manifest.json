@@ -1,0 +1,48 @@
+{
+  "asset": "LSB_ENV_MCH_Lathe_Mid",
+  "fbx": "20_场景地编/stage3/ENV/LatheMid/LSB_ENV_MCH_Lathe_Mid_v01.fbx",
+  "textures": [
+    "20_场景地编/stage3/ENV/Textures/LSB_ENV_MCH_Lathe_Mid_Atlas_BaseColor.png",
+    "20_场景地编/stage3/ENV/Textures/LSB_ENV_MCH_Lathe_Mid_Atlas_Normal.png",
+    "20_场景地编/stage3/ENV/Textures/LSB_ENV_MCH_Lathe_Mid_Atlas_MS.png"
+  ],
+  "instances": [
+    {
+      "name": "LT02",
+      "pos": [
+        2.0,
+        0,
+        11.0
+      ],
+      "yaw": 0
+    },
+    {
+      "name": "LT03",
+      "pos": [
+        14.0,
+        0,
+        11.0
+      ],
+      "yaw": 0
+    },
+    {
+      "name": "LT04",
+      "pos": [
+        20.0,
+        0,
+        11.0
+      ],
+      "yaw": 0
+    }
+  ],
+  "hide_graybox": [
+    "LT02",
+    "LT03",
+    "LT04"
+  ],
+  "hide_graybox_blockers": [],
+  "follow": [],
+  "mirror_emission": [],
+  "highlight": [],
+  "notes": "LT01 减配（同一台 HC-620 几何，去掉 L1 漆圈、R1 传感器、2025 新线、护罩凹痕），合成一个部件 LatheMid。模型原点 = 床身西端底面中心（同 LT01），主轴箱在西、操作面朝南；pos = (cx − 1.4, 0, 11.0)。灰盒 LT02/03/04 组里没有碰撞体（Lathe() 的 Box 默认 blocker=false），整组隐藏即可。贴图集 2048²（约 321 px/m），按 LT01 同一套磨损动线重新烘焙。"
+}

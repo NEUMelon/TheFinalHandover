@@ -1,0 +1,46 @@
+{
+  "asset": "LSB_ENV_PRP_ShiftDesk",
+  "fbx": "20_场景地编/stage3/Props/ShiftDesk/LSB_ENV_PRP_ShiftDesk_v01.fbx",
+  "textures": [
+    "20_场景地编/stage3/Props/ShiftDesk/PRP_ShiftDesk_Atlas_BaseColor.png",
+    "20_场景地编/stage3/Props/ShiftDesk/PRP_ShiftDesk_Atlas_Normal.png",
+    "20_场景地编/stage3/Props/ShiftDesk/PRP_ShiftDesk_Atlas_MS.png"
+  ],
+  "instances": [
+    {
+      "name": "交班桌",
+      "pos": [
+        26.5,
+        0.0,
+        13.0
+      ],
+      "yaw": 0
+    }
+  ],
+  "hide_graybox": [
+    "交班桌_桌面",
+    "桌腿",
+    "抽屉_盒",
+    "台灯_座",
+    "台灯_杆"
+  ],
+  "follow": [
+    {
+      "part": "Drawer",
+      "gray": "DrawerBox",
+      "mode": "rigid"
+    }
+  ],
+  "mirror_emission": [],
+  "highlight": [
+    {
+      "id": "drawer",
+      "part": "Drawer"
+    },
+    {
+      "id": "desk_lamp",
+      "part": "DeskLamp"
+    }
+  ],
+  "notes": "局部原点 = 桌底面中心；+X 东（坐人侧 / N1 看到的一面）、+Y 北。部件：Desk、GlassPlate、Drawer（枢轴 = DrawerBox 静止位置 (26.55, 0.62, 13.55)，开抽屉向东 0.3 m，跟灰盒 rigid）、DeskLamp。【必须】GlassPlate 的材质 M_DSK_Glass 在 Unity 里要设成 URP Lit Transparent（Alpha 约 0.12、Smoothness 0.95）：玻璃板 0.7605–0.772 压着灰盒“玻璃板下的点检单”(0.763–0.767，谜题三交互物)，Stage3ArtMaterials 现在按不透明纯色建材质，不改就会把点检单整个挡住；来不及改就把 GlassPlate 部件关掉。台灯不发光（灰盒台灯开关只放音效、记 lamp_toggled，没有灯光状态），所以没有 _On 材质。灰盒问题：台灯_座 / 台灯_杆 (25.95, 13.45) 和 对讲机 (26.0, 12.7) 都在桌面西沿 X 26.1 之外，悬空；本模型的台灯底座放回桌面 (26.2, 13.5)，弯杆把灯罩伸到 X≈26.03、Y≈1.12 去，至少灯罩落在 desk_lamp 碰撞盒（X 25.85–26.05）里；对讲机不归道具组，灰盒照旧悬空，建议协调者挪到 X≈26.2。交班本、点检单、对讲机、椅子不在本模型里。贴图集 2048。"
+}

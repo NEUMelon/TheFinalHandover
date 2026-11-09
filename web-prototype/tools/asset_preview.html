@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><title>资产自查页</title>
+<link rel="stylesheet" href="../fonts/fonts.css">
+<link rel="stylesheet" href="../css/tokens.css">
+<style>
+  body{margin:0;background:#2b2a27;color:#ddd;font-family:var(--F-Sans);padding:24px;width:1872px}
+  h2{font:500 16px var(--F-Sans);color:#bbb;margin:18px 0 8px}
+  .row{display:flex;gap:24px;align-items:flex-start;flex-wrap:wrap}
+  .drawer{background:#3b3a36;padding:16px;display:grid;gap:10px}
+  .photo{width:300px;height:220px;position:relative;overflow:hidden;background:#fff;filter:contrast(18)}
+  .photo .src{position:absolute;inset:0;filter:blur(1.4px)}
+  .photo::after{content:"";position:absolute;inset:-60%;background-image:radial-gradient(circle,#000 0,#fff 72%);background-size:5px 5px;mix-blend-mode:screen;transform:rotate(45deg);opacity:1}
+  .photoWrap{position:relative;width:300px;height:220px}
+  .photoWrap::after{content:"";position:absolute;inset:0;background:#d9c9a4;mix-blend-mode:multiply}
+  .paper{background:var(--C-Paper-Old);padding:16px}
+  .spec{background:var(--C-Sys-BG);padding:12px;position:relative}
+  .spec canvas{display:block}
+  .spec .fx{position:absolute;left:12px;top:12px}
+</style></head><body>
+<h2>工具箱（俯视，抽屉内）</h2>
+<div class="row"><div class="drawer" id="tools"></div><div id="stamp"></div>
+  <div><h2>工作照（CSS 网点）</h2><canvas id="photo" width="300" height="220"></canvas> <canvas id="pz" width="120" height="160"></canvas> <canvas id="pj" width="120" height="160"></canvas></div>
+  <div class="paper" id="sketch"></div>
+</div>
+<h2>LT01 主轴箱特写</h2>
+<div class="row"><div id="lathe" style="width:1160px"></div>
+ <div><div class="spec"><canvas id="b1" width="760" height="340"></canvas><canvas class="fx" id="f1" width="760" height="340"></canvas></div>
+ <div class="spec" style="margin-top:16px"><canvas id="b2" width="760" height="340"></canvas><canvas class="fx" id="f2" width="760" height="340"></canvas></div></div>
+</div>
+<script src="../js/data.js"></script><script src="../js/svg.js"></script><script src="../js/spectro.js"></script><script src="../js/halftone.js"></script>
+<script>
+  document.getElementById('tools').innerHTML = [SVG.toolRod, SVG.toolTorch, SVG.toolCaliper, SVG.toolDriver].join('');
+  document.getElementById('stamp').innerHTML = SVG.stampPass();
+  HALFTONE.render(photo,'workPhoto'); HALFTONE.render(pz,'portraitZhou',{cell:3}); HALFTONE.render(pj,'portraitJian',{cell:3});
+  document.getElementById('sketch').innerHTML = SVG.sectionSketch;
+  document.getElementById('lathe').innerHTML = SVG.lathe;
+  document.fonts.ready.then(() => {
+    SPECTRO.drawBase(b1, 'L1'); SPECTRO.drawFx(f1, 'L1', 2.2, true, {t0: 1.5, t1: 3.2});
+    SPECTRO.drawBase(b2, 'R1'); SPECTRO.drawFx(f2, 'R1', 3.1, false, null);
+    document.body.dataset.ready = 1;
+  });
+</script></body></html>

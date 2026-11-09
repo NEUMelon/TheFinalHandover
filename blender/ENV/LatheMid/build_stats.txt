@@ -1,0 +1,4 @@
+objects=124
+tris=13976
+atlas=2048
+density_px_per_m=321

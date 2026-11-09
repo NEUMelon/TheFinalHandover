@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- 云端编译检查：把 Runtime / DevTools / Editor 三个程序集的源码对着 Unity 参考库编译一遍（只检查能否编译，不运行）。
+       参考库：nuget UnityEngine.Modules 2021.3.33、Unity3D.SDK 2021.1.14.1（UnityEditor.dll）。
+       工程目标是 Unity 2022.3.62f3c1；nuget 上没有 2022.3 的参考库，2021.3 是最接近的。能编过 ≈ 没用到 2021.3 之后才有的 API；最终以本机 Unity 2022.3 编译为准。 -->
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <LangVersion>9.0</LangVersion>
+    <Nullable>disable</Nullable>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <NoWarn>CS0414;CS0169;CS0649;CS0219;CS1701;CS1702</NoWarn>
+    <RefDir>/tmp/claude-0/unityref</RefDir>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="../../UnityProject/Assets/LSB/Scripts/Runtime/**/*.cs" />
+    <Compile Include="../../UnityProject/Assets/LSB/Scripts/DevTools/**/*.cs" />
+    <Compile Include="../../UnityProject/Assets/LSB/Scripts/Editor/**/*.cs" />
+    <ProjectReference Include="../CoreCheck/CoreCheck.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="$(RefDir)/modules/lib/net45/*.dll" />
+    <Reference Include="$(RefDir)/sdk/x/lib/UnityEditor.dll" />
+  </ItemGroup>
+</Project>

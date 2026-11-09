@@ -1,0 +1,18 @@
+Speaker: tris=666 pivot=(0.0, 0.0, 0.0)
+Slogan: tris=86 pivot=(0.0, 0.0, 0.0)
+Drill: tris=1116 pivot=(0.0, 0.0, 0.0)
+Grinder: tris=852 pivot=(0.0, 0.0, 0.0)
+WorkRack: tris=500 pivot=(0.0, 0.0, 0.0)
+Shafts: tris=1560 pivot=(0.0, 0.0, 0.0)
+RestTable: tris=120 pivot=(0.0, 0.0, 0.0)
+RestBenches: tris=96 pivot=(0.0, 0.0, 0.0)
+ThermosRack: tris=84 pivot=(0.0, 0.0, 0.0)
+Thermos: tris=988 pivot=(0.0, 0.0, 0.0)
+MES_Desk: tris=108 pivot=(0.0, 0.0, 0.0)
+MES_Monitors: tris=192 pivot=(0.0, 0.0, 0.0)
+MainSwitch_Box: tris=146 pivot=(0.0, 0.0, 0.0)
+MainSwitch_Handle: tris=124 pivot=(29.68, 1.5, 1.55)
+LockerBench: tris=48 pivot=(0.0, 0.0, 0.0)
+Chair: tris=120 pivot=(0.0, 0.0, 0.0)
+parts=16
+tris=6806

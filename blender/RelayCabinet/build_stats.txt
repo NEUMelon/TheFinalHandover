@@ -1,0 +1,2 @@
+objects=401
+tris=26672
