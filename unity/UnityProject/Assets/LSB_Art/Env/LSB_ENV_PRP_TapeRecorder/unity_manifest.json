@@ -1,0 +1,57 @@
+{
+  "asset": "LSB_ENV_PRP_TapeRecorder",
+  "fbx": "20_场景地编/stage3/Props/TapeRecorder/LSB_ENV_PRP_TapeRecorder_v01.fbx",
+  "textures": [
+    "20_场景地编/stage3/Props/TapeRecorder/PRP_TapeRecorder_Atlas_BaseColor.png",
+    "20_场景地编/stage3/Props/TapeRecorder/PRP_TapeRecorder_Atlas_Normal.png",
+    "20_场景地编/stage3/Props/TapeRecorder/PRP_TapeRecorder_Atlas_MS.png"
+  ],
+  "instances": [
+    {
+      "name": "抽屉里的磁带与录音机",
+      "pos": [
+        26.55,
+        0.62,
+        13.55
+      ],
+      "yaw": 0
+    }
+  ],
+  "hide_graybox": [
+    "盒式磁带",
+    "单卡录音机"
+  ],
+  "follow": [
+    {
+      "part": "Tape",
+      "gray": "DrawerBox",
+      "mode": "rigid"
+    },
+    {
+      "part": "Recorder",
+      "gray": "DrawerBox",
+      "mode": "rigid"
+    },
+    {
+      "part": "DrawerClutter",
+      "gray": "DrawerBox",
+      "mode": "rigid"
+    }
+  ],
+  "mirror_emission": [],
+  "highlight": [
+    {
+      "id": "tape",
+      "part": "Tape"
+    },
+    {
+      "id": "recorder",
+      "part": "Recorder"
+    },
+    {
+      "id": "drawer",
+      "part": "DrawerClutter"
+    }
+  ],
+  "notes": "局部原点 = 灰盒 DrawerBox 静止位置；三个部件都跟 DrawerBox 平移。录音机仰面躺在抽屉底板上（底板上沿 = 世界 Y 0.56），磁带躺在一沓旧单据上，标签手写“广播站　孙桂兰”（ContentDB.Puzzles.cs:79 原文），字头朝西，CU5 机位看是正的。和灰盒的差：交班桌模型的抽屉内宽比灰盒窄（0.27 vs 0.35），录音机中心北移 1.5 cm；磁带转了 90°（长边沿南北）。灰盒碰撞盒中心比模型高：tape 碰撞盒 Y 0.62–0.70、模型磁带 Y 0.581–0.593；recorder 碰撞盒 Y 0.63–0.73、模型 Y 0.56–0.64——CU5 俯 40° 看时点选位置会偏上几厘米，建议协调者把这两个碰撞盒的 Y 各降约 6 cm（ContentDB 是 Demo α 文件，我没改）。灰盒拿走磁带（tape_taken）后不隐藏磁带，模型也照灰盒不隐藏。贴图集 2048（为了磁带手写标签在 CU5 里看得清）。"
+}

@@ -1,0 +1,32 @@
+{
+  "asset": "LSB_ENV_CRN_Crane_CR01",
+  "fbx": "20_场景地编/stage3/Crane/LSB_ENV_CRN_Crane_CR01_v01.fbx",
+  "textures": [
+    "20_场景地编/stage3/Crane/Textures/CR01_Atlas_BaseColor.png",
+    "20_场景地编/stage3/Crane/Textures/CR01_Atlas_Normal.png",
+    "20_场景地编/stage3/Crane/Textures/CR01_Atlas_MS.png",
+    "20_场景地编/stage3/Crane/Textures/CR01Hook_Atlas_BaseColor.png",
+    "20_场景地编/stage3/Crane/Textures/CR01Hook_Atlas_Normal.png",
+    "20_场景地编/stage3/Crane/Textures/CR01Hook_Atlas_MS.png",
+    "20_场景地编/stage3/Crane/Textures/CR01Mug_Atlas_BaseColor.png",
+    "20_场景地编/stage3/Crane/Textures/CR01Mug_Atlas_Normal.png",
+    "20_场景地编/stage3/Crane/Textures/CR01Mug_Atlas_MS.png"
+  ],
+  "instances": [ { "name": "CR01_天车", "pos": [6.0, 0.0, 0.0], "yaw": 0 } ],
+  "hide_graybox": [
+    "桥架_主梁南", "桥架_主梁北", "端梁_南", "端梁_北", "小车", "滑轮组", "钢丝绳",
+    "吊钩_钩体", "吊盘", "搪瓷缸", "缸里的水", "司机室", "司机室_吊杆", "司机室_旧搪瓷缸"
+  ],
+  "follow": [
+    { "part": "CR01_Bridge",   "gray": "CraneBridge",      "mode": "rigid" },
+    { "part": "CR01_Trolley",  "gray": "CraneTrolley",     "mode": "rigid" },
+    { "part": "CR01_Rope",     "gray": "CraneRope",        "mode": "rigid" },
+    { "part": "CR01_Hook",     "gray": "CraneHook",        "mode": "rigid" },
+    { "part": "CR01_Mug",      "gray": "CraneMug",         "mode": "rigid" },
+    { "part": "CR01_MugWater", "gray": "MugWater",         "mode": "rigid" },
+    { "part": "CR01_CabMug",   "gray": "司机室_旧搪瓷缸", "mode": "rigid" }
+  ],
+  "mirror_emission": [],
+  "highlight": [ { "id": "cab_mug", "part": "CR01_CabMug", "instance": "CR01_天车" } ],
+  "notes": "1) 资产原点 = 灰盒 CR01_桥架 的枢轴（Unity 世界 (6,0,0)，试吊停车位）；7 个部件原点与灰盒枢轴逐一重合：CR01_Bridge (6,0,0)、CR01_Trolley (6,0,4)、CR01_Rope = 吊钩_摆动轴 (6,7.0,4)、CR01_Hook (6,3.0,4)、CR01_Mug (6,3.02,4)、CR01_MugWater (6,3.07,4，水面圆心)、CR01_CabMug (6,5.25,2.0)（均为 Unity 世界坐标）。FBX 层级 Bridge>Trolley>Rope>Hook>{Mug,MugWater}，Bridge>CabMug；部件只有位置、无旋转（export_fbx_unity.flatten）。全部 rigid：直接拷贝灰盒物体的世界位置 + 旋转即可，嵌套关系与灰盒一致。 2) 摆动轴：WorldPresenter.cs:218 用 FromToRotation(down, (sinθ, −cosθ, 0))，实际是绕 Z 轴转、吊钩沿 X 摆（规格写的“摆动轴为 X 方向”指摆动方向）；rigid 跟随不受影响。水面 WorldPresenter.cs:219 绕 Z 倾斜 ×6，模型水面圆心就是枢轴。 3) 洒水时 MugWater.gameObject.SetActive(false)（WorldPresenter.cs:220/224）：请让 CR01_MugWater 的激活状态跟随灰盒 MugWater。 4) 隐藏灰盒时只关 Renderer，别关 GameObject（CraneMug / MugWater 是逻辑引用；司机室_旧搪瓷缸 是 cab_mug 的高亮目标，高亮改走 highlight）。 5) 与灰盒差异：主梁对称放在桥架局部 X ±0.55（灰盒在 0 / −0.9），因为摆动轴在 X 0、钢丝绳必须从两梁中间下来；吊盘改成 Ø0.22 圆盘（灰盒 0.45 方板会把缸从 N8 仰角完全挡住）；钢丝绳模型只画到钩头动滑轮（摆动轴下 2.75 m），摆长仍是 4.0 m。 6) 材质：M_CR01_Atlas、M_CR01Hook_Atlas、M_CR01Mug_Atlas（贴图集，请把 Textures/ 下 9 张拷到 Assets/LSB_Art/Env/Textures/）；纯色 M_CR01_Water（水面，Blender 里深灰蓝 #3E4A50、粗糙度 0.03；Unity 端光滑度是否正确带过去未验证，建议换成半透明水材质）、M_CR01_StatusLED_2026（名字含 StatusLED → Stage3ArtMaterials 开冷白自发光；2026 自动化套件状态灯，美术圣经 §6，待核 K-05）。 7) 吊车梁和大车钢轨不在本资产里（归 ENV 结构工人 env3d），端梁车轮踏面底 = 轨顶 Y 7.0。 8) 司机室窗洞、地板观察窗都没有玻璃（Unity 不透明材质会挡住缸），需要玻璃请另加透明材质面片。"
+}

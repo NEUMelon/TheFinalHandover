@@ -1,0 +1,48 @@
+{
+  "asset": "LSB_ENV_PRP_Lockers",
+  "fbx": "20_场景地编/stage3/Props/Lockers/LSB_ENV_PRP_Lockers_v01.fbx",
+  "textures": [
+    "20_场景地编/stage3/Props/Lockers/PRP_Lockers_Atlas_BaseColor.png",
+    "20_场景地编/stage3/Props/Lockers/PRP_Lockers_Atlas_Normal.png",
+    "20_场景地编/stage3/Props/Lockers/PRP_Lockers_Atlas_MS.png",
+    "20_场景地编/stage3/Props/Lockers/PRP_LockerZhou_Atlas_BaseColor.png",
+    "20_场景地编/stage3/Props/Lockers/PRP_LockerZhou_Atlas_Normal.png",
+    "20_场景地编/stage3/Props/Lockers/PRP_LockerZhou_Atlas_MS.png"
+  ],
+  "instances": [
+    {
+      "name": "更衣柜×6",
+      "pos": [
+        32.9,
+        0.0,
+        17.6
+      ],
+      "yaw": 0
+    }
+  ],
+  "hide_graybox": [
+    "更衣柜",
+    "更衣柜_老周",
+    "柜门",
+    "老周柜门"
+  ],
+  "follow": [
+    {
+      "part": "LockerDoor_Zhou",
+      "gray": "LockerDoor",
+      "mode": "rot"
+    }
+  ],
+  "mirror_emission": [],
+  "highlight": [
+    {
+      "id": "locker_zhou",
+      "part": "Locker_Zhou"
+    },
+    {
+      "id": "locker_zhou",
+      "part": "LockerDoor_Zhou"
+    }
+  ],
+  "notes": "局部原点 = 六只柜一排的底面中心；柜门朝南（−Y）。部件：Lockers（另外五只，关着）、Locker_Zhou（老周那只：空心柜体、两层隔板、挂钩、工作帽）、LockerDoor_Zhou（枢轴 = 灰盒“老周柜门_铰链”(33.81, 0.9, 17.34)，跟 WorkshopRefs.LockerDoor 转，开门 = 铰链 Y +105° 往南外开）。两张贴图集：M_PRP_Lockers_Atlas（五只普通柜）、M_PRP_LockerZhou_Atlas（老周那只 + 门，N2 正对、近看），各 2048。【注意 hide_graybox】灰盒的父组也叫“更衣柜”（里面有手套、工牌套、合影、饭盒这些交互物的渲染体）：只能隐藏名字精确等于“更衣柜”的那几个方块自身的 Renderer，不能递归隐藏子物体，否则柜内交互物会一起看不见。“更衣凳”不在本模型里。柜内隔板高度按灰盒物件放：下隔板上沿 1.215（手套底）、上隔板上沿 1.575（饭盒底）；工作帽放在上隔板西半边，避开饭盒。灰盒问题：工牌套（33.86, 1.45, 17.2）和建线合影（33.82, 1.55, 17.3）是按“门开着”摆的固定位置，门关着时它们穿出柜门外（Z < 17.33），模型柜门挡不住，建议协调者把这两件挂到 LockerDoor 铰链下面跟门走。名牌卡手写“周铁生”（世界观圣经人名口径）。"
+}

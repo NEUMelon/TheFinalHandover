@@ -1,0 +1,104 @@
+{
+  "asset": "LSB_ENV_PRP_Misc",
+  "fbx": "20_场景地编/stage3/Props_Misc/LSB_ENV_PRP_Misc_v01.fbx",
+  "textures": [
+    "20_场景地编/stage3/ENV/Textures/LSB_ENV_BLD_SteelPaint_Atlas_BaseColor.png",
+    "20_场景地编/stage3/ENV/Textures/LSB_ENV_BLD_SteelPaint_Atlas_Normal.png",
+    "20_场景地编/stage3/ENV/Textures/LSB_ENV_BLD_SteelPaint_Atlas_MS.png",
+    "20_场景地编/stage3/Props_Misc/Textures/LSB_ENV_PRP_MachinePaint_Atlas_BaseColor.png",
+    "20_场景地编/stage3/Props_Misc/Textures/LSB_ENV_PRP_MachinePaint_Atlas_Normal.png",
+    "20_场景地编/stage3/Props_Misc/Textures/LSB_ENV_PRP_MachinePaint_Atlas_MS.png",
+    "20_场景地编/stage3/Props_Misc/Textures/LSB_ENV_PRP_CastIron_Atlas_BaseColor.png",
+    "20_场景地编/stage3/Props_Misc/Textures/LSB_ENV_PRP_CastIron_Atlas_Normal.png",
+    "20_场景地编/stage3/Props_Misc/Textures/LSB_ENV_PRP_CastIron_Atlas_MS.png",
+    "20_场景地编/stage3/Props_Misc/Textures/LSB_ENV_PRP_MachinedSteel_Atlas_BaseColor.png",
+    "20_场景地编/stage3/Props_Misc/Textures/LSB_ENV_PRP_MachinedSteel_Atlas_Normal.png",
+    "20_场景地编/stage3/Props_Misc/Textures/LSB_ENV_PRP_MachinedSteel_Atlas_MS.png",
+    "20_场景地编/stage3/Props_Misc/Textures/LSB_ENV_PRP_WornBright_Atlas_BaseColor.png",
+    "20_场景地编/stage3/Props_Misc/Textures/LSB_ENV_PRP_WornBright_Atlas_Normal.png",
+    "20_场景地编/stage3/Props_Misc/Textures/LSB_ENV_PRP_WornBright_Atlas_MS.png",
+    "20_场景地编/stage3/Props_Misc/Textures/LSB_ENV_PRP_Wood_Atlas_BaseColor.png",
+    "20_场景地编/stage3/Props_Misc/Textures/LSB_ENV_PRP_Wood_Atlas_Normal.png",
+    "20_场景地编/stage3/Props_Misc/Textures/LSB_ENV_PRP_Wood_Atlas_MS.png",
+    "20_场景地编/stage3/Props_Misc/Textures/LSB_ENV_PRP_Slogan_Atlas_BaseColor.png",
+    "20_场景地编/stage3/Props_Misc/Textures/LSB_ENV_PRP_Slogan_Atlas_Normal.png",
+    "20_场景地编/stage3/Props_Misc/Textures/LSB_ENV_PRP_Slogan_Atlas_MS.png"
+  ],
+  "instances": [
+    {
+      "name": "LSB_ENV_PRP_Misc",
+      "pos": [
+        0,
+        0,
+        0
+      ],
+      "yaw": 0
+    }
+  ],
+  "hide_graybox": [
+    "广播喇叭",
+    "安全标语牌",
+    "立钻",
+    "砂轮机",
+    "工件架",
+    "长桌",
+    "长桌_腿",
+    "条凳_南",
+    "条凳_北",
+    "暖水瓶架",
+    "暖水瓶",
+    "MES_桌",
+    "总闸_刀闸箱",
+    "总闸_手柄",
+    "更衣凳",
+    "椅子"
+  ],
+  "hide_graybox_blockers": [],
+  "follow": [
+    {
+      "part": "MainSwitch_Handle",
+      "gray": "MainSwitchHandle",
+      "mode": "rot"
+    }
+  ],
+  "mirror_emission": [],
+  "highlight": [
+    {
+      "id": "speaker",
+      "part": "Speaker"
+    },
+    {
+      "id": "slogan",
+      "part": "Slogan"
+    },
+    {
+      "id": "grinder",
+      "part": "Grinder"
+    },
+    {
+      "id": "shaft_rack",
+      "part": "Shafts"
+    },
+    {
+      "id": "shaft_rack",
+      "part": "WorkRack"
+    },
+    {
+      "id": "thermos",
+      "part": "Thermos"
+    },
+    {
+      "id": "main_switch",
+      "part": "MainSwitch_Box"
+    },
+    {
+      "id": "main_switch",
+      "part": "MainSwitch_Handle"
+    },
+    {
+      "id": "mes",
+      "part": "MES_Monitors"
+    }
+  ],
+  "notes": "整批一个资产，原点 = 车间西南角 = Unity (0,0,0)，yaw 0。hide_graybox 全是精确物体名（这些灰盒方块都没有子物体；立钻 / 砂轮机 / 工件架 三个组里只有被替换的方块，交互碰撞盒在“交互物”组，不受影响），都不是 blocker。“休息区”组里的“先进生产者”奖状、“更衣柜”组里的柜子与线索道具不隐藏、不在本资产里。MES 屏面 MES_屏1 / MES_屏2 保留灰盒（WorldPresenter 换屏幕材质）：模型只做桌子和显示器外壳，外壳前框压住屏边 1 cm，中间 0.58×0.36 露出灰盒屏面，背壳在屏后 Z 3.955–3.984。总闸手柄：部件 MainSwitch_Handle 原点 = 灰盒“总闸_手柄转轴”(29.68, 1.55, 1.5)，follow rot 复制 WorkshopRefs.MainSwitchHandle 的转角；Demo α 现有代码里还没有转这个手柄的逻辑（只建了引用），转轴方向由以后的结局代码决定，rot 模式对任意轴都成立。暖水瓶：按灰盒位置做了一只（交互物 thermos），架子下层另放一只、上层一只搪瓷茶缸（规格 §7 #21“暖水瓶与茶缸”）。高度偏差〔派生〕：灰盒条凳 / 更衣凳面高 0.22–0.245，按正常坐高改为 0.45（与灰盒椅子 0.45 一致）；广播喇叭灰盒中心 (12, 5, 0.45) 落在柱 ③ 里面，模型装在柱北面、号筒朝北下倾 12°，号口到 Z≈1.2，交互碰撞盒只罩住喇叭后半段。"
+}
