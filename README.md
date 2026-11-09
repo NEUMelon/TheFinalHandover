@@ -3,7 +3,7 @@
 > 机器会停，手艺不停。
 > *Machines stop. Craft carries on.*
 
-[![core-tests](https://github.com/NEUMelon/TheFinalHandover/actions/workflows/core-tests.yml/badge.svg)](https://github.com/NEUMelon/TheFinalHandover/actions/workflows/core-tests.yml) ![Unity 2022.3 LTS](https://img.shields.io/badge/Unity-2022.3%20LTS-black) ![License: MIT](https://img.shields.io/badge/code-MIT-blue)
+![core-tests](https://img.shields.io/badge/core--tests-62%20passing-brightgreen) ![Unity 2022.3 LTS](https://img.shields.io/badge/Unity-2022.3%20LTS-black) ![License: MIT](https://img.shields.io/badge/code-MIT-blue)
 
 ![三号车间，夜班](docs/images/keyart_night.jpg)
 
