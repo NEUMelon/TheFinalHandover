@@ -3,6 +3,8 @@
 > 机器会停，手艺不停。
 > *Machines stop. Craft carries on.*
 
+[![core-tests](https://github.com/NEUMelon/TheFinalHandover/actions/workflows/core-tests.yml/badge.svg)](https://github.com/NEUMelon/TheFinalHandover/actions/workflows/core-tests.yml) ![Unity 2022.3 LTS](https://img.shields.io/badge/Unity-2022.3%20LTS-black) ![License: MIT](https://img.shields.io/badge/code-MIT-blue)
+
 ![三号车间，夜班](docs/images/keyart_night.jpg)
 
 **《最后一次交班》** 是一款第一人称、节点式固定机位的 3D 叙事诊断解谜游戏。
