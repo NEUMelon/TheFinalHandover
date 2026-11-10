@@ -11,7 +11,7 @@
 //   运行时按标签的字号（em）和内容框摆放，不依赖运行时字形栅格化。
 // 时序与网页样片 40_特效/stage3_RuleID重组/LSB_VFX_RuleIdReassemble_LookDev_v01.html 一致。
 // 关掉：启动参数 -lsbNoStage3Fx。
-// 由 Claude 编写（AI 辅助代码，记入 AI 使用日志）；未在 Unity 里编译运行过。
+// 由 AI 辅助工具编写（AI 辅助代码，记入 AI 使用日志）；未在 Unity 里编译运行过。
 using System.Collections.Generic;
 using System.Linq;
 using LSB.Core;

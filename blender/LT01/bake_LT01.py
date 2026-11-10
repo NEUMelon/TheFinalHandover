@@ -1,4 +1,4 @@
-# LT01 v02：在 build_LT01.py 产出的 .blend 上按磨损动线烘焙贴图集，替换材质并重新导出 FBX。由 Claude 编写。
+# LT01 v02：在 build_LT01.py 产出的 .blend 上按磨损动线烘焙贴图集，替换材质并重新导出 FBX。由 AI 辅助工具编写。
 # 运行：python3 bake_LT01.py <build 输出目录> [贴图集边长=4096]
 import bpy, sys, os
 HERE = os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0, os.path.join(HERE, "..", "Textures"))

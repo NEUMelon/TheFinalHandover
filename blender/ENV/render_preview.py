@@ -1,4 +1,4 @@
-# ENV 预览渲染（由 Claude 编写）：python3 render_preview.py <Workshop.blend> <LatheMid.fbx> <LT01.fbx> <输出目录> [views=A,E,mid] [samples=32]
+# ENV 预览渲染（由 AI 辅助工具编写）：python3 render_preview.py <Workshop.blend> <LatheMid.fbx> <LT01.fbx> <输出目录> [views=A,E,mid] [samples=32]
 # 场景 = ENV 建筑壳 + LT01（Hero，摆 (8.0, 0, 11.0)）+ LT02–04（Mid，摆 x0 = 2 / 14 / 20）。其余道具、天车、灯罩不在本资产里，不渲。
 # 光：16:00 太阳方位 235°、高度 18°（白盒规格 §1），钨丝灯 6 排 × 3 盏（只放点光源，灯罩不是本资产），机加工区一个低密度体积雾看光柱。
 import bpy, sys, os, math

@@ -1,4 +1,4 @@
-# 《最后一次交班》Stage 3 · 可平铺年代叠层贴图生成（numpy 程序生成，由 Claude 编写，已登记 AI 使用日志）
+# 《最后一次交班》Stage 3 · 可平铺年代叠层贴图生成（numpy 程序生成，由 AI 辅助工具编写，已登记 AI 使用日志）
 # 运行：python3 gen_textures.py <输出目录> [尺寸=1024]
 # 每张贴图 1 张 = 1 m × 1 m（与模型的 1 m 立方体投影 UV 对应，≥1024 px/m）。所有噪声都用周期频谱生成，四边无缝。
 # 每个材质输出（漆面另有 _Mask 供烘焙按磨损动线控制剥落）：_BaseColor（sRGB）、_Normal（OpenGL，G 朝上）、_ORM（R=AO, G=粗糙度, B=金属度）、_MS（URP Lit：R=金属度, A=光滑度）。

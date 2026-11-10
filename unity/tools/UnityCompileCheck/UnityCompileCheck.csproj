@@ -8,7 +8,7 @@
     <Nullable>disable</Nullable>
     <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
     <NoWarn>CS0414;CS0169;CS0649;CS0219;CS1701;CS1702</NoWarn>
-    <RefDir>/tmp/claude-0/unityref</RefDir>
+    <RefDir>/tmp/build/unityref</RefDir>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="../../UnityProject/Assets/LSB/Scripts/Runtime/**/*.cs" />

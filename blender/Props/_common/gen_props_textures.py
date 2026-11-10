@@ -1,4 +1,4 @@
-# 《最后一次交班》Stage 3 · 道具组可平铺贴图（numpy 程序生成，由 Claude 编写，已登记 AI 使用日志）
+# 《最后一次交班》Stage 3 · 道具组可平铺贴图（numpy 程序生成，由 AI 辅助工具编写，已登记 AI 使用日志）
 # 运行：python3 gen_props_textures.py <输出目录> [尺寸=1024]
 # 约定与 Textures/gen_textures.py 相同：1 张 = 1 m × 1 m，四边无缝；输出 _BaseColor / _Normal / _ORM / _MS，漆面另出 _Mask（R 剥落序位 / G 刷痕 / B 污渍）。
 # 这里只补道具需要、而车床贴图里没有的材质：清漆木、书皮布、旧纸页、深色塑料、喇叭网、漆面遮罩。

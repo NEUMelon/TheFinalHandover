@@ -1,4 +1,4 @@
-# 天车组 CR01 预览渲染（由 Claude 编写）：python3 render_preview.py <blend> <输出目录> [视角,逗号分隔] [百分比] [samples]
+# 天车组 CR01 预览渲染（由 AI 辅助工具编写）：python3 render_preview.py <blend> <输出目录> [视角,逗号分隔] [百分比] [samples]
 # 视角：D = 关键机位 D（N8：Unity (7.5, 0.9, 6.5)，Yaw 225°，仰 20°，28mm，竖向 24 mm 底片，22:00 夜）
 #       D_close = N8 附近、往吊钩 / 缸收紧一点的视角；overall = 整体（东北上方俯看）；hook = 吊钩 + 缸特写
 # 资产原点 = Unity 世界 (6.0, 0, 0)，所以 Blender 坐标 = (Ux − 6, Uz, Uy)。

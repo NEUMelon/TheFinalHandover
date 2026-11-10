@@ -2,7 +2,7 @@
    依据：01_圣经/03_UI设计系统 v0.1 §1–§3、50_游戏交互/prototype/css/tokens.css。
    每条前缀 .lsb-s3（由 UiHifiLayer 加到 lsb-root 上），选择器更具体，所以无论加载顺序都会覆盖原样式。
    对应 50_游戏交互/stage3/01_UI高保真对齐表 §3 的 H-01…H-03；v02（2026-10-15）补 H-04…H-08 与 S-02（见 01_UI高保真对齐表_v0.2.md §3）。
-   由 Claude 编写，未在 Unity 里看过。v01 原文备份在 stage3_addon/备份/lsb_stage3_hifi_v01备份.uss.txt。 */
+   由 AI 辅助工具编写，未在 Unity 里看过。v01 原文备份在 stage3_addon/备份/lsb_stage3_hifi_v01备份.uss.txt。 */
 
 /* H-01 衡的界面只用冷白：Demo α 新加的薄荷绿 #9FD6B4 不在色板里（UI-DS §3：冷白不得出纸面，衡只有冷白 + 安全黄警告）。
    “正常 / 通过”改成冷白实色 + 加粗，靠亮度和字重区分，不靠新颜色。 */

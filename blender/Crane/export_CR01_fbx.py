@@ -1,4 +1,4 @@
-# 天车组 CR01 导出 Unity FBX（由 Claude 编写）：python3 export_CR01_fbx.py <v01.blend> <输出.fbx>
+# 天车组 CR01 导出 Unity FBX（由 AI 辅助工具编写）：python3 export_CR01_fbx.py <v01.blend> <输出.fbx>
 # 复用 20_场景地编/stage3/export_fbx_unity.py 的 flatten()（按部件合并，部件只有位置、没有旋转），只额外登记本资产的嵌套部件名。
 import bpy, sys, os
 HERE = os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0, os.path.join(HERE, ".."))

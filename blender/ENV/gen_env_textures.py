@@ -1,4 +1,4 @@
-# 《最后一次交班》Stage 3 · 车间环境贴图（numpy 程序生成，由 Claude 编写，已登记 AI 使用日志）
+# 《最后一次交班》Stage 3 · 车间环境贴图（numpy 程序生成，由 AI 辅助工具编写，已登记 AI 使用日志）
 # 运行：python3 gen_env_textures.py [输出目录=同目录 Textures/]
 # 输出 URP 用三张：<名字>_Atlas_BaseColor（sRGB）/ _Normal（OpenGL）/ _MS（R=金属度, A=光滑度）。材质名 M_<名字>_Atlas 由 Unity 端自动接。
 # 颜色依据 01_圣经/02_美术圣经_v0.1.md §2（墙裙绿 #5E7D6A、水磨石灰 #B9B4A8、安全黄 #F2C200、警示黑 #1A1A1A）、§5（墙裙上沿 30 mm 深色线、分格条 1 m、安全线 100 mm）。

@@ -7,7 +7,7 @@
 //      旧柜是两扇门：铰链在西侧的门和灰盒同向转，铰链在东侧的门镜像转，两扇一起开。
 //   3. 交互高亮：把模型部件加进对应交互物的高亮目标（灰盒被隐藏后，高亮要落在模型上才看得见）。
 //   4. 其余资产（天车、道具、灯具、ENV、LT02–04）按实例上的 Stage3ArtInstance（unity_manifest.json）接：hide_graybox / follow / mirror_emission。
-// 由 Claude 编写（AI 辅助代码，记入 AI 使用日志）。
+// 由 AI 辅助工具编写（AI 辅助代码，记入 AI 使用日志）。
 using System.Collections.Generic;
 using System.Linq;
 using LSB.Unity;

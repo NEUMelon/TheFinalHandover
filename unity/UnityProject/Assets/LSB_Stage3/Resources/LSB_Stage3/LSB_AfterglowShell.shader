@@ -3,7 +3,7 @@
 // 不改原渲染体的材质，所以 WorldPresenter.SetRow / SetLamp 换 sharedMaterial、Stage3ArtBinder 切模型亮 / 灭材质都不受影响。
 // 颜色由 LightsOutAfterglowFx 每帧通过 MaterialPropertyBlock 写 _Color（HDR，已乘亮度），黑色 = 不可见。
 // 与 40_特效/stage3_交接灯熄灭/LSB_VFX_LightsOut_LookDev_v01.html 的余辉曲线是同一套。
-// 由 Claude 编写，记入 AI 使用日志；未在 Unity 里编译过，以本机 Unity 2022.3 为准。
+// 由 AI 辅助工具编写，记入 AI 使用日志；未在 Unity 里编译过，以本机 Unity 2022.3 为准。
 Shader "LSB/AfterglowShell"
 {
     Properties

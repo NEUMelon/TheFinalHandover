@@ -1,6 +1,6 @@
 // 《最后一次交班》Stage 3 · 手写 → Rule ID 点阵数据（自动生成，勿手改）
 // 生成脚本：40_特效/stage3_RuleID重组/tools/gen_ruleid_dots.py；字体：Demo α Assets/LSB/Fonts（OFL 1.1）。
-// 坐标单位 1/1000 em，y 从行框顶算起。由 Claude 编写脚本生成（AI 辅助代码，记入 AI 使用日志）。
+// 坐标单位 1/1000 em，y 从行框顶算起。由 AI 辅助工具编写脚本生成（AI 辅助代码，记入 AI 使用日志）。
 namespace LSB.Stage3
 {
     public static class RuleIdDotsData

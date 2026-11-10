@@ -1,4 +1,4 @@
-# ENV FBX 回读检查（由 Claude 编写）：python3 check_env.py <blend> <fbx> [--colliders]
+# ENV FBX 回读检查（由 AI 辅助工具编写）：python3 check_env.py <blend> <fbx> [--colliders]
 # 1. Blender 重新导入 FBX，逐部件比较世界包围盒（中心、尺寸）与 .blend 里的同名部件；列材质、UV 层。
 # 2. --colliders：取 WorkshopGraybox.cs 里所有 blocker 方块（墙 / 地面 / 柱 / 屋面 / 隔断下段，坐标抄自源码），
 #    在每个方块露出的表面上撒点，量到模型表面的最近距离——模型外形应与碰撞体重合（距离 ≈ 0）。

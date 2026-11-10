@@ -1,4 +1,4 @@
-# 《最后一次交班》Stage 3 · 三号车间建筑壳（ENV-Kit）程序化建模。由 Claude 编写（AI 辅助，已登记 AI 使用日志）。
+# 《最后一次交班》Stage 3 · 三号车间建筑壳（ENV-Kit）程序化建模。由 AI 辅助工具编写（AI 辅助，已登记 AI 使用日志）。
 # 运行：python3 build_ENV.py <输出目录> [贴图目录=同目录 Textures/]
 # 尺寸唯一依据：02_母项目VS/02_车间白盒规格_v0.1.md §2–§4 与灰盒生成器 WorkshopGraybox.cs（BuildStructure / BuildControlRoom / BuildAnnex）。
 # 灰盒里墙、地面、柱、屋面、隔断下段是碰撞体（blocker），模型只替换渲染，所以凡是灰盒有碰撞体的地方，这里的外形按灰盒方块原样做（同一组角点）；

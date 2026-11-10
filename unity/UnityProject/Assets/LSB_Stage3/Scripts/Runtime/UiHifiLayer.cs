@@ -7,7 +7,7 @@
 //   S-03 交班本翻页：UI-DS §5.1“翻页 D-Base”，换页时新的一页 240ms ease-out-cubic 淡入（纸张翻页贴图做好前的近似）。
 // 做法：每 16ms 扫一遍 UI 树（Demo α 的面板每次重绘都会新建元素，所以靠类名打标记，不持有旧元素）。
 // 不改 Demo α 的 USS 和代码；删掉本文件或那张 USS 就回到原样。启动参数 -lsbNoStage3Ui 关掉。
-// 由 Claude 编写（AI 辅助代码，记入 AI 使用日志）；只对 Unity 参考库编译过，未在 Unity 里运行过。
+// 由 AI 辅助工具编写（AI 辅助代码，记入 AI 使用日志）；只对 Unity 参考库编译过，未在 Unity 里运行过。
 using System.Collections.Generic;
 using LSB.Unity;
 using UnityEngine;

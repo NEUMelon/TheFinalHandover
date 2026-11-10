@@ -1,4 +1,4 @@
-# 道具组预览渲染（Cycles CPU，960×540，32 samples）。由 Claude 编写（AI 编写脚本程序化生成）。
+# 道具组预览渲染（Cycles CPU，960×540，32 samples）。由 AI 辅助工具编写（AI 编写脚本程序化生成）。
 # 运行：python3 render_props.py <build 输出根目录（各资产子目录：dsk ldg tpr tbx rod lmp lkr）> <预览输出目录> [视图,…]
 # 视图：B（关键机位 B：N1 (27.6, 1.6, 13.0) Yaw 270° 俯 15° 32mm）、desk、ledger、tape、toolbox、rod、lamp、lockers
 # 资产按 unity_manifest 的实例位置摆进世界坐标（Blender X = Unity X，Blender Y = Unity Z，Blender Z = Unity Y）。

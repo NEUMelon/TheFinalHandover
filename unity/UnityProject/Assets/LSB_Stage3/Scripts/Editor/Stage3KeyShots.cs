@@ -2,7 +2,7 @@
 // 菜单 LSB/Stage3/截 6 个关键机位：按 03_阶段3主产/Stage3_制作看板.md §2 的 Shot A–F，各截一张 1920×1080 和一张 3840×2160，
 // 存到工程根目录 Screenshots_Stage3/<日期时间>/。每张前按机位切一次光照（日景 / 夜景 / 熄灯中 / 熄灯后），截完恢复。
 // 编辑器里截的是静帧，不含运行时特效与 UI（记忆显影、熄灯过程、衡日志要在 Play 里录）。
-// 由 Claude 编写（AI 辅助代码，记入 AI 使用日志）；未在 Unity 里编译运行过。
+// 由 AI 辅助工具编写（AI 辅助代码，记入 AI 使用日志）；未在 Unity 里编译运行过。
 using System;
 using System.Collections.Generic;
 using System.IO;

@@ -13,7 +13,7 @@
 // 余辉曲线与网页样片 40_特效/stage3_交接灯熄灭/LSB_VFX_LightsOut_LookDev_v01.html 一致：
 //   u = t / 时长；色温 K = 800 + 1900·e^(−3.2u)；亮度 b = 0.6·e^(−6u) + 0.4·(1−u)^1.5；颜色 = 黑体近似（Tanner Helland）。
 // 关掉：启动参数 -lsbNoStage3Fx。读档 / 新游戏不放余辉（直接是 WorldPresenter 摆好的样子）。
-// 由 Claude 编写（AI 辅助代码，记入 AI 使用日志）；未在 Unity 里编译运行过。
+// 由 AI 辅助工具编写（AI 辅助代码，记入 AI 使用日志）；未在 Unity 里编译运行过。
 using System.Collections.Generic;
 using System.Linq;
 using LSB.Core;

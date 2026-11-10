@@ -7,7 +7,7 @@
 // 菜单 LSB/Stage3/切换灰盒（被 3D 资产替换的部分）：只隐藏 / 显示被替换的灰盒方块（车床、旧柜外壳 + 各 manifest 的 hide_graybox），方便看新模型；交互、线索、碰撞都不动。
 //   运行时由 Stage3ArtBinder 接玩法（卡盘转、柜门开、交接灯灭都跟灰盒同步），Play 时会自动隐藏被替换的灰盒，这个开关只管编辑器里看。
 //   注意：如果删掉 LSB_Stage3_美术资产，记得把灰盒外壳切回显示，否则车床和旧柜会变成看不见。
-// 由 Claude 编写（AI 辅助代码，记入 AI 使用日志）。
+// 由 AI 辅助工具编写（AI 辅助代码，记入 AI 使用日志）。
 using System.Linq;
 using UnityEditor;
 using UnityEditor.SceneManagement;
@@ -137,7 +137,7 @@ namespace LSB.Stage3.EditorTools
                 {
                     var s = Vector3.one; if (check.dir.x != 0) s.x = -1; if (check.dir.z != 0) s.z = -1;
                     wrap.transform.localScale = s;
-                    Debug.LogWarning($"[LSB Stage3] {wrap.name} 导入后是镜像的，已用负缩放临时修正；请告诉 Claude 改导出。");
+                    Debug.LogWarning($"[LSB Stage3] {wrap.name} 导入后是镜像的，已用负缩放临时修正；请改导出脚本。");
                 }
             }
             wrap.transform.position = pos;

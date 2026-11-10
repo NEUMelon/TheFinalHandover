@@ -1,4 +1,4 @@
-# 给 LT01 铭牌、联锁继电器两条胶布的正面铺 UV 并挂贴花贴图，另存 v04 .blend（v02 不动）。由 Claude 编写，记入 AI 使用日志。
+# 给 LT01 铭牌、联锁继电器两条胶布的正面铺 UV 并挂贴花贴图，另存 v04 .blend（v02 不动）。由 AI 辅助工具编写，记入 AI 使用日志。
 # 运行：python3 apply_decals.py <src.blend> <dst.blend>
 # Unity 端：Stage3ArtMaterials 发现 Textures/<材质名去掉 M_>_BaseColor.png 就把它当 _BaseMap（M_LT01_Nameplate → LT01_Nameplate_BaseColor.png）。
 import bpy, sys, os

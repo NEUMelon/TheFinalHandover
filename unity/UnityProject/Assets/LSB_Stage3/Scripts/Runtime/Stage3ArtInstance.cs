@@ -1,7 +1,7 @@
 // 《最后一次交班》Stage 3 · 场景里每个 3D 资产实例的接线数据
 // 由菜单 LSB/Stage3/摆放 3D 资产 挂到实例外壳上，内容来自资产目录里的 unity_manifest.json（20_场景地编/stage3/**/unity_manifest.json，同步时拷进 Assets/LSB_Art/Env/<资产>/）。
 // 运行时 Stage3ArtBinder 读它：隐藏被替换的灰盒渲染、让模型部件跟着灰盒会动的部件走、发光部件跟着灰盒灯罩亮灭。
-// 由 Claude 编写（AI 辅助代码，记入 AI 使用日志）。
+// 由 AI 辅助工具编写（AI 辅助代码，记入 AI 使用日志）。
 using System;
 using UnityEngine;
 

@@ -1,4 +1,4 @@
-# 《最后一次交班》Stage 3 · 杂项道具贴图（由 Claude 编写，已登记 AI 使用日志）。运行：python3 gen_misc_textures.py [输出目录=同目录 Textures/]
+# 《最后一次交班》Stage 3 · 杂项道具贴图（由 AI 辅助工具编写，已登记 AI 使用日志）。运行：python3 gen_misc_textures.py [输出目录=同目录 Textures/]
 # 1. 复用 LT01 已有的可平铺贴图（../Textures/gen_textures.py 生成，1024 px = 1 m），改名成 Unity 能自动接的 <名字>_Atlas_* 三张：
 #    LT01_Paint_1983Green → LSB_ENV_PRP_MachinePaint（立钻、砂轮机）、LT01_CastIron → LSB_ENV_PRP_CastIron、
 #    LT01_MachinedSteel → LSB_ENV_PRP_MachinedSteel、LT01_WornBright → LSB_ENV_PRP_WornBright（砂轮机托架、手柄球）

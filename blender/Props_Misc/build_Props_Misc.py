@@ -1,4 +1,4 @@
-# 《最后一次交班》Stage 3 · 杂项道具（BG / Mid）程序化建模。由 Claude 编写（AI 辅助，已登记 AI 使用日志）。
+# 《最后一次交班》Stage 3 · 杂项道具（BG / Mid）程序化建模。由 AI 辅助工具编写（AI 辅助，已登记 AI 使用日志）。
 # 运行：python3 build_Props_Misc.py <输出目录> [ENV 贴图目录] [本目录贴图目录]
 # 位置 / 尺寸唯一依据：WorkshopGraybox.cs（BuildMachining / BuildControlRoom / BuildDeskArea / BuildAnnex）与白盒规格 §4、§7。
 # 整批一个资产，原点 = 车间西南角 = Unity (0,0,0)。Blender X = 东，Y = 北（Unity Z），Z = 上（Unity Y）。

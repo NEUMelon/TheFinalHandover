@@ -4,7 +4,7 @@
 //   M_<资产>_Atlas：贴图集材质，读 Assets/LSB_Art/Env/Textures/<资产>_Atlas_BaseColor / _Normal / _MS
 //   其余 M_*：纯色材质，颜色取自 FBX 自带材质（有同名贴花贴图 Textures/<名>_BaseColor.png 时改用贴图）；名字含 “_On” 或 “StatusLED” 的开自发光（交接灯亮、2025 冷白小灯）。
 // 贴图导入设置由 ArtTextureImporter 按文件名后缀自动设：_Normal → 法线贴图；_MS / _ORM → 线性。
-// 由 Claude 编写（AI 辅助代码，记入 AI 使用日志）。
+// 由 AI 辅助工具编写（AI 辅助代码，记入 AI 使用日志）。
 using System.IO;
 using System.Linq;
 using UnityEditor;

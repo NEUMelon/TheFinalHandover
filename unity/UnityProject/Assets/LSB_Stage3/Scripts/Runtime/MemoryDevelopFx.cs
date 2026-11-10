@@ -8,7 +8,7 @@
 //   ① 四边形铺满视野，光锥位置从 UI 的 .mem-cone 读（原来放在画面正中，和 UI 光锥“中心偏左”、年份字对不上）；
 //   ② UI 的 .memory 半透明黑盖在 3D 之上，会把网点压暗 42%：接管期间把它清掉，改由 Shader 的 _Dim 在光锥外压暗（同样 2 s 渐入、0.42）；
 //   ③ 跳过（点击 / Esc）时和 MemoryOverlay 一样先补满聚合再溶解（原来跳过发生在聚合前会什么都不出现）。
-// 由 Claude 编写（AI 辅助代码，记入 AI 使用日志）；只对 Unity 参考库编译过，未在 Unity 里运行过。
+// 由 AI 辅助工具编写（AI 辅助代码，记入 AI 使用日志）；只对 Unity 参考库编译过，未在 Unity 里运行过。
 using LSB.Core;
 using LSB.Unity;
 using UnityEngine;

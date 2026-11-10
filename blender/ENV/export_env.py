@@ -1,4 +1,4 @@
-# ENV 资产导出 FBX（复用 ../export_fbx_unity.flatten，不改那个文件）。由 Claude 编写（AI 辅助，已登记 AI 使用日志）。
+# ENV 资产导出 FBX（复用 ../export_fbx_unity.flatten，不改那个文件）。由 AI 辅助工具编写（AI 辅助，已登记 AI 使用日志）。
 # 运行：python3 export_env.py <blend> <fbx> [--single 部件名]
 #   --single：把整个资产合成一个部件（背景车床用：没有会动的部件，合成一个省 Draw Call）；此时清空 KEEP，免得 LT01 的部件名被拆出来。
 import bpy, sys, os

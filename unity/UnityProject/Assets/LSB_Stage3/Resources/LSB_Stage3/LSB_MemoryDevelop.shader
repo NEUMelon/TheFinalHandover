@@ -10,7 +10,7 @@
 //   ① 辅助函数加 LSB_ 前缀：URP Core.hlsl → core Common.hlsl → Random.hlsl 已有 float Hash(uint)，同名重载能编但容易误调；
 //   ② 整数字面量改浮点；mask 采样坐标 saturate（PNG 默认 Repeat 寻址，光锥边缘不卷到对边）；
 //   ③ 四边形从“光锥大小、居中”改为“铺满视野 + _ConeRect 定位”，与 UI 光锥（中心偏左）对齐；加 _Dim。
-// 由 Claude 编写，记入 AI 使用日志；v02 已用 DXC 1.8 按 D3D11 / Vulkan / Metal 宏对 URP 14.0.12 头文件编过，
+// 由 AI 辅助工具编写，记入 AI 使用日志；v02 已用 DXC 1.8 按 D3D11 / Vulkan / Metal 宏对 URP 14.0.12 头文件编过，
 // 但没有在 Unity 里编译过（Unity 在 Windows D3D11 上用 FXC），以本机 Unity 2022.3 Console 为准。
 Shader "LSB/MemoryDevelop"
 {

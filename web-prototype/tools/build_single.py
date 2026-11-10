@@ -4,7 +4,7 @@
 用法：python3 tools/build_single.py [片段输出路径]
   输出 dist/最后一次交班_UI原型.html：完整网页，双击即可离线打开，也可以直接发给别人。
   给了片段输出路径时，另外写一份不带 <!doctype>/<html>/<head>/<body> 外壳的片段，
-  用于发布成 claude.ai Artifact（发布时由平台补外壳）。
+  用于嵌入其他网页（由宿主页面补外壳）。
 源文件（index.html、css/、js/、fonts/）不改；改了源文件后重跑本脚本即可。
 """
 import base64, re, sys

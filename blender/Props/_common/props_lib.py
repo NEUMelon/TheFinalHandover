@@ -1,5 +1,5 @@
 # 《最后一次交班》Stage 3 · 道具组共用：建模小工具、烘焙（lsb_bake）、贴字 / 贴花、扁平化导出（export_fbx_unity.flatten）、回读检查、预览。
-# 由 Claude 编写（AI 编写脚本程序化生成，已登记 80_合规/AI使用日志）。
+# 由 AI 辅助工具编写（AI 编写脚本程序化生成，已登记 80_合规/AI使用日志）。
 # 轴向：Blender +X = 世界东，+Y = 世界北，+Z = 上；单位米。每个资产的根是 EMPTY “LSB_ENV_…_v01”，根下每个直接子物体 = 一个部件（原点 = 枢轴）。
 import bpy, bmesh, math, os, sys, json
 import numpy as np

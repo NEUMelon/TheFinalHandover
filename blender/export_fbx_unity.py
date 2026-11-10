@@ -1,4 +1,4 @@
-# 把 v02 .blend 导出成给 Unity 的 FBX（由 Claude 编写）。运行：python3 export_fbx_unity.py <blend> <fbx>
+# 把 v02 .blend 导出成给 Unity 的 FBX（由 AI 辅助工具编写）。运行：python3 export_fbx_unity.py <blend> <fbx>
 # v02 第一次导出（多层空物体 + 旋转父级 + 实验性 bake_space_transform）在 Unity 里整体躺倒、手轮脱位（10-15 引擎内截图）。
 # 现在的做法：
 #   1. 按“部件”合并网格：根下的每个直接子物体是一个部件；KEEP 里的名字（凹痕、手轮、柜门、交接灯、联锁继电器、胶布等）单独成部件。

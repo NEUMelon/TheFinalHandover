@@ -1,4 +1,4 @@
-# 《最后一次交班》Stage 3 · ENV 共用数据（贴图生成与建模脚本共用）。由 Claude 编写（AI 辅助，已登记 AI 使用日志）。
+# 《最后一次交班》Stage 3 · ENV 共用数据（贴图生成与建模脚本共用）。由 AI 辅助工具编写（AI 辅助，已登记 AI 使用日志）。
 # 坐标：Blender X = 世界东（Unity X），Blender Y = 世界北（Unity Z），Blender Z = 上（Unity Y）；原点 = 车间西南角室内地面。
 
 # 水磨石：一张平铺贴图 = 2 m × 2 m（2048 px，1024 px/m），四个 1 m 象限各是一块“分格”。

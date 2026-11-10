@@ -1,4 +1,4 @@
-# 杂项道具预览（由 Claude 编写）：python3 render_preview.py <ENV Workshop.blend> <Misc.fbx> <输出目录> [samples=32]
+# 杂项道具预览（由 AI 辅助工具编写）：python3 render_preview.py <ENV Workshop.blend> <Misc.fbx> <输出目录> [samples=32]
 # 场景 = ENV 建筑壳 + 本批道具。衡 MES 屏面是灰盒（不在本 FBX 里），预览里补两块冷白自发光片示意灰盒屏面位置。
 import bpy, sys, os, math
 from mathutils import Vector

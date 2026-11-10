@@ -1,4 +1,4 @@
-# 把 Textures/ 里的可平铺贴图接到 Blender 材质上（LT01 / 继电器柜构建脚本共用）。由 Claude 编写。
+# 把 Textures/ 里的可平铺贴图接到 Blender 材质上（LT01 / 继电器柜构建脚本共用）。由 AI 辅助工具编写。
 # 贴图 1 张 = 1 m，模型 UV 用 1 m 立方体投影（world_uv），所以各部件纹理密度一致（1024 px/m）。
 import bpy, os, math
 
