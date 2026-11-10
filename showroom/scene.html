@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>三号车间 · 拉闸之后 · 最后一次交班</title>
+<link rel="stylesheet" href="fonts.css">
+<link rel="stylesheet" href="style.css">
+<style>
+.clock{position:fixed;left:24px;top:72px;z-index:10;}
+.clock .tm{font-family:var(--mono);font-weight:700;font-size:30px;color:var(--warm);letter-spacing:.04em;line-height:1;}
+.clock .pl{font-family:var(--serif);font-weight:700;font-size:14px;color:var(--paper);margin-top:8px;letter-spacing:.1em;}
+.clock .sw{display:flex;gap:6px;margin-top:12px;}
+.nodes{position:fixed;left:50%;bottom:26px;transform:translateX(-50%);z-index:10;display:flex;gap:8px;flex-wrap:wrap;justify-content:center;width:max-content;max-width:calc(100vw - 24px);}
+.pull{position:fixed;right:26px;bottom:22px;z-index:11;display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;background:none;border:none;padding:0;}
+.pull .h{width:58px;height:96px;border-radius:6px;background:linear-gradient(180deg,#2a3346,#1a2132);border:1px solid rgba(232,180,90,.55);position:relative;box-shadow:0 6px 18px rgba(0,0,0,.4);}
+.pull .h i{position:absolute;left:50%;top:14px;width:8px;height:46px;margin-left:-4px;background:#b8433a;border-radius:4px;transform-origin:50% 100%;transition:transform .5s cubic-bezier(.6,-0.4,.4,1.4);}
+.pull .h i:after{content:"";position:absolute;left:-7px;top:-6px;width:22px;height:12px;border-radius:6px;background:#c9533f;}
+.pull .h b{position:absolute;left:0;right:0;bottom:8px;text-align:center;font-family:var(--mono);font-size:9px;color:var(--dim);letter-spacing:.1em;font-weight:400;}
+.pull span{font-family:var(--serif);font-weight:900;font-size:15px;letter-spacing:.3em;color:var(--paper);padding-left:.3em;}
+.pull.down .h i{transform:translateY(30px) scaleY(.35);}
+.pull[disabled]{opacity:.5;cursor:default;}
+.cap{position:fixed;left:50%;bottom:92px;transform:translateX(-50%);z-index:9;width:min(760px,calc(100vw - 40px));text-align:center;pointer-events:none;
+  font-family:var(--serif);font-size:16px;line-height:1.9;color:var(--paper);text-shadow:0 1px 10px rgba(0,0,0,.85);opacity:0;transition:opacity .9s;}
+.cap.show{opacity:1;}
+.cap .big{display:block;font-weight:900;font-size:30px;letter-spacing:.06em;margin-top:6px;color:#fff;}
+.cap .sm{font-family:var(--sans);font-size:13px;color:var(--muted);}
+.veil{position:fixed;inset:0;z-index:8;pointer-events:none;background:radial-gradient(ellipse at 50% 55%,rgba(0,0,0,0) 45%,rgba(0,0,0,.55) 100%);}
+.sound{position:fixed;right:20px;top:68px;z-index:10;}
+@media (max-width:760px){
+  .clock{top:60px;left:14px;} .clock .tm{font-size:22px;} .clock .pl{font-size:12px;}
+  .nodes{bottom:16px;gap:6px;max-width:calc(100vw - 100px);left:12px;transform:none;justify-content:flex-start;}
+  .pull{right:12px;bottom:14px;} .pull .h{width:46px;height:76px;} .pull span{font-size:12px;}
+  .cap{bottom:150px;font-size:14px;} .cap .big{font-size:21px;}
+  .sound{top:58px;right:10px;}
+}
+</style>
+</head>
+<body>
+<canvas class="view" id="c" tabindex="0"></canvas>
+<div class="veil"></div>
+<header class="top">
+  <div class="brand">最后一次交班<span>三号车间 · 拉闸之后</span></div>
+  <nav><a href="../index.html">首页</a><a href="index.html">模型展厅</a><a class="on" href="scene.html">三号车间 · 拉闸之后</a></nav>
+</header>
+<div class="clock">
+  <div class="tm" id="tm">23:50</div>
+  <div class="pl" id="pl">三号车间 · 最后一个中班</div>
+  <div class="sw"><button class="chip on" id="bNight">夜班 23:50</button><button class="chip" id="bDay">白天 16:00</button></div>
+</div>
+<button class="chip sound on" id="bSnd">声音 开</button>
+<div class="nodes" id="nodes"></div>
+<button class="pull" id="pull" title="拉闸"><div class="h"><i></i><b>总闸</b></div><span>拉闸</span></button>
+<div class="cap" id="cap"></div>
+<div class="load" id="load"><div class="t" id="loadT">正在打开三号车间的门……</div><div class="bar"><i id="loadBar"></i></div></div>
+<div class="err" id="err"><div><b>这台电脑的浏览器打不开 3D 画面</b>请换用最新版 Chrome 或 Edge，并确认浏览器设置里打开了“使用硬件加速”。</div></div>
+
+<script src="lib/three-bundle.js"></script>
+<script src="models/manifest.js"></script>
+<script src="common.js"></script>
+<script>
+(function () {
+  if (!SR.hasWebGL()) { document.getElementById('err').classList.add('show'); document.getElementById('load').style.display = 'none'; return; }
+  var T = window.T, THREE = T.THREE;
+  var $ = function (id) { return document.getElementById(id); };
+
+  // 机位：Unity 坐标 (x, y, z) → three.js (x, y, -z)；镜头焦距换算成垂直视角（画幅高 24 mm）
+  function U(x, y, z) { return new THREE.Vector3(x, y, -z); }
+  function fovOf(lens) { return 2 * Math.atan(12 / lens) * 180 / Math.PI; }
+  var NODES = [
+    { id: 'key', name: '全景', pos: U(3.6, 1.35, 8.0), tgt: U(11.0, 1.5, 11.8), lens: 26, cap: '三号车间。36 米长，18 米宽，六排钨丝灯，四台车床。' },
+    { id: 'lathe', name: 'LT01 车床', pos: U(5.2, 1.55, 8.4), tgt: U(8.2, 0.95, 11.2), lens: 30, cap: '新传感器装在右端，老周却一直听左边。' },
+    { id: 'hook', name: '吊钩', pos: U(7.2, 1.0, 5.9), tgt: U(6.0, 3.9, 4.0), lens: 30, cap: '缸里的水一晃，就知道收车早了还是晚了。' },
+    { id: 'desk', name: '交班桌', pos: U(25.6, 1.5, 11.7), tgt: U(26.6, 0.78, 12.9), lens: 35, cap: '“本子在桌上，按单子走。”' },
+    { id: 'cab', name: '继电器柜', pos: U(25.2, 1.55, 2.9), tgt: U(26.1, 1.35, 0.4), lens: 30, cap: '一颗继电器缠着红胶布，上面写着：护罩 87。' },
+    { id: 'aisle', name: '高处', pos: U(0.8, 3.2, 0.8), tgt: U(14.0, 0.8, 12.0), lens: 20, cap: '' }
+  ];
+  var OUT = { pos: U(23.2, 1.6, 8.0), tgt: U(2.0, 1.5, 9.5), lens: 28 };
+  var ROWX = [2, 6, 10, 14, 18, 22], ROWZ = [4.5, 9.0, 13.5];
+
+  var canvas = $('c');
+  var renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, powerPreference: 'high-performance' });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
+  renderer.outputColorSpace = THREE.SRGBColorSpace;
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.shadowMap.enabled = true; renderer.shadowMap.type = THREE.PCFShadowMap; renderer.shadowMap.autoUpdate = false; // 场景静止，阴影只算一次
+
+  var scene = new THREE.Scene();
+  var camera = new THREE.PerspectiveCamera(fovOf(26), 1, 0.05, 120);
+  var controls = new T.OrbitControls(camera, canvas);
+  controls.enableDamping = true; controls.dampingFactor = 0.08; controls.rotateSpeed = 0.5; controls.zoomSpeed = 0.7;
+  controls.minDistance = 0.4; controls.maxDistance = 14;
+
+  var pmrem = new THREE.PMREMGenerator(renderer);
+  scene.environment = pmrem.fromScene(new T.RoomEnvironment(), 0.04).texture;
+
+  var hemi = new THREE.HemisphereLight(0x33476b, 0x1a130d, 0.5);
+  var moon = new THREE.DirectionalLight(0x8fa8d8, 0.35); moon.position.set(30, 14, 6); moon.target.position.set(14, 0, -9);
+  var sun = new THREE.DirectionalLight(0xffcc94, 0); sun.castShadow = true; sun.shadow.mapSize.set(4096, 4096); sun.shadow.bias = -0.0003; sun.shadow.normalBias = 0.03;
+  var sd = new THREE.Vector3(0.787, -0.276, -0.551).normalize();
+  sun.target.position.set(15, 0, -9); sun.position.copy(sun.target.position).addScaledVector(sd, -40);
+  var sc = sun.shadow.camera; sc.left = -26; sc.right = 26; sc.top = 16; sc.bottom = -16; sc.near = 1; sc.far = 90;
+  scene.add(hemi, moon, moon.target, sun, sun.target);
+
+  var PS = new URLSearchParams(location.search).get('ps') !== '0'; // 吊灯阴影
+  var bulbs = [], deskLights = [];
+  var rowLights = [], rowGlows = [[], [], [], [], [], []], rowLevel = [1, 1, 1, 1, 1, 1];
+  ROWX.forEach(function (x, r) {
+    var l = new THREE.PointLight(0xffa850, 0, 0, 2); l.position.set(x, 4.9, -9); l.castShadow = PS; l.shadow.mapSize.set(512, 512); l.shadow.bias = -0.002; l.shadow.normalBias = 0.04; l.shadow.radius = 3; l.shadow.camera.near = 0.3; l.shadow.camera.far = 30; scene.add(l); rowLights.push(l);
+  });
+  var GLOW_ON = new THREE.Color(1.0, 0.78, 0.5).multiplyScalar(4), GLOW_OFF = new THREE.Color(0.16, 0.15, 0.13);
+
+  var composer = new T.EffectComposer(renderer);
+  composer.addPass(new T.RenderPass(scene, camera));
+  var bloom = new T.UnrealBloomPass(new THREE.Vector2(512, 512), 0.6, 0.4, 2.2);
+  composer.addPass(bloom);
+  composer.addPass(new T.OutputPass());
+
+  var MODE = 'night';
+  var LAMP_I = +(new URLSearchParams(location.search).get('li') || 22);
+  function setRow(r, k) { // k: 0..1 亮度
+    rowLevel[r] = k;
+    rowLights[r].intensity = (MODE === 'night' ? LAMP_I : 0) * k;
+    rowGlows[r].forEach(function (m) {
+      m.color.copy(GLOW_OFF).lerp(GLOW_ON, MODE === 'night' ? k : 0);
+    });
+    if (MODE === 'night') { // 灯越暗，眼睛越适应，窗外的月光越显
+      var avg = rowLevel.reduce(function (a, b) { return a + b; }, 0) / 6;
+      sun.intensity = 0.6 + 0.9 * (1 - avg);
+    }
+  }
+  function applyMode() {
+    var night = MODE === 'night';
+    scene.background = new THREE.Color(night ? 0x070d18 : 0x9aa6b4);
+    scene.fog = night ? new THREE.FogExp2(0x0a1322, 0.028) : new THREE.FogExp2(0xb8b0a0, 0.012);
+    hemi.color.setHex(night ? 0x33476b : 0xa8b8cc); hemi.groundColor.setHex(night ? 0x1a130d : 0x4a3a2a); hemi.intensity = night ? 0.18 : 1.1;
+    moon.intensity = night ? 0.12 : 0;
+    sun.intensity = night ? 0.6 : 4.2; sun.color.setHex(night ? 0x7d9bd8 : 0xffcc94); // 夜里同一扇窗进来的是月光
+    scene.environmentIntensity = night ? 0.03 : 0.45;
+    renderer.toneMappingExposure = night ? 1.0 : 0.9;
+    bloom.strength = night ? 0.6 : 0.1;
+    for (var r = 0; r < 6; r++) setRow(r, rowLevel[r]);
+    $('tm').textContent = night ? '23:50' : '16:00';
+    $('pl').textContent = night ? '三号车间 · 最后一个中班' : '三号车间 · 中班开始';
+    $('bNight').classList.toggle('on', night); $('bDay').classList.toggle('on', !night);
+  }
+
+  // ---------- 声音（全部实时合成，不载入音频文件） ----------
+  var AC = null, master = null, hum = null, soundOn = true;
+  function audio() {
+    if (AC) return AC;
+    try {
+      AC = new (window.AudioContext || window.webkitAudioContext)();
+      master = AC.createGain(); master.gain.value = 0.9; master.connect(AC.destination);
+      hum = AC.createGain(); hum.gain.value = 0; var lp = AC.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 420;
+      [100, 150, 200, 300].forEach(function (f, i) { var o = AC.createOscillator(); o.frequency.value = f; var g = AC.createGain(); g.gain.value = [0.5, 0.18, 0.12, 0.05][i]; o.connect(g); g.connect(lp); o.start(); });
+      lp.connect(hum); hum.connect(master);
+    } catch (e) { AC = null; }
+    return AC;
+  }
+  function noise(dur, f, q, gain, pan, at) {
+    if (!AC || !soundOn) return;
+    var t = at || AC.currentTime, n = Math.floor(AC.sampleRate * dur), buf = AC.createBuffer(1, n, AC.sampleRate), d = buf.getChannelData(0);
+    for (var i = 0; i < n; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / n, 3);
+    var s = AC.createBufferSource(); s.buffer = buf; var bp = AC.createBiquadFilter(); bp.type = 'bandpass'; bp.frequency.value = f; bp.Q.value = q;
+    var g = AC.createGain(); g.gain.value = gain; s.connect(bp); bp.connect(g);
+    if (AC.createStereoPanner) { var p = AC.createStereoPanner(); p.pan.value = pan || 0; g.connect(p); p.connect(master); } else g.connect(master);
+    s.start(t);
+  }
+  function thump(at) {
+    if (!AC || !soundOn) return;
+    var t = at || AC.currentTime, o = AC.createOscillator(), g = AC.createGain();
+    o.frequency.setValueAtTime(90, t); o.frequency.exponentialRampToValueAtTime(38, t + 0.25);
+    g.gain.setValueAtTime(0.7, t); g.gain.exponentialRampToValueAtTime(0.001, t + 0.35); o.connect(g); g.connect(master); o.start(t); o.stop(t + 0.4);
+  }
+  function setHum(v) { if (AC && hum) hum.gain.setTargetAtTime(soundOn ? v : 0, AC.currentTime, 0.25); }
+
+  // ---------- 机位 ----------
+  var tween = null;
+  function goto(n, dur, cb) {
+    var p0 = camera.position.clone(), t0 = controls.target.clone(), f0 = camera.fov, f1 = fovOf(n.lens);
+    var start = performance.now(); dur = dur || 1800;
+    tween = function (now) {
+      var k = Math.min(1, (now - start) / dur), e = k < 0.5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2;
+      camera.position.lerpVectors(p0, n.pos, e); controls.target.lerpVectors(t0, n.tgt, e);
+      camera.fov = f0 + (f1 - f0) * e; camera.updateProjectionMatrix();
+      if (k >= 1) { tween = null; if (cb) cb(); }
+    };
+  }
+  var nodesEl = $('nodes'), capEl = $('cap'), capTimer = null;
+  function caption(html, ms) {
+    clearTimeout(capTimer); capEl.innerHTML = html; capEl.classList.add('show');
+    if (ms) capTimer = setTimeout(function () { capEl.classList.remove('show'); }, ms);
+  }
+  nodesEl.innerHTML = NODES.map(function (n, i) { return '<button class="chip' + (i === 0 ? ' on' : '') + '" data-i="' + i + '">' + n.name + '</button>'; }).join('');
+  nodesEl.addEventListener('click', function (e) {
+    var b = e.target.closest('.chip'); if (!b || busy) return;
+    var n = NODES[+b.getAttribute('data-i')];
+    [].forEach.call(nodesEl.children, function (c) { c.classList.toggle('on', c === b); });
+    goto(n, 1800, function () { if (n.cap) caption(n.cap, 4200); });
+  });
+
+  // ---------- 拉闸 ----------
+  var busy = false, pulled = false;
+  function wait(ms) { return new Promise(function (r) { setTimeout(r, ms); }); }
+  function fadeRow(r, ms) {
+    var s = performance.now();
+    return new Promise(function (res) {
+      (function step() {
+        var k = Math.min(1, (performance.now() - s) / ms);
+        var flick = k < 0.25 ? (Math.random() < 0.5 ? 0.35 : 1) : Math.pow(1 - (k - 0.25) / 0.75, 2.2);
+        setRow(r, k < 1 ? flick : 0);
+        if (k < 1) requestAnimationFrame(step); else res();
+      })();
+    });
+  }
+  $('pull').onclick = function () {
+    if (busy) return;
+    audio(); if (AC && AC.state === 'suspended') AC.resume();
+    if (pulled) { // 重新开灯
+      pulled = false; busy = true; $('pull').querySelector('span').textContent = '拉闸'; $('pull').classList.remove('down');
+      capEl.classList.remove('show');
+      var r = 0; (function on() { if (r < 6) { setRow(r, 1); noise(0.03, 2400, 3, 0.4, 0); r++; setTimeout(on, 160); } else { busy = false; setHum(0.05); } })();
+      return;
+    }
+    busy = true; $('pull').setAttribute('disabled', '');
+    if (MODE !== 'night') { MODE = 'night'; applyMode(); }
+    capEl.classList.remove('show'); $('tm').textContent = '23:58';
+    [].forEach.call(nodesEl.children, function (c) { c.classList.remove('on'); });
+    goto(OUT, 2200, function () {
+      $('pull').classList.add('down');
+      thump(); noise(0.08, 900, 1.2, 0.9, 0.2); setHum(0.06);
+      var chain = wait(900);
+      [5, 4, 3, 2, 1, 0].forEach(function (r, i) {
+        chain = chain.then(function () {
+          noise(0.05, 1600, 2, 0.5, (ROWX[r] - 12) / 14 * -0.6);
+          setHum(0.06 * (5 - i) / 6);
+          return fadeRow(r, 700);
+        }).then(function () { return wait(i === 5 ? 1400 : 650); });
+      });
+      chain.then(function () {
+        caption('<span class="sm">23:58</span><br>六排钨丝灯由近及远熄灭。车间里没有台词。', 0);
+        return wait(3600);
+      }).then(function () {
+        capEl.classList.remove('show'); return wait(1200);
+      }).then(function () {
+        caption('<span class="sm">周建国第一次走进画面，只问了一句</span><span class="big">“左边那个咔哒，你听见了吗？”</span>', 0);
+        if (AC) { var t = AC.currentTime + 0.6; for (var k = 0; k < 7; k++) noise(0.018, 3200, 6, 0.55, -0.85, t + k * 0.29); }
+        return wait(3800);
+      }).then(function () {
+        busy = false; pulled = true; $('pull').removeAttribute('disabled'); $('pull').querySelector('span').textContent = '开灯';
+      });
+    });
+  };
+  $('bNight').onclick = function () { if (busy) return; MODE = 'night'; applyMode(); };
+  $('bDay').onclick = function () { if (busy) return; MODE = 'day'; for (var r = 0; r < 6; r++) rowLevel[r] = 1; pulled = false; $('pull').classList.remove('down'); $('pull').querySelector('span').textContent = '拉闸'; applyMode(); };
+  $('bSnd').onclick = function () { soundOn = !soundOn; this.classList.toggle('on', soundOn); this.textContent = soundOn ? '声音 开' : '声音 关'; audio(); if (AC && AC.state === 'suspended') AC.resume(); setHum(soundOn ? 0.05 * rowLevel.reduce(function (a, b) { return a + b; }, 0) / 6 : 0); };
+  canvas.addEventListener('pointerdown', function () { if (!AC) { audio(); if (AC) { if (AC.state === 'suspended') AC.resume(); setHum(0.05); } } }, { once: true });
+
+  function resize() {
+    var w = window.innerWidth, h = window.innerHeight;
+    renderer.setSize(w, h, false); composer.setSize(w, h);
+    camera.aspect = w / h; camera.updateProjectionMatrix();
+  }
+  window.addEventListener('resize', resize); resize();
+
+  camera.position.copy(NODES[0].pos); controls.target.copy(NODES[0].tgt); camera.fov = fovOf(NODES[0].lens); camera.updateProjectionMatrix();
+
+  SR.loadGLB('scene', function (p) { $('loadBar').style.width = Math.max(4, p * 90) + '%'; }).then(function (g) {
+    g.scene.traverse(function (o) {
+      if (!o.isMesh) return;
+      o.castShadow = true; o.receiveShadow = true;
+      var m = /^Lamp_r(\d)_c(\d)_Glow/.exec(o.name) || (o.parent && /^Lamp_r(\d)_c(\d)_Glow/.exec(o.parent.name));
+      if (m) {
+        var mat = new THREE.MeshBasicMaterial({ color: GLOW_ON.clone(), toneMapped: false });
+        o.material = mat; o.castShadow = false; rowGlows[+m[1]].push(mat);
+      }
+      var mats = Array.isArray(o.material) ? o.material : [o.material];
+      mats.forEach(function (mt) {
+        if (!mt || !mt.name) return;
+        if (/HandoverLamp_On/.test(mt.name)) { mt.emissive = new THREE.Color(0xff9a3a); mt.emissiveIntensity = 1.4; }
+        if (/StatusLED/.test(mt.name)) { mt.emissive = new THREE.Color(0x66ff99); mt.emissiveIntensity = 1.6; }
+        if (/DSK_LampBulb/.test(mt.name)) { mt.emissive = new THREE.Color(0xffc887); mt.emissiveIntensity = 3; bulbs.push(o); }
+      });
+    });
+    scene.add(g.scene);
+    scene.updateMatrixWorld(true);
+    bulbs.forEach(function (o) { // 交班桌台灯：拉闸后它还亮着
+      var c = new THREE.Box3().setFromObject(o).getCenter(new THREE.Vector3());
+      var dl = new THREE.PointLight(0xffc27a, 1.6, 0, 2); dl.position.copy(c).add(new THREE.Vector3(0, -0.06, 0)); scene.add(dl); deskLights.push(dl);
+    });
+    applyMode(); renderer.shadowMap.needsUpdate = true;
+    $('loadBar').style.width = '100%'; $('load').classList.add('hide');
+    setTimeout(function () { caption(NODES[0].cap + '<br><span class="sm">点下方切换机位，拖动画面环顾；右下角拉闸。</span>', 6000); }, 600);
+    window.__ready = true;
+  }).catch(function (e) { $('loadT').textContent = '载入失败，请刷新重试'; console.error(e); });
+
+  // 性能自适应：载入后量 60 帧，慢就先关吊灯阴影，再降分辨率
+  var perf = { n: 0, t0: 0, step: 0 };
+  function adapt(now) {
+    if (!window.__ready || perf.step > 1) return;
+    if (!perf.t0) { perf.t0 = now; perf.n = 0; return; }
+    if (++perf.n < 60) return;
+    var ms = (now - perf.t0) / perf.n; perf.t0 = 0;
+    if (ms < 30) { perf.step = 2; return; }
+    if (perf.step === 0 && PS) { rowLights.forEach(function (l) { l.castShadow = false; }); renderer.shadowMap.needsUpdate = true; perf.step = 1; }
+    else { renderer.setPixelRatio(1); resize(); perf.step = 2; }
+  }
+  (function loop(now) {
+    requestAnimationFrame(loop);
+    now = now || performance.now();
+    if (tween) tween(now);
+    controls.update();
+    composer.render();
+    adapt(now);
+  })();
+})();
+</script>
+</body>
+</html>

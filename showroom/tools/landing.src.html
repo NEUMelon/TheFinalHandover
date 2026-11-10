@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>最后一次交班 · 在线演示</title>
+<link rel="stylesheet" href="showroom/fonts.css">
+<link rel="stylesheet" href="showroom/style.css">
+<style>
+html,body{height:auto;}
+body{background:var(--navy);}
+.hero{position:relative;min-height:min(88vh,760px);display:flex;align-items:flex-end;justify-content:flex-end;overflow:hidden;}
+.hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:30% 40%;}
+.hero:after{content:"";position:absolute;inset:0;background:linear-gradient(270deg,rgba(10,18,32,.9) 0%,rgba(10,18,32,.62) 34%,rgba(10,18,32,0) 62%),linear-gradient(0deg,var(--navy) 0%,rgba(15,28,48,0) 30%);}
+.hero .in{position:relative;z-index:1;padding:0 64px 76px;width:600px;max-width:100%;}
+.kick{font-size:12px;letter-spacing:.32em;color:var(--warm);}
+h1{font-family:var(--serif);font-weight:900;font-size:64px;letter-spacing:.08em;margin:14px 0 8px;color:var(--paper);line-height:1.15;}
+.motto{font-family:var(--serif);font-weight:700;font-size:20px;letter-spacing:.2em;color:var(--paper);opacity:.86;}
+.lead{font-family:var(--serif);font-size:16px;line-height:2;color:var(--ink);margin:22px 0 0;max-width:520px;}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;padding:8px 56px 40px;max-width:1440px;margin:0 auto;}
+.cd{display:flex;flex-direction:column;text-decoration:none;background:var(--navy2);border:1px solid var(--line);transition:border-color .2s,transform .2s;}
+.cd:hover{border-color:rgba(232,180,90,.7);transform:translateY(-2px);}
+.cd .ph{aspect-ratio:16/9;overflow:hidden;background:#0a1220;}
+.cd .ph img{width:100%;height:100%;object-fit:cover;display:block;}
+.cd .tx{padding:18px 20px 20px;display:flex;flex-direction:column;flex:1;}
+.cd .no{font-family:var(--mono);font-weight:700;font-size:11px;color:var(--warm);letter-spacing:.12em;}
+.cd h2{font-family:var(--serif);font-weight:900;font-size:22px;letter-spacing:.04em;margin:6px 0 8px;color:var(--paper);}
+.cd p{font-family:var(--serif);font-size:14.5px;line-height:1.95;color:var(--ink);margin:0 0 14px;flex:1;}
+.cd .tg{font-size:12px;color:var(--muted);display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--line);padding-top:12px;}
+.cd .go{color:var(--warm);font-weight:500;}
+.foot{max-width:1440px;margin:0 auto;padding:6px 56px 48px;font-size:12.5px;line-height:1.9;color:var(--dim);}
+.foot b{color:var(--muted);font-weight:500;}
+@media (max-width:980px){ .grid{grid-template-columns:1fr 1fr;} }
+@media (max-width:680px){
+  .hero{min-height:78vh;} .hero .in{padding:0 18px 40px;} h1{font-size:40px;} .motto{font-size:16px;} .lead{font-size:14.5px;}
+  .hero:after{background:linear-gradient(0deg,var(--navy) 6%,rgba(10,18,32,.72) 55%,rgba(10,18,32,.25) 100%);}
+  .grid{grid-template-columns:1fr;padding:8px 16px 28px;gap:16px;} .foot{padding:6px 16px 36px;}
+}
+</style>
+</head>
+<body>
+<section class="hero">
+  <img src="{{img:desk}}" alt="交班桌，台灯还亮着">
+  <div class="in">
+    <div class="kick">怀旧主题 · 原创游戏设计 · 在线演示</div>
+    <h1>最后一次交班</h1>
+    <div class="motto">机器会停，手艺不停。</div>
+    <p class="lead">2026 年 10 月，一座老机械厂的三号车间迎来最后一个人工中班。我们把这间车间和里面的每一件东西都做成了模型，打开浏览器就能走进去看。</p>
+  </div>
+</section>
+<main class="grid">
+  <a class="cd" href="showroom/scene.html">
+    <div class="ph"><img src="{{img:night}}" alt="三号车间夜班"></div>
+    <div class="tx">
+      <div class="no">01 · 3D 场景</div>
+      <h2>三号车间 · 拉闸之后</h2>
+      <p>整座车间可以环顾。夜班的钨丝灯、白天从高窗斜进来的光，六个机位任选。右下角的总闸，可以亲手拉下。</p>
+      <div class="tg"><span>{{size:scene}} · 建议戴耳机</span><span class="go">进入车间 →</span></div>
+    </div>
+  </a>
+  <a class="cd" href="showroom/index.html">
+    <div class="ph"><img src="{{img:gallery}}" alt="模型展厅里的 LT01 车床"></div>
+    <div class="tx">
+      <div class="no">02 · 模型展厅</div>
+      <h2>十一件模型，逐件细看</h2>
+      <p>车床、天车、继电器柜、交班桌、交班本、更衣柜……每件都能转着看，附一段它在故事里的来历，以及面数和贴图规格。</p>
+      <div class="tg"><span>Blender 建模 · 可切线框</span><span class="go">打开展厅 →</span></div>
+    </div>
+  </a>
+  <a class="cd" href="web-prototype/dist/%E6%9C%80%E5%90%8E%E4%B8%80%E6%AC%A1%E4%BA%A4%E7%8F%AD_UI%E5%8E%9F%E5%9E%8B.html">
+    <div class="ph"><img src="{{img:proto}}" alt="谜题二时频图界面"></div>
+    <div class="tx">
+      <div class="no">03 · 可玩原型</div>
+      <h2>谜题二 · 咔哒在左</h2>
+      <p>能从头点到尾的界面原型。贴上听针，在时频图里框出那一下咔哒，再把它写成一条以老师傅名字命名的规则。</p>
+      <div class="tg"><span>纯网页 · 手机横屏也能玩</span><span class="go">开始试玩 →</span></div>
+    </div>
+  </a>
+</main>
+<footer class="foot">
+  建议用电脑上的 Chrome 或 Edge 打开；3D 页面第一次载入需要几秒到十几秒。<br>
+  <b>开源</b>　模型、贴图按 CC BY-NC 4.0，代码按 MIT。Blender 建模脚本在仓库的 blender/ 目录，FBX 模型和贴图在 unity/UnityProject/Assets/LSB_Art/，网页版的导出与压缩脚本在 showroom/tools/。
+</footer>
+</body>
+</html>

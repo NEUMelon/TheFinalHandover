@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>模型展厅 · 最后一次交班</title>
+<link rel="stylesheet" href="fonts.css">
+<link rel="stylesheet" href="style.css">
+<style>
+.side{position:fixed;left:0;top:56px;bottom:0;width:290px;z-index:10;overflow-y:auto;padding:14px 14px 24px 22px;
+  background:linear-gradient(90deg,rgba(12,22,38,.9),rgba(12,22,38,.72) 80%,rgba(12,22,38,0));}
+.side h2{font-family:var(--serif);font-weight:700;font-size:12px;letter-spacing:.32em;color:var(--warm);margin:18px 0 6px;}
+.side h2:first-child{margin-top:4px;}
+.it{display:flex;align-items:baseline;gap:10px;width:100%;text-align:left;background:none;border:none;border-left:2px solid transparent;
+  padding:8px 10px;cursor:pointer;color:var(--muted);font-size:14px;}
+.it:hover{color:var(--ink);}
+.it.on{color:var(--paper);border-left-color:var(--warm);background:rgba(255,255,255,.04);}
+.it .n{font-family:var(--serif);font-weight:700;}
+.it .k{margin-left:auto;font-family:var(--mono);font-size:10.5px;color:var(--dim);}
+.side .about{margin-top:22px;font-size:12px;line-height:1.85;color:var(--dim);padding-right:6px;}
+.card{position:fixed;left:312px;bottom:26px;width:min(470px,calc(100vw - 340px));z-index:10;background:var(--panel);backdrop-filter:blur(8px);
+  border:1px solid var(--line);border-left:3px solid var(--warm);padding:16px 20px 15px;}
+.card .nm{font-family:var(--serif);font-weight:900;font-size:22px;letter-spacing:.04em;color:var(--paper);}
+.card .sb{font-size:12px;color:var(--warm);margin-top:3px;letter-spacing:.06em;}
+.card p{font-family:var(--serif);font-size:14.5px;line-height:1.95;margin:10px 0 12px;color:var(--ink);}
+.card .sp{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:11.5px;color:var(--muted);border-top:1px solid var(--line);padding-top:9px;}
+.card .sp b{font-family:var(--mono);font-weight:700;color:var(--ink);margin-left:4px;}
+.tools{position:fixed;right:20px;top:68px;z-index:10;display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;}
+.hint{position:fixed;right:22px;bottom:22px;z-index:10;font-size:11.5px;color:var(--dim);text-align:right;line-height:1.7;}
+@media (max-width:760px){
+  .side{top:auto;bottom:0;left:0;right:0;width:auto;height:auto;display:flex;gap:2px;overflow-x:auto;overflow-y:hidden;padding:8px 10px;
+    background:rgba(12,22,38,.92);white-space:nowrap;}
+  .side h2,.side .about{display:none;}
+  .it{width:auto;flex:none;border-left:none;border-bottom:2px solid transparent;padding:8px 10px;}
+  .it.on{border-bottom-color:var(--warm);}
+  .it .k{display:none;}
+  .card{left:12px;right:12px;width:auto;bottom:64px;padding:12px 14px;}
+  .card .nm{font-size:18px;}
+  .card p{font-size:13px;line-height:1.8;margin:6px 0 8px;}
+  .tools{top:58px;right:10px;left:10px;justify-content:flex-start;}
+  .chip{padding:6px 11px;font-size:12px;}
+  .hint{display:none;}
+}
+</style>
+</head>
+<body>
+<canvas class="view" id="c" tabindex="0"></canvas>
+<header class="top">
+  <div class="brand">最后一次交班<span>模型展厅</span></div>
+  <nav><a href="../index.html">首页</a><a class="on" href="index.html">模型展厅</a><a href="scene.html">三号车间 · 拉闸之后</a></nav>
+</header>
+<aside class="side" id="side"></aside>
+<section class="card" id="card"></section>
+<div class="tools">
+  <button class="chip on" id="bTung">钨丝灯</button>
+  <button class="chip" id="bDay">白天</button>
+  <button class="chip" id="bWire">线框</button>
+  <button class="chip on" id="bSpin">自动旋转</button>
+  <button class="chip" id="bReset">复位</button>
+</div>
+<div class="hint">拖动旋转　滚轮缩放　右键平移<br>↑ ↓ 切换模型</div>
+<div class="load" id="load"><div class="t" id="loadT">正在搬进车间……</div><div class="bar"><i id="loadBar"></i></div></div>
+<div class="err" id="err"><div><b>这台电脑的浏览器打不开 3D 画面</b>请换用最新版 Chrome 或 Edge，并确认浏览器设置里打开了“使用硬件加速”。</div></div>
+
+<script src="lib/three-bundle.js"></script>
+<script src="models/manifest.js"></script>
+<script src="common.js"></script>
+<script>
+(function () {
+  var ITEMS = [
+    { g: '机床与设备', key: 'lt01', name: 'LT01 车床', sub: 'HC-620 型普通车床（虚构）· 三号车间的主角',
+      story: '左端有一圈 1983 年的测点环，周铁生就在这里听轴承；右端那颗 2025 年的新传感器，是衡的耳朵。手常碰的手轮和手柄磨得露铁发亮，护罩上留着 1987 年的凹痕。',
+      tris: 39556, size: '2.87 × 1.00 × 1.81 m', tex: '4096²（网页版 2048²）' },
+    { g: '机床与设备', key: 'lathemid', name: 'LT02–04 车床', sub: '同一排的另外三台',
+      story: '和 LT01 同一型号，撑起车间的纵深。面数只有主角的三分之一，磨损也更均匀。三台站成一排，车间才像真的开过几十年工。',
+      tris: 13976, size: '2.87 × 0.98 × 1.81 m', tex: '2048²（网页版 1024²）' },
+    { g: '机床与设备', key: 'cabinet', dir: [0.8, 0.38, -1.3], name: '继电器旧柜', sub: '护罩联锁所在的地方',
+      story: '1998 年的灰色线槽和 2025 年的新线槽并排走。一颗继电器缠着红胶布，写着“护罩 87”；柜门上四盏交接灯，玩家每确认一条规则，就熄灭一盏。',
+      tris: 26672, size: '1.02 × 0.65 × 2.01 m', tex: '2048²（网页版 1024²）' },
+    { g: '机床与设备', key: 'crane', name: 'CR01 天车', sub: '孙桂兰开过的天车',
+      story: '吊钩下挂着两只搪瓷缸，缸里盛着水。收车稳不稳，看水洒不洒：“我这手，就比钩子早半拍。”',
+      tris: 34732, size: '3.80 × 17.10 × 5.85 m', tex: '2048²（网页版 1024²）' },
+    { g: '交班桌上', key: 'desk', name: '交班桌', sub: '所有节点都从这里出发',
+      story: '台灯、玻璃板、一把旧椅子。最后一卷交班本就放在这张桌上，等最后一次签字。',
+      tris: 2748, size: '0.92 × 1.60 × 1.17 m', tex: '2048²（网页版 1024²）' },
+    { g: '交班桌上', key: 'ledger', name: '交班本', sub: '三代人的贴页',
+      story: '纸页里夹着三代工人的批注、变更单和工票，书签一层叠一层。最后一页的接班人一栏，留给玩家签名。',
+      tris: 3326, size: '0.35 × 0.26 × 0.05 m', tex: '2048²（网页版 1024²）' },
+    { g: '交班桌上', key: 'tape', name: '录音机与磁带', sub: '抽屉里的那盘磁带',
+      story: '1990 年代广播站对天车司机孙桂兰的一次采访。“开天车啊，稳不稳看手。”',
+      tris: 1498, size: '0.30 × 0.25 × 0.08 m', tex: '2048²（网页版 1024²）' },
+    { g: '交班桌上', key: 'toolbox', name: '工具箱', sub: '蓝漆磨掉了好几块',
+      story: '交班桌旁的铁皮工具箱。提手被握得发亮，听针就搁在盖子上。',
+      tris: 768, size: '0.49 × 0.25 × 0.26 m', tex: '1024²' },
+    { g: '交班桌上', key: 'rod', name: '听针', sub: '老师傅的听诊器',
+      story: '一头贴在机器上，一头贴着耳朵。左右挪一挪，就知道毛病在哪一边。玩家拿到的第一件工具。',
+      tris: 538, size: '0.46 × 0.04 × 0.04 m', tex: '512²' },
+    { g: '车间里', key: 'lockers', name: '更衣柜', sub: '六只，其中一只是老周的',
+      story: '老周那只柜门上，名牌还插在卡槽里。结局时，考勤架最末一格的空工号卡，是留给玩家的。',
+      tris: 5046, size: '4.60 × 0.55 × 1.80 m', tex: '2048²（网页版 1024²）' },
+    { g: '车间里', key: 'lamp', fit: { r: 0.42, y: 0.16 }, dir: [1, 0.25, 1.3], name: '搪瓷吊灯', sub: '十八盏，六排',
+      story: '车间顶上的搪瓷灯罩和钨丝灯泡。结局拉闸，它们由近及远，一排一排熄灭。',
+      tris: 690, size: '0.46 × 0.45 × 3.60 m（含吊杆）', tex: '512²' }
+  ];
+
+  if (!SR.hasWebGL()) { document.getElementById('err').classList.add('show'); document.getElementById('load').style.display = 'none'; return; }
+
+  var T = window.T, THREE = T.THREE;
+  var canvas = document.getElementById('c');
+  var renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+  renderer.outputColorSpace = THREE.SRGBColorSpace;
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.shadowMap.enabled = true; renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+  var scene = new THREE.Scene();
+  var camera = new THREE.PerspectiveCamera(32, 1, 0.01, 400);
+  var controls = new T.OrbitControls(camera, canvas);
+  controls.enableDamping = true; controls.dampingFactor = 0.08; controls.autoRotateSpeed = 0.7;
+  controls.autoRotate = true;
+
+  var pmrem = new THREE.PMREMGenerator(renderer);
+  scene.environment = pmrem.fromScene(new T.RoomEnvironment(), 0.04).texture;
+
+  var ground = new THREE.Mesh(new THREE.CircleGeometry(1, 64), new THREE.ShadowMaterial({ opacity: 0.38 }));
+  ground.rotation.x = -Math.PI / 2; ground.receiveShadow = true; scene.add(ground);
+  var floorGlow = new THREE.Mesh(new THREE.CircleGeometry(1, 64), new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.05, depthWrite: false }));
+  floorGlow.rotation.x = -Math.PI / 2; floorGlow.position.y = 0.0005; scene.add(floorGlow);
+
+  var key = new THREE.DirectionalLight(0xffffff, 2); key.castShadow = true; key.shadow.mapSize.set(2048, 2048); key.shadow.bias = -0.0004; key.shadow.normalBias = 0.02;
+  var fill = new THREE.DirectionalLight(0xffffff, 0.4);
+  var rim = new THREE.DirectionalLight(0xffffff, 1);
+  scene.add(key, key.target, fill, rim);
+
+  var LIGHTS = {
+    tung: { bg: 0x0f1a2b, env: 0.22, exp: 1.08, key: [0xffaa5e, 3.0], fill: [0x5f7aa8, 0.45], rim: [0xffd29a, 1.6], glow: 0.05 },
+    day:  { bg: 0xc7ccd0, env: 0.95, exp: 0.95, key: [0xfff1e0, 2.2], fill: [0xd8e6ff, 0.55], rim: [0xffffff, 0.7], glow: 0.0 }
+  };
+  var mode = 'tung';
+  function applyLight() {
+    var L = LIGHTS[mode];
+    scene.background = new THREE.Color(L.bg);
+    scene.environmentIntensity = L.env;
+    renderer.toneMappingExposure = L.exp;
+    key.color.setHex(L.key[0]); key.intensity = L.key[1];
+    fill.color.setHex(L.fill[0]); fill.intensity = L.fill[1];
+    rim.color.setHex(L.rim[0]); rim.intensity = L.rim[1];
+    floorGlow.material.opacity = L.glow;
+    ground.material.opacity = mode === 'day' ? 0.28 : 0.42;
+    document.getElementById('bTung').classList.toggle('on', mode === 'tung');
+    document.getElementById('bDay').classList.toggle('on', mode === 'day');
+  }
+
+  var cache = {}, current = null, curItem = null, wire = false, radius = 1, fitPos = new THREE.Vector3(), fitTarget = new THREE.Vector3();
+  var side = document.getElementById('side'), card = document.getElementById('card');
+  var load = document.getElementById('load'), loadBar = document.getElementById('loadBar'), loadT = document.getElementById('loadT');
+
+  var html = '', lastG = '';
+  ITEMS.forEach(function (it, i) {
+    if (it.g !== lastG) { html += '<h2>' + it.g + '</h2>'; lastG = it.g; }
+    html += '<button class="it" data-i="' + i + '"><span class="n">' + it.name + '</span><span class="k">' + (it.tris / 1000).toFixed(1) + 'k</span></button>';
+  });
+  html += '<div class="about">全部模型由 Blender 建模、按“手常碰的地方磨得最狠”的规则合成做旧贴图，网页版贴图已压缩。建模脚本在开源仓库的 blender/ 目录，FBX 和原尺寸贴图在 unity/ 工程里。</div>';
+  side.innerHTML = html;
+  side.addEventListener('click', function (e) {
+    var b = e.target.closest('.it'); if (b) show(+b.getAttribute('data-i'));
+  });
+
+  function setWire(obj) {
+    obj.traverse(function (o) {
+      if (o.isMesh) (Array.isArray(o.material) ? o.material : [o.material]).forEach(function (m) { m.wireframe = wire; });
+    });
+  }
+
+  function frame(obj) {
+    var box = new THREE.Box3().setFromObject(obj);
+    var size = box.getSize(new THREE.Vector3()), c = box.getCenter(new THREE.Vector3());
+    obj.position.x -= c.x; obj.position.z -= c.z; obj.position.y -= box.min.y;
+    radius = size.length() / 2;
+    var vf = camera.fov * Math.PI / 180, hf = 2 * Math.atan(Math.tan(vf / 2) * camera.aspect);
+    var it = ITEMS[curItem], tall = size.y > Math.max(size.x, size.z);
+    var dist = radius / Math.sin(Math.min(vf, hf) / 2) * (tall ? 1.08 : 0.92);
+    fitTarget.set(0, size.y * (tall ? 0.5 : 0.45), 0);
+    if (it.fit) { dist = it.fit.r / Math.sin(Math.min(vf, hf) / 2); fitTarget.y = it.fit.y; } // 只框住一部分（吊灯只看灯罩）
+    var d = it.dir || [1, 0.42, 1.3]; // 机位方向：正面朝向不同的模型各自指定
+    fitPos.set(d[0], d[1], d[2]).normalize().multiplyScalar(dist).add(fitTarget);
+    camera.near = Math.max(0.005, radius / 200); camera.far = radius * 40; camera.updateProjectionMatrix();
+    controls.minDistance = radius * 0.25; controls.maxDistance = radius * 6;
+    camera.position.copy(fitPos); controls.target.copy(fitTarget); controls.update();
+    var r = Math.max(size.x, size.z) * 1.6 + 0.3;
+    ground.scale.setScalar(r); floorGlow.scale.setScalar(r * 0.6); floorGlow.position.y = radius * 0.004; // 大模型时防止两层地面互相闪
+    key.position.set(radius * 2.2, radius * 3.2, radius * 1.6); key.target.position.set(0, 0, 0);
+    var sc = key.shadow.camera; sc.left = sc.bottom = -radius * 1.4; sc.right = sc.top = radius * 1.4; sc.near = radius * 0.1; sc.far = radius * 10; sc.updateProjectionMatrix();
+    key.shadow.normalBias = Math.max(0.02, radius * 0.012); key.shadow.bias = -0.0004;
+    key.castShadow = radius < 4; // 天车跨度十几米，一张阴影贴图盖不住，干脆不投
+    fill.position.set(-radius * 2.5, radius * 1.2, radius * 1.5);
+    rim.position.set(-radius * 1.2, radius * 1.8, -radius * 2.6);
+  }
+
+  function info(it) {
+    card.innerHTML = '<div class="nm">' + it.name + '</div><div class="sb">' + it.sub + '</div><p>' + it.story + '</p>' +
+      '<div class="sp"><span>三角面<b>' + it.tris.toLocaleString('en-US') + '</b></span><span>尺寸<b>' + it.size + '</b></span><span>贴图集<b>' + it.tex + '</b></span></div>';
+  }
+
+  var token = 0;
+  function show(i) {
+    var it = ITEMS[i]; curItem = i; var my = ++token;
+    [].forEach.call(side.querySelectorAll('.it'), function (b) { b.classList.toggle('on', +b.getAttribute('data-i') === i); });
+    info(it); SR.safeHash(it.key);
+    var put = function (obj) {
+      if (my !== token) return;
+      if (current) scene.remove(current);
+      current = obj; scene.add(obj); setWire(obj); frame(obj);
+      load.classList.add('hide');
+    };
+    if (cache[it.key]) { put(cache[it.key]); return; }
+    load.classList.remove('hide'); loadT.textContent = '正在搬进车间：' + it.name; loadBar.style.width = '4%';
+    SR.loadGLB(it.key, function (p) { loadBar.style.width = Math.max(4, p * 92) + '%'; }).then(function (g) {
+      var obj = new THREE.Group(); obj.add(g.scene);
+      g.scene.traverse(function (o) { if (o.isMesh) { o.castShadow = true; o.receiveShadow = true; } });
+      cache[it.key] = obj; loadBar.style.width = '100%'; put(obj);
+    }).catch(function (e) { loadT.textContent = '载入失败，请刷新重试'; console.error(e); });
+  }
+
+  document.getElementById('bTung').onclick = function () { mode = 'tung'; applyLight(); };
+  document.getElementById('bDay').onclick = function () { mode = 'day'; applyLight(); };
+  document.getElementById('bWire').onclick = function () { wire = !wire; this.classList.toggle('on', wire); if (current) setWire(current); };
+  document.getElementById('bSpin').onclick = function () { controls.autoRotate = !controls.autoRotate; this.classList.toggle('on', controls.autoRotate); };
+  document.getElementById('bReset').onclick = function () { camera.position.copy(fitPos); controls.target.copy(fitTarget); controls.update(); };
+  window.addEventListener('keydown', function (e) {
+    if (e.key === 'ArrowDown') { show((curItem + 1) % ITEMS.length); e.preventDefault(); }
+    if (e.key === 'ArrowUp') { show((curItem - 1 + ITEMS.length) % ITEMS.length); e.preventDefault(); }
+  });
+
+  function resize() {
+    var w = window.innerWidth, h = window.innerHeight;
+    renderer.setSize(w, h, false); camera.aspect = w / h;
+    // 左侧列表占位：把画面中心往右挪
+    var off = w > 760 ? 145 : 0;
+    camera.setViewOffset(w + off * 2, h, 0, 0, w, h);
+    if (off) camera.setViewOffset(w, h, -off, 0, w, h); else camera.clearViewOffset();
+    camera.updateProjectionMatrix();
+  }
+  window.addEventListener('resize', resize); resize();
+
+  applyLight();
+  var start = 0, h0 = SR.safeHash();
+  ITEMS.forEach(function (it, i) { if (it.key === h0) start = i; });
+  show(start);
+  (function loop() { requestAnimationFrame(loop); controls.update(); renderer.render(scene, camera); })();
+  window.__ready = true;
+})();
+</script>
+</body>
+</html>

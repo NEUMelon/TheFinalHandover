@@ -52,6 +52,7 @@ unity/            Unity 2022.3 LTS + URP 14 工程（Demo α：第 1 章逻辑�
     Assets/LSB_Art/        FBX 模型与贴图
   tools/                   脱离 Unity 的 dotnet 编译与测试工程
 web-prototype/    高保真可点击 UI 原型（纯 HTML/CSS/JS，零依赖，双击即开）
+showroom/         在线演示：可走动的三号车间、模型展厅（three.js，双击即开）
 blender/          程序化建模与渲染脚本（车床、天车、继电器柜、道具、厂房）
 vfx/              三个关键特效的 Look-dev（记忆显影、规则 ID 重组、交接灯熄灭）
 docs/
@@ -83,6 +84,16 @@ docs/
 ---
 
 ## 快速开始
+
+**在线演示（不用下载）**：仓库开了网页模式，用浏览器打开根目录的 `index.html` 即可，里面有三个入口：
+
+| | |
+|---|---|
+| ![三号车间夜班](showroom/shots/night.jpg) | **三号车间 · 拉闸之后**（`showroom/scene.html`）：整座车间可环顾，夜班 / 白天两套光，六个机位；右下角拉下总闸，六排钨丝灯由近及远熄灭。 |
+| ![模型展厅](showroom/shots/gallery.jpg) | **模型展厅**（`showroom/index.html`）：11 件 Blender 模型逐件旋转、缩放、看线框，附故事、面数与贴图规格。 |
+| ![谜题二原型](showroom/shots/proto.jpg) | **谜题二 · 咔哒在左**：单文件网页原型，见下一段。 |
+
+本地看同样双击 `index.html` 就行，不需要起服务器。网页版模型由 `showroom/tools/` 里的脚本从各资产的 FBX 导出成 glTF（meshopt 压缩，贴图转 WebP），详见 [showroom/README.md](showroom/README.md)。
 
 **网页原型（最快）**：双击 `web-prototype/index.html`，或打开单文件版 `web-prototype/dist/最后一次交班_UI原型.html`。原型覆盖谜题二“咔哒在左”的完整流程，详见 [web-prototype/README.md](web-prototype/README.md)。
 
